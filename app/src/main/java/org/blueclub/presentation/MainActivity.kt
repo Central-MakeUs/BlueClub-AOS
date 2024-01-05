@@ -1,7 +1,8 @@
-package org.blueclub
+package org.blueclub.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import org.blueclub.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
