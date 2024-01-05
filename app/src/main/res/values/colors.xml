@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#191919</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="primary_background">#E6F1FF</color>
+    <color name="primary_light">#6EA8FF</color>
+    <color name="primary_normal">#2D75FF</color>
+    <color name="primary_dark">#1861F1</color>
+
+    <color name="red">#FE1D30</color>
+
+    <color name="gray_01">#F9F9F9</color>
+    <color name="gray_02">#F3F3F3</color>
+    <color name="gray_03">#EAEAEA</color>
+    <color name="gray_04">#DADADA</color>
+    <color name="gray_05">#B7B7B7</color>
+    <color name="gray_06">#979797</color>
+    <color name="gray_07">#6E6E6E</color>
+    <color name="gray_08">#5B5B5B</color>
+    <color name="gray_09">#3C3C3C</color>
+    <color name="gray_10">#1C1C1C</color>
+
+    <color name="coolgray_01">#F7FAFC</color>
+    <color name="coolgray_02">#EDF2F7</color>
+    <color name="coolgray_03">#E2E8F0</color>
+    <color name="coolgray_04">#CBD5E0</color>
+    <color name="coolgray_05">#A0AEC0</color>
+    <color name="coolgray_06">#718096</color>
+    <color name="coolgray_07">#626F85</color>
+    <color name="coolgray_08">#4A5568</color>
+    <color name="coolgray_09">#2D3748</color>
+    <color name="coolgray_10">#1A202C</color>
+
 </resources>
