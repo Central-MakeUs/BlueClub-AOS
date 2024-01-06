@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">BlueClub-AOS</string>
+
+    <!-- onboarding -->
+    <string name="onboarding1_title">근무기록과 수입관리를 한번에!</string>
+    <string name="onboarding1_description">매일 다른 근무 내용과 수입 내역을\n한 곳에서 기록하고 체계적으로 관리해 보세요</string>
+    <string name="onboarding2_title">함께라면 더 쉽고 재밌어요!</string>
+    <string name="onboarding2_description">매일 근무를 기록작성한 후\n수입인증을 통해 동기부여해 보세요</string>
+    <string name="onboarding3_title">같이 정보 교류하고 소통해요!</string>
+    <string name="onboarding3_description">같은 일을 하는 동료들과 고민을 나누고\n소통하며 서로의 정보를 교환해요</string>
+
+    <string name="onboarding_btn">직업 설정하고 시작하기</string>
 </resources>
