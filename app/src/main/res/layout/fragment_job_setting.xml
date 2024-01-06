@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.blueclub.presentation.auth.AuthSettingViewModel" />
+
+        <import type="org.blueclub.presentation.type.JobSettingViewType" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_choose_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/auth_job_setting_description"
+            android:textAppearance="@style/TextAppearance.H6_Bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_job_type_golf"
+            selected="@{viewModel.selectedJobType.get(JobSettingViewType.GOLF)}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/selector_job_setting"
+            android:onClick="@{() -> viewModel.setJobType(JobSettingViewType.GOLF)}"
+            android:paddingVertical="17dp"
+            android:text="@{JobSettingViewType.GOLF.titleRes}"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            android:textColor="@drawable/selector_job_setting_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_choose_job"
+            tools:text="골프캐디" />
+
+        <TextView
+            android:id="@+id/tv_job_type_rider"
+            selected="@{viewModel.selectedJobType.get(JobSettingViewType.RIDER)}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_job_setting"
+            android:onClick="@{() -> viewModel.setJobType(JobSettingViewType.RIDER)}"
+            android:paddingVertical="17dp"
+            android:text="@{JobSettingViewType.RIDER.titleRes}"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            android:textColor="@drawable/selector_job_setting_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_job_type_golf"
+            tools:text="배달 라이더" />
+
+        <TextView
+            android:id="@+id/tv_job_type_delivery"
+            selected="@{viewModel.selectedJobType.get(JobSettingViewType.DELIVERY)}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_job_setting"
+            android:onClick="@{() -> viewModel.setJobType(JobSettingViewType.DELIVERY)}"
+            android:paddingVertical="17dp"
+            android:text="@{JobSettingViewType.DELIVERY.titleRes}"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            android:textColor="@drawable/selector_job_setting_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_job_type_rider"
+            tools:text="택배 기사" />
+
+        <TextView
+            android:id="@+id/tv_job_type_insurance"
+            selected="@{viewModel.selectedJobType.get(JobSettingViewType.INSURANCE)}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_job_setting"
+            android:onClick="@{() -> viewModel.setJobType(JobSettingViewType.INSURANCE)}"
+            android:paddingVertical="17dp"
+            android:text="@{JobSettingViewType.INSURANCE.titleRes}"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            android:textColor="@drawable/selector_job_setting_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_job_type_delivery"
+            tools:text="보험 설계사" />
+
+        <TextView
+            android:id="@+id/tv_job_type_freelancer"
+            selected="@{viewModel.selectedJobType.get(JobSettingViewType.FREELANCER)}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_job_setting"
+            android:onClick="@{() -> viewModel.setJobType(JobSettingViewType.FREELANCER)}"
+            android:paddingVertical="17dp"
+            android:text="@{JobSettingViewType.FREELANCER.titleRes}"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            android:textColor="@drawable/selector_job_setting_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_job_type_insurance"
+            tools:text="기타·프리랜서" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
