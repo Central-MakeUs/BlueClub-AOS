@@ -32,6 +32,11 @@
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".presentation.auth.AuthSettingActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

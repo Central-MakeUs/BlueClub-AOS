@@ -10,4 +10,21 @@
     <string name="onboarding3_description">같은 일을 하는 동료들과 고민을 나누고\n소통하며 서로의 정보를 교환해요</string>
 
     <string name="onboarding_btn">직업 설정하고 시작하기</string>
+
+    <!-- auth setting -->
+    <string name="auth_job_setting">직업 설정</string>
+    <string name="auth_job_setting_description">내 직업과 일치하는\n항목을 골라주세요</string>
+
+    <string name="job_golf">골프캐디</string>
+    <string name="job_rider">배달 라이더</string>
+    <string name="job_delivery">택배 기사</string>
+    <string name="job_insurance">보험 설계사</string>
+    <string name="job_freelancer">기타·프리랜서</string>
+    
+    <string name="auth_year_setting">연차 설정</string>
+    <string name="auth_year_setting_description">근무 시작년도를 선택해주세요</string>
+    <string name="auth_choose_year">근무 시작년도 선택</string>
+
+    <string name="auth_job_setting_finish">$s로 설정완료</string>
+    <string name="auth_setting_finish_descriptin">가입완료까지 거의 다 왔어요!</string>
 </resources>
