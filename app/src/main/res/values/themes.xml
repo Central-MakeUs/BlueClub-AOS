@@ -15,11 +15,12 @@
         <!-- Customize your theme here. -->
 
         <item name="android:includeFontPadding">false</item>
+        <item name="android:colorBackground">@color/white</item>
     </style>
 
     <!-- Splash -->
     <style name="Theme.BlueClub.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/primary_normal</item>
+        <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
         <item name="postSplashScreenTheme">@style/Theme.BlueClubAOS</item>
     </style>
