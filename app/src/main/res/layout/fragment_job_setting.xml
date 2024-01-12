@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="org.blueclub.presentation.auth.AuthSettingViewModel" />
+            type="org.blueclub.presentation.auth.setting.AuthSettingViewModel" />
 
         <import type="org.blueclub.presentation.type.JobSettingViewType" />
     </data>

@@ -1,10 +1,11 @@
-package org.blueclub.presentation.auth
+package org.blueclub.presentation.auth.setting.fragment
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import org.blueclub.R
 import org.blueclub.databinding.FragmentJobSettingBinding
+import org.blueclub.presentation.auth.setting.AuthSettingViewModel
 import org.blueclub.presentation.base.BindingFragment
 
 class JobSettingFragment :

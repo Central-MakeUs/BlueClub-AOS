@@ -1,4 +1,4 @@
-package org.blueclub.presentation.auth
+package org.blueclub.presentation.auth.setting
 
 import android.os.Bundle
 import androidx.activity.viewModels

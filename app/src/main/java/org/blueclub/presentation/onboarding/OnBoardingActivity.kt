@@ -8,7 +8,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.blueclub.R
 import org.blueclub.databinding.ActivityOnboardingBinding
-import org.blueclub.presentation.auth.AuthSettingActivity
+import org.blueclub.presentation.auth.setting.AuthSettingActivity
 import org.blueclub.presentation.base.BindingActivity
 
 @AndroidEntryPoint

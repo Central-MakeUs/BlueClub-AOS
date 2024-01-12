@@ -6,12 +6,12 @@
     <data>
         <variable
             name="viewModel"
-            type="org.blueclub.presentation.auth.AuthSettingViewModel" />
+            type="org.blueclub.presentation.auth.setting.AuthSettingViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.auth.AuthSettingActivity">
+        tools:context=".presentation.auth.setting.AuthSettingActivity">
 
         <include
             android:id="@+id/view_toolbar"

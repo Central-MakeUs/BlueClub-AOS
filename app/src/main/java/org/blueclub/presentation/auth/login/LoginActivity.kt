@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.data.service.KakaoAuthService
 import org.blueclub.databinding.ActivityLoginBinding
-import org.blueclub.presentation.auth.AuthSettingActivity
+import org.blueclub.presentation.auth.setting.AuthSettingActivity
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.util.UiState
 import javax.inject.Inject

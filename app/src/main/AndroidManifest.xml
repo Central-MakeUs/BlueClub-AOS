@@ -34,7 +34,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".presentation.auth.AuthSettingActivity"
+            android:name=".presentation.auth.setting.AuthSettingActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 

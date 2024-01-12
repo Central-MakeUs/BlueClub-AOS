@@ -1,4 +1,4 @@
-package org.blueclub.presentation.auth
+package org.blueclub.presentation.auth.setting
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
