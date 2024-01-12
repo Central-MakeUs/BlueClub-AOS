@@ -11,6 +11,12 @@
 
     <string name="onboarding_btn">직업 설정하고 시작하기</string>
 
+    <!-- login -->
+    <string name="login_title">특수고용직의 파트너, 블루클럽</string>
+    <string name="login_description">근무 내용을 쉽게 기록하고\n수입을 다른 사람들에게 자랑해보세요!</string>
+    <string name="login_kakao">카카오로 3초만에 시작하기</string>
+    <string name="login_naver">네이버로 시작하기</string>
+
     <!-- auth setting -->
     <string name="auth_job_setting">직업 설정</string>
     <string name="auth_job_setting_description">내 직업과 일치하는\n항목을 골라주세요</string>

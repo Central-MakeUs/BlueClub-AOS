@@ -32,4 +32,8 @@
     <color name="coolgray_09">#2D3748</color>
     <color name="coolgray_10">#1A202C</color>
 
+    <color name="naver">#03C75A</color>
+    <color name="kakao">#FDE500</color>
+    <color name="kakao_text">#3C1E1E</color>
+
 </resources>
