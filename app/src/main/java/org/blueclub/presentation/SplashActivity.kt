@@ -9,8 +9,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.blueclub.R
 import org.blueclub.databinding.ActivitySplashBinding
+import org.blueclub.presentation.auth.login.LoginActivity
 import org.blueclub.presentation.base.BindingActivity
-import org.blueclub.presentation.onboarding.OnBoardingActivity
 
 @AndroidEntryPoint
 class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_splash) {
@@ -19,12 +19,12 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
             delay(1000L)
-            moveToOnBoarding()
+            moveToLogin()
         }
     }
 
-    private fun moveToOnBoarding() {
-        startActivity(Intent(this, OnBoardingActivity::class.java))
+    private fun moveToLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 }
