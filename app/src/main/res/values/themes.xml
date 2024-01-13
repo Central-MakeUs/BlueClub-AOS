@@ -42,5 +42,12 @@
         <item name="android:paddingVertical">10dp</item>
     </style>
 
+    <style name="Widget.Divider" parent="">
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@color/gray_03</item>
+        <item name="android:paddingHorizontal">20dp</item>
+        <item name="android:paddingVertical">8dp</item>
+    </style>
+
     <style name="Theme.BlueClubAOS" parent="Base.Theme.BlueClubAOS" />
 </resources>
