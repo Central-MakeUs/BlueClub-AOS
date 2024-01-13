@@ -18,6 +18,7 @@
     <string name="login_naver">네이버로 시작하기</string>
 
     <!-- auth setting -->
+        <!-- job setting -->
     <string name="auth_job_setting">직업 설정</string>
     <string name="auth_job_setting_description">내 직업과 일치하는\n항목을 골라주세요</string>
 
@@ -33,4 +34,9 @@
 
     <string name="auth_job_setting_finish">$s로 설정완료</string>
     <string name="auth_setting_finish_descriptin">가입완료까지 거의 다 왔어요!</string>
+
+        <!-- year setting -->
+    <string name="year_title">근무를 시작한 년도를\n선택해주세요</string>
+    <string name="year_select_title">근무 시작년도를 선택해주세요</string>
+    <string name="next">다음</string>
 </resources>
