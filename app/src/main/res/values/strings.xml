@@ -43,4 +43,14 @@
     <string name="year_title">근무를 시작한 년도를\n선택해주세요</string>
     <string name="year_select_title">근무 시작년도를 선택해주세요</string>
     <string name="next">다음</string>
+
+        <!-- nickname setting -->
+    <string name="nickname_title">닉네임을 설정해주세요</string>
+    <string name="nickname_description">닉네임은 언제든 수정이 가능해요.</string>
+    <string name="nickname_input">닉네임을 입력해주세요</string>
+    <string name="check_duplication">중복확인</string>
+
+    <string name="correct_nickname">사용 가능한 닉네임 입니다.</string>
+    <string name="wrong_nickname">띄어쓰기 없이 한글, 영문, 숫자만 가능해요</string>
+    <string name="nickname_length_limit">%d / 10</string>
 </resources>

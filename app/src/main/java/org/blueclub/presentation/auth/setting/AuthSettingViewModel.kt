@@ -29,6 +29,11 @@ class AuthSettingViewModel : ViewModel() {
         MutableStateFlow(AuthSettingPageViewType.JOB)
     val currentPage = _currentPage.asStateFlow()
 
+    val nickname = MutableStateFlow("")
+    private val _isNicknameCorrect = MutableStateFlow(false)
+    val isNicknameCorrect = _isNicknameCorrect.asStateFlow()
+    // TODO 닉네임 중복확인 후 버튼 활성화하는 작업 필요
+
     fun setChosenJobType(jobType: JobSettingViewType) {
         _chosenJobType.value = jobType
     }
@@ -37,8 +42,8 @@ class AuthSettingViewModel : ViewModel() {
         _selectedYear.value = selectedYear
     }
 
-    fun setYearSelected() {
-        _yearSelectFinished.value = true
+    fun setYearSelected(selected: Boolean) {
+        _yearSelectFinished.value = selected
     }
 
     fun setCurrentPage(position: Int) {
