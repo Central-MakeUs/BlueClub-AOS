@@ -3,6 +3,7 @@ package org.blueclub.presentation.auth.setting
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.blueclub.presentation.type.AuthSettingPageViewType
 import org.blueclub.presentation.type.JobSettingViewType
 
 class AuthSettingViewModel : ViewModel() {
@@ -20,11 +21,25 @@ class AuthSettingViewModel : ViewModel() {
     private val _chosenJobType: MutableStateFlow<JobSettingViewType> =
         MutableStateFlow(JobSettingViewType.GOLF)
     val chosenJobType = _chosenJobType
+    private val _selectedYear: MutableStateFlow<String?> = MutableStateFlow(null)
+    val selectedYear = _selectedYear.asStateFlow()
+    private val _yearSelectFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val yearSelectFinished = _yearSelectFinished.asStateFlow()
+    private val _pageType: MutableStateFlow<AuthSettingPageViewType> =
+        MutableStateFlow(AuthSettingPageViewType.JOB)
+    val pageType = _pageType.asStateFlow()
 
     fun setChosenJobType(jobType: JobSettingViewType) {
         _chosenJobType.value = jobType
     }
 
+    fun setSelectedYear(selectedYear: String?) {
+        _selectedYear.value = selectedYear
+    }
+
+    fun setYearSelected() {
+        _yearSelectFinished.value = true
+    }
 
     fun setJobType(jobType: JobSettingViewType) {
         val isSelected = selectedJobType.value[jobType] ?: return

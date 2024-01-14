@@ -33,9 +33,14 @@ class AuthSettingActivity :
 
     private fun collectData() {
         viewModel.selectedJobType.flowWithLifecycle(lifecycle).onEach { data ->
-            val type = data.entries.find { it.value }?.key ?: return@onEach
+            val type = data.entries.find { it.value } ?: return@onEach
             binding.vpAuthsetting.currentItem++
-            viewModel.setChosenJobType(type)
+            viewModel.setChosenJobType(type.key)
+            viewModel.setSelectedYear(null)
+        }.launchIn(lifecycleScope)
+        viewModel.yearSelectFinished.flowWithLifecycle(lifecycle).onEach {
+            if(it)
+                binding.vpAuthsetting.currentItem++
         }.launchIn(lifecycleScope)
     }
 }

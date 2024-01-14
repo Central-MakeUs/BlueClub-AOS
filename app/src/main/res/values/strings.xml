@@ -18,8 +18,12 @@
     <string name="login_naver">네이버로 시작하기</string>
 
     <!-- auth setting -->
-        <!-- job setting -->
+
     <string name="auth_job_setting">직업 설정</string>
+    <string name="auth_year_setting">연차 설정</string>
+    <string name="auth_nickname_setting">닉네임 설정</string>
+
+        <!-- job setting -->
     <string name="auth_job_setting_description">내 직업과 일치하는\n항목을 골라주세요</string>
 
     <string name="job_golf">골프캐디</string>
@@ -27,8 +31,7 @@
     <string name="job_delivery">택배 기사</string>
     <string name="job_insurance">보험 설계사</string>
     <string name="job_freelancer">기타·프리랜서</string>
-    
-    <string name="auth_year_setting">연차 설정</string>
+
     <string name="auth_year_setting_description">근무 시작년도를 선택해주세요</string>
     <string name="auth_choose_year">근무 시작년도 선택</string>
 
