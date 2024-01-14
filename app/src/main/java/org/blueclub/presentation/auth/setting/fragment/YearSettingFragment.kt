@@ -31,7 +31,7 @@ class YearSettingFragment :
             dialog.show(parentFragmentManager, "yearSetting")
         }
         binding.btnNext.setOnClickListener {
-            viewModel.setYearSelected()
+            viewModel.setYearSelected(true)
         }
     }
 

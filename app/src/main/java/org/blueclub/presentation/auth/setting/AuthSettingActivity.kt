@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.ActivityAuthSettingBinding
 import org.blueclub.presentation.base.BindingActivity
+import org.blueclub.presentation.type.AuthSettingPageViewType
 
 class AuthSettingActivity :
     BindingActivity<ActivityAuthSettingBinding>(R.layout.activity_auth_setting) {
@@ -38,6 +39,9 @@ class AuthSettingActivity :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                if(position != AuthSettingPageViewType.YEAR.ordinal){
+                    viewModel.setYearSelected(false)
+                }
                 viewModel.setCurrentPage(position)
             }
         })
