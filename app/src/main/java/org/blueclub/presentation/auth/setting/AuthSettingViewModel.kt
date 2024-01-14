@@ -25,9 +25,9 @@ class AuthSettingViewModel : ViewModel() {
     val selectedYear = _selectedYear.asStateFlow()
     private val _yearSelectFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val yearSelectFinished = _yearSelectFinished.asStateFlow()
-    private val _pageType: MutableStateFlow<AuthSettingPageViewType> =
+    private val _currentPage: MutableStateFlow<AuthSettingPageViewType> =
         MutableStateFlow(AuthSettingPageViewType.JOB)
-    val pageType = _pageType.asStateFlow()
+    val currentPage = _currentPage.asStateFlow()
 
     fun setChosenJobType(jobType: JobSettingViewType) {
         _chosenJobType.value = jobType
@@ -39,6 +39,13 @@ class AuthSettingViewModel : ViewModel() {
 
     fun setYearSelected() {
         _yearSelectFinished.value = true
+    }
+
+    fun setCurrentPage(position: Int) {
+        AuthSettingPageViewType.entries.map {
+            if (it.ordinal == position)
+                _currentPage.value = it
+        }
     }
 
     fun setJobType(jobType: JobSettingViewType) {

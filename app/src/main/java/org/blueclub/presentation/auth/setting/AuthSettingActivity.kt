@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
@@ -29,6 +30,13 @@ class AuthSettingActivity :
         binding.viewToolbar.ivBack.setOnClickListener {
             binding.vpAuthsetting.currentItem--
         }
+        binding.vpAuthsetting.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.setCurrentPage(position)
+            }
+        })
     }
 
     private fun collectData() {
@@ -39,7 +47,7 @@ class AuthSettingActivity :
             viewModel.setSelectedYear(null)
         }.launchIn(lifecycleScope)
         viewModel.yearSelectFinished.flowWithLifecycle(lifecycle).onEach {
-            if(it)
+            if (it)
                 binding.vpAuthsetting.currentItem++
         }.launchIn(lifecycleScope)
     }

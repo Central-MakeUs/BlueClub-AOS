@@ -9,4 +9,5 @@ enum class AuthSettingPageViewType(
     JOB(R.string.auth_job_setting),
     YEAR(R.string.auth_year_setting),
     NICKNAME(R.string.auth_nickname_setting),
+    DEFAULT(R.string.empty);
 }

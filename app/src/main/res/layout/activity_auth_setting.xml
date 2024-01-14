@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="org.blueclub.presentation.auth.setting.AuthSettingViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,22 +18,23 @@
         <include
             android:id="@+id/view_toolbar"
             layout="@layout/view_toolbar"
-            app:title="직업 설정" />
+            app:title="@{context.getString(viewModel.currentPage.titleRes)}" />
+
         <ProgressBar
             android:id="@+id/pb_authsetting"
-            android:progressDrawable="@drawable/progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="4dp"
+            android:progressDrawable="@drawable/progress_bar"
             app:layout_constraintTop_toBottomOf="@+id/view_toolbar" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_authsetting"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pb_authsetting" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

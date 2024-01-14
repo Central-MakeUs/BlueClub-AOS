@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">BlueClub-AOS</string>
+    <string name="empty"></string>
 
     <!-- onboarding -->
     <string name="onboarding1_title">근무기록과 수입관리를 한번에!</string>
