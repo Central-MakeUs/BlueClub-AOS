@@ -1,6 +1,7 @@
 package org.blueclub.presentation.auth.setting
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +29,9 @@ class AuthSettingActivity :
         binding.vpAuthsetting.adapter = AuthSettingAdapter(this)
         binding.vpAuthsetting.isUserInputEnabled = false
         binding.viewToolbar.ivBack.setOnClickListener {
+            binding.vpAuthsetting.currentItem--
+        }
+        onBackPressedDispatcher.addCallback(this) {
             binding.vpAuthsetting.currentItem--
         }
         binding.vpAuthsetting.registerOnPageChangeCallback(object :
