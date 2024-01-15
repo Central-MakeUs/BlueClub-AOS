@@ -53,4 +53,13 @@
     <string name="correct_nickname">사용 가능한 닉네임 입니다.</string>
     <string name="wrong_nickname">띄어쓰기 없이 한글, 영문, 숫자만 가능해요</string>
     <string name="nickname_length_limit">%d / 10</string>
+    
+        <!-- terms of service -->
+    <string name="tos_title">블루 클럽을 이용하려면,\n정보 동의가 필요해요.</string>
+    <string name="tos_entire">약관 전체 동의</string>
+    <string name="tos_privacy">개인정보 수집·이용 정책 동의 (필수)</string>
+    <string name="tos_service">서비스 이용약관 동의 (필수)</string>
+    <string name="tos_third">제 3자 제공 동의 (필수)</string>
+    <string name="tos_phone">휴대폰 본인확인 서비스 동의 (필수)</string>
+    <string name="tos_marketing">마케팅 활용정보 동의 (선택)</string>
 </resources>

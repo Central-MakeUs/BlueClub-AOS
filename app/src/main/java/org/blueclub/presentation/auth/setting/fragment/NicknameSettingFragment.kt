@@ -13,6 +13,7 @@ import java.util.regex.Pattern
 class NicknameSettingFragment :
     BindingFragment<FragmentNicknameSettingBinding>(R.layout.fragment_nickname_setting) {
     private val viewModel: AuthSettingViewModel by activityViewModels()
+    private var dialog = TermsOfServiceBottomSheetDialog()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,5 +31,8 @@ class NicknameSettingFragment :
             } else source
         }
         binding.etNickname.filters = arrayOf(filterAlphaNum)
+        binding.btnNext.setOnClickListener {
+            dialog.show(parentFragmentManager, "termsOfService")
+        }
     }
 }
