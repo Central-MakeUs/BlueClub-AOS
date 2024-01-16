@@ -62,4 +62,9 @@
     <string name="tos_third">제 3자 제공 동의 (필수)</string>
     <string name="tos_phone">휴대폰 본인확인 서비스 동의 (필수)</string>
     <string name="tos_marketing">마케팅 활용정보 동의 (선택)</string>
+
+    <!-- auth setting finished -->
+    <string name="auth_finished_title">블루클럽에 오신걸 환영해요!</string>
+    <string name="auth_finished_description">이제 근무기록을 통해 관리하고\n나의 근무활동을 자유롭게 자랑해봐요</string>
+    <string name="start_now">바로 시작하기</string>
 </resources>
