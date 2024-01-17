@@ -8,7 +8,5 @@ enum class JobSettingViewType(
 ) {
     GOLF(R.string.job_golf),
     RIDER(R.string.job_rider),
-    DELIVERY(R.string.job_delivery),
-    INSURANCE(R.string.job_insurance),
-    FREELANCER(R.string.job_freelancer),
+    DAY_LABOR(R.string.job_day_labor),
 }

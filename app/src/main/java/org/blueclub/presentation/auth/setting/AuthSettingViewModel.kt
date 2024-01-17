@@ -12,9 +12,7 @@ class AuthSettingViewModel : ViewModel() {
             mapOf(
                 JobSettingViewType.GOLF to false,
                 JobSettingViewType.RIDER to false,
-                JobSettingViewType.DELIVERY to false,
-                JobSettingViewType.INSURANCE to false,
-                JobSettingViewType.FREELANCER to false,
+                JobSettingViewType.DAY_LABOR to false,
             )
         )
     val selectedJobType = _selectedJobType.asStateFlow()
@@ -59,9 +57,7 @@ class AuthSettingViewModel : ViewModel() {
             mutableMapOf(
                 JobSettingViewType.GOLF to false,
                 JobSettingViewType.RIDER to false,
-                JobSettingViewType.DELIVERY to false,
-                JobSettingViewType.INSURANCE to false,
-                JobSettingViewType.FREELANCER to false,
+                JobSettingViewType.DAY_LABOR to false,
             ).apply {
                 this[jobType] = !isSelected
             }

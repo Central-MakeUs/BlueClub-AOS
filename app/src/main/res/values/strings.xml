@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BlueClub-AOS</string>
-    <string name="empty"></string>
+    <string name="empty" />
 
     <!-- onboarding -->
     <string name="onboarding1_title">근무기록과 수입관리를 한번에!</string>
@@ -25,10 +25,13 @@
     <string name="auth_nickname_setting">닉네임 설정</string>
 
         <!-- job setting -->
-    <string name="auth_job_setting_description">내 직업과 일치하는\n항목을 골라주세요</string>
+    <string name="auth_job_setting_title">어떤 일을 하고 계시나요?</string>
+    <string name="auth_job_setting_description">내 직업과 일치하는 항목을 골라주세요.</string>
 
     <string name="job_golf">골프캐디</string>
     <string name="job_rider">배달 라이더</string>
+    <string name="job_day_labor">일용직 근로자</string>
+
     <string name="job_delivery">택배 기사</string>
     <string name="job_insurance">보험 설계사</string>
     <string name="job_freelancer">기타·프리랜서</string>
