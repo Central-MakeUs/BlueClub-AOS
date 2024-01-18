@@ -25,11 +25,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField(
-            "String",
-            "KAKAO_NATIVE_KEY",
-            properties.getProperty("KAKAO_NATIVE_KEY")
-        )
+        buildConfigField("String","KAKAO_NATIVE_KEY",properties.getProperty("KAKAO_NATIVE_KEY"))
+        buildConfigField("String","NAVER_CLIENT_ID",properties.getProperty("NAVER_CLIENT_ID"))
+        buildConfigField("String","NAVER_CLIENT_SECRETE",properties.getProperty("NAVER_CLIENT_SECRETE"))
     }
 
     buildTypes {

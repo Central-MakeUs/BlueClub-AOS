@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.data.service.KakaoAuthService
+import org.blueclub.data.service.NaverAuthService
 import org.blueclub.databinding.ActivityLoginBinding
 import org.blueclub.presentation.auth.setting.AuthSettingActivity
 import org.blueclub.presentation.base.BindingActivity
@@ -20,6 +21,8 @@ import javax.inject.Inject
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     @Inject
     lateinit var kakaoAuthService: KakaoAuthService
+    @Inject
+    lateinit var naverAuthService: NaverAuthService
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +37,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             kakaoAuthService.loginKakao(viewModel::login)
         }
         binding.btnLoginNaver.setOnClickListener {
-
+            naverAuthService.loginNaver(viewModel::login)
         }
     }
 

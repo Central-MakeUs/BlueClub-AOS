@@ -9,6 +9,7 @@ import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import org.blueclub.data.service.KakaoAuthService
+import org.blueclub.data.service.NaverAuthService
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -22,4 +23,9 @@ object SignModule {
         @ActivityContext context: Context,
         client: UserApiClient,
     ) = KakaoAuthService(context, client)
+
+    @Provides
+    fun provideNaverSignService(
+        @ActivityContext context: Context,
+    ) = NaverAuthService(context)
 }
