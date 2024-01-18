@@ -1,3 +1,82 @@
 <resources>
     <string name="app_name">BlueClub-AOS</string>
+    <string name="empty" />
+
+    <!-- onboarding -->
+    <string name="onboarding1_title">근무기록과 수입관리를 한번에!</string>
+    <string name="onboarding1_description">매일 다른 근무 내용과 수입 내역을\n한 곳에서 기록하고 체계적으로 관리해 보세요</string>
+    <string name="onboarding2_title">함께라면 더 쉽고 재밌어요!</string>
+    <string name="onboarding2_description">매일 근무를 기록작성한 후\n수입인증을 통해 동기부여해 보세요</string>
+    <string name="onboarding3_title">같이 정보 교류하고 소통해요!</string>
+    <string name="onboarding3_description">같은 일을 하는 동료들과 고민을 나누고\n소통하며 서로의 정보를 교환해요</string>
+
+    <string name="onboarding_btn">직업 설정하고 시작하기</string>
+
+    <!-- login -->
+    <string name="login_title">특수고용직의 파트너, 블루클럽</string>
+    <string name="login_description">근무 내용을 쉽게 기록하고\n수입을 다른 사람들에게 자랑해보세요!</string>
+    <string name="login_kakao">카카오로 3초만에 시작하기</string>
+    <string name="login_naver">네이버로 시작하기</string>
+
+    <!-- auth setting -->
+
+    <string name="auth_job_setting">직업 설정</string>
+    <string name="auth_goal_setting">목표 금액 설정</string>
+    <string name="auth_year_setting">연차 설정</string>
+    <string name="auth_nickname_setting">닉네임 설정</string>
+
+        <!-- job setting -->
+    <string name="auth_job_setting_title">어떤 일을 하고 계시나요?</string>
+    <string name="auth_job_setting_description">내 직업과 일치하는 항목을 골라주세요.</string>
+
+    <string name="job_golf">골프캐디</string>
+    <string name="job_rider">배달 라이더</string>
+    <string name="job_day_labor">일용직 근로자</string>
+
+    <string name="job_delivery">택배 기사</string>
+    <string name="job_insurance">보험 설계사</string>
+    <string name="job_freelancer">기타·프리랜서</string>
+
+    <string name="auth_year_setting_description">근무 시작년도를 선택해주세요</string>
+    <string name="auth_choose_year">근무 시작년도 선택</string>
+
+    <string name="auth_job_setting_finish">$s로 설정완료</string>
+    <string name="auth_setting_finish_descriptin">가입완료까지 거의 다 왔어요!</string>
+
+        <!-- goal setting -->
+    <string name="goal_setting_title">매달 수입 목표를 입력해주세요</string>
+    <string name="goal_setting_description">목표 금액은 최소 50만원부터 입력해주세요.</string>
+    <string name="goal_setting_hint">목표 금액 입력</string>
+    <string name="goal_setting_wrong">50만원 이상 입력해주세요.</string>
+    <string name="goal_setting_correct">멋진 목표 금액이에요!</string>
+    <string name="goal_setting_amount_info">%1$s 원</string>
+
+        <!-- year setting -->
+    <string name="year_title">근무를 시작한 년도를\n선택해주세요</string>
+    <string name="year_select_title">근무 시작년도를 선택해주세요</string>
+    <string name="next">다음</string>
+
+        <!-- nickname setting -->
+    <string name="nickname_title">닉네임을 설정해주세요</string>
+    <string name="nickname_description">닉네임은 언제든 수정이 가능해요.</string>
+    <string name="nickname_input">닉네임을 입력해주세요</string>
+    <string name="check_duplication">중복확인</string>
+
+    <string name="correct_nickname">사용 가능한 닉네임 입니다.</string>
+    <string name="wrong_nickname">띄어쓰기 없이 한글, 영문, 숫자만 가능해요</string>
+    <string name="nickname_length_limit">%d / 10</string>
+    
+        <!-- terms of service -->
+    <string name="tos_title">블루 클럽을 이용하려면,\n정보 동의가 필요해요.</string>
+    <string name="tos_entire">약관 전체 동의</string>
+    <string name="tos_privacy">개인정보 수집·이용 정책 동의 (필수)</string>
+    <string name="tos_service">서비스 이용약관 동의 (필수)</string>
+    <string name="tos_third">제 3자 제공 동의 (필수)</string>
+    <string name="tos_phone">휴대폰 본인확인 서비스 동의 (필수)</string>
+    <string name="tos_marketing">마케팅 활용정보 동의 (선택)</string>
+
+    <!-- auth setting finished -->
+    <string name="auth_finished_title">블루클럽에 오신걸 환영해요!</string>
+    <string name="auth_finished_description">이제 근무기록을 통해 관리하고\n나의 근무활동을 자유롭게 자랑해봐요</string>
+    <string name="start_now">바로 시작하기</string>
 </resources>

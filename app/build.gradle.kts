@@ -1,8 +1,16 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.dagger.hilt.android")
+}
+
+val properties = Properties().apply {
+    load(FileInputStream(rootProject.file("local.properties")))
 }
 
 android {
@@ -17,6 +25,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String","KAKAO_NATIVE_KEY",properties.getProperty("KAKAO_NATIVE_KEY"))
+        buildConfigField("String","NAVER_CLIENT_ID",properties.getProperty("NAVER_CLIENT_ID"))
+        buildConfigField("String","NAVER_CLIENT_SECRETE",properties.getProperty("NAVER_CLIENT_SECRETE"))
     }
 
     buildTypes {
@@ -42,6 +53,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
 }
 
@@ -61,6 +73,7 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.8.2")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha04")
 
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
@@ -69,7 +82,7 @@ dependencies {
     implementation("io.coil-kt:coil:2.4.0")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.47")
+    implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-fragment:1.1.0")
     kapt("com.google.dagger:hilt-compiler:2.47")
     kapt("com.google.dagger:dagger-compiler:2.47")
@@ -84,4 +97,10 @@ dependencies {
 
     // Splash
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // Kakao
+    implementation("com.kakao.sdk:v2-user:2.19.0")
+
+    // Naver
+    implementation("com.navercorp.nid:oauth:5.9.0")
 }

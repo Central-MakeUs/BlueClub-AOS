@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="org.blueclub.R" />
+
+        <import type="org.blueclub.util.extension.StringExtKt" />
+
+        <variable
+            name="viewModel"
+            type="org.blueclub.presentation.auth.setting.AuthSettingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_nickname_setting_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="62dp"
+            android:text="@string/nickname_title"
+            android:textAppearance="@style/TextAppearance.H6_Bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_nickname_setting_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/nickname_description"
+            android:textAppearance="@style/TextAppearance.Body2_Medium"
+            android:textColor="@color/gray_06"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname_setting_title" />
+
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/shape_edittext_nickname"
+            android:gravity="top|start"
+            android:hint="@string/nickname_input"
+            android:inputType="text|textNoSuggestions"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:text="@={viewModel.nickname}"
+            android:textAppearance="@style/TextAppearance.Body1"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_06"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname_setting_description"
+            app:maxLen="@{10}" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_check_duplication"
+            style="@style/Widget.Material.Button.Basic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/shape_border_radius_4"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:text="@string/check_duplication"
+            android:textAppearance="@style/TextAppearance.Subtitle3"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/gray_06"
+            app:layout_constraintBottom_toBottomOf="@id/et_nickname"
+            app:layout_constraintEnd_toEndOf="@+id/et_nickname"
+            app:layout_constraintTop_toTopOf="@+id/et_nickname" />
+
+        <TextView
+            android:id="@+id/tv_nickname_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:textAppearance="@style/TextAppearance.Caption1"
+            app:layout_constraintStart_toStartOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname"
+            tools:text="@{viewModel.isNicknameCorrect ? @string/correct_nickname : @string/wrong_nickname}"
+            tools:textColor="@{viewModel.isNicknameCorrect ? @color/primary_normal : @color/red}" />
+
+        <TextView
+            android:id="@+id/tv_nickname_length_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:text="@{@string/nickname_length_limit(StringExtKt.getStringLength(viewModel.nickname))}"
+            android:textAppearance="@style/TextAppearance.Caption1"
+            android:textColor="@color/gray_07"
+            app:layout_constraintEnd_toEndOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname"
+            tools:text="0 / 10" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_next"
+            style="@style/Widget.Material.Button.Basic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_border_radius_12"
+            android:paddingVertical="17dp"
+            android:text="@string/next"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
