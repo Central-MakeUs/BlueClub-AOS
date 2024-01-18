@@ -39,8 +39,8 @@ class AuthSettingActivity :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if(position != AuthSettingPageViewType.YEAR.ordinal){
-                    viewModel.setYearSelected(false)
+                if(position != AuthSettingPageViewType.GOAL.ordinal){
+                    viewModel.isGoalSettingFinished(false)
                 }
                 viewModel.setCurrentPage(position)
             }
@@ -54,7 +54,7 @@ class AuthSettingActivity :
             viewModel.setChosenJobType(type.key)
             viewModel.setSelectedYear(null)
         }.launchIn(lifecycleScope)
-        viewModel.yearSelectFinished.flowWithLifecycle(lifecycle).onEach {
+        viewModel.goalSettingFinished.flowWithLifecycle(lifecycle).onEach {
             if (it)
                 binding.vpAuthsetting.currentItem++
         }.launchIn(lifecycleScope)

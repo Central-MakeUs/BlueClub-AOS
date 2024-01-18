@@ -21,6 +21,7 @@
     <!-- auth setting -->
 
     <string name="auth_job_setting">직업 설정</string>
+    <string name="auth_goal_setting">목표 금액 설정</string>
     <string name="auth_year_setting">연차 설정</string>
     <string name="auth_nickname_setting">닉네임 설정</string>
 
@@ -41,6 +42,14 @@
 
     <string name="auth_job_setting_finish">$s로 설정완료</string>
     <string name="auth_setting_finish_descriptin">가입완료까지 거의 다 왔어요!</string>
+
+        <!-- goal setting -->
+    <string name="goal_setting_title">매달 수입 목표를 입력해주세요</string>
+    <string name="goal_setting_description">목표 금액은 최소 50만원부터 입력해주세요.</string>
+    <string name="goal_setting_hint">목표 금액 입력</string>
+    <string name="goal_setting_wrong">50만원 이상 입력해주세요.</string>
+    <string name="goal_setting_correct">멋진 목표 금액이에요!</string>
+    <string name="goal_setting_amount_info">%1$s 원</string>
 
         <!-- year setting -->
     <string name="year_title">근무를 시작한 년도를\n선택해주세요</string>
