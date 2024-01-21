@@ -74,6 +74,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.security:security-crypto-ktx:1.1.0-alpha04")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
@@ -103,4 +105,10 @@ dependencies {
 
     // Naver
     implementation("com.navercorp.nid:oauth:5.9.0")
+
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.3.0")
+
+    // Indicator
+    implementation("com.github.zhpanvip:viewpagerindicator:1.2.3")
 }
