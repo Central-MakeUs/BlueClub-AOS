@@ -25,6 +25,11 @@
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
 
+    <style name="TextAppearance.Caption3" parent="">
+        <item name="android:textSize">10dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+
     <style name="TextAppearance.Body1_Medium" parent="">
         <item name="android:textSize">16dp</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>

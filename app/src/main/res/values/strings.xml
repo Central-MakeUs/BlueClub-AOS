@@ -85,4 +85,14 @@
     <string name="income_input_hint">수입을 기록해봐요</string>
     <string name="move_to_workbook">근무 기록하고 달성률 채우러 가기</string>
 
+    <string name="sharing_description">수입인증을 보관한</string>
+    <string name="sharing_title">자랑하기 모음집</string>
+    <string name="work_info_description">블로버를 위한</string>
+    <string name="work_info_title">근로 정보 모음집</string>
+
+    <string name="release_info">오픈 예정</string>
+
+    <string name="banner_title1">블루클럽과 함께하는</string>
+    <string name="banner_title2">근무관리 잘하는 법 배워요</string>
+
 </resources>
