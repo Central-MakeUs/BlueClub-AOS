@@ -34,8 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="14dp"
-            android:background="@drawable/shape_border_radius_12"
-            android:backgroundTint="@color/gray_01"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_tos_title">
@@ -63,6 +61,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/gray_04"
+            app:layout_constraintEnd_toEndOf="@+id/layout_tos_entire"
+            app:layout_constraintStart_toStartOf="@+id/layout_tos_entire"
+            app:layout_constraintTop_toBottomOf="@+id/layout_tos_entire" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_privacy"
