@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
+import androidx.fragment.app.activityViewModels
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -21,10 +22,13 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragment_workbook) {
+    private val viewModel: WorkbookViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         initLayout()
     }
 
@@ -49,14 +53,14 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
 
 
         // TODO 코드 리팩토링 필요
-        val titleContainer = requireActivity().findViewById<ViewGroup>(R.id.layout_title_container)
-        titleContainer.children
-            .map { it as TextView }
-            .forEachIndexed { index, textView ->
-                val dayOfWeek = daysOfWeek()[index]
-                val title = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                textView.text = title
-            }
+//        val titleContainer = requireActivity().findViewById<ViewGroup>(R.id.layout_title_container)
+//        titleContainer.children
+//            .map { it as TextView }
+//            .forEachIndexed { index, textView ->
+//                val dayOfWeek = daysOfWeek()[index]
+//                val title = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+//                textView.text = title
+//            }
 
         binding.calendarView.monthHeaderBinder =
             object : MonthHeaderFooterBinder<MonthViewContainer> {

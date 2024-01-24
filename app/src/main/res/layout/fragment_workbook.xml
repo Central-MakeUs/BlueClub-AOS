@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.blueclub.presentation.home.WorkbookViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -86,26 +93,130 @@
                 android:text="1000,000,000원"
                 android:textAppearance="@style/TextAppearance.Subtitle1"
                 android:textColor="@color/coolgray_10"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tv_income_achievement"
                 app:layout_constraintStart_toEndOf="@id/tv_income_achievement"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_income_achievement"
                 tools:text="1000,000,000원" />
 
-            <ImageView
-                android:id="@+id/iv_income_goal_arrow"
+            <ImageButton
+                android:id="@+id/btn_income_goal_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_arrow_down"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@null"
+                android:onClick="@{() -> viewModel.onExpandBtnClick()}"
+                android:src="@{viewModel.isGoalViewExpanded ? @drawable/ic_arrow_top : @drawable/ic_arrow_down}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_income_achievement"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/tv_income_achievement" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_goal_expanded"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_income_achievement"
+                app:visibility="@{viewModel.isGoalViewExpanded()}">
+
+                <TextView
+                    android:id="@+id/tv_bubble_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_bubble"
+                    android:text="20%"
+                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="10dp"
+                    android:textAppearance="@style/TextAppearance.Caption3"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="@+id/pb_goal"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/iv_bubble_below"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_triangle_down"
+                    app:layout_constraintBottom_toTopOf="@+id/pb_goal"
+                    app:layout_constraintStart_toStartOf="@+id/pb_goal" />
+
+                <ProgressBar
+                    android:id="@+id/pb_goal"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:max="100"
+                    android:progress="@{viewModel.goalProgress}"
+                    android:progressDrawable="@drawable/progressbar_goal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_bubble_amount"
+                    android:layout_marginTop="8dp"
+                    tools:progress="20" />
+
+                <TextView
+                    android:id="@+id/tv_goal_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="1000만원"
+                    android:textAppearance="@style/TextAppearance.Caption3"
+                    android:textColor="@color/coolgray_05"
+                    app:layout_constraintEnd_toEndOf="@id/pb_goal"
+                    app:layout_constraintTop_toBottomOf="@id/pb_goal" />
+
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/gray_04"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_goal_income" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_goal_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_divider">
+
+                    <TextView
+                        android:id="@+id/tv_goal_setting_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/goal_setting"
+                        android:textAppearance="@style/TextAppearance.Body2_Medium"
+                        android:textColor="@color/coolgray_06"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:layout_constraintStart_toEndOf="@+id/tv_goal_setting_title"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <include
-            android:id="@+id/layout_title_container"
-            layout="@layout/layout_calendar_day_title_container" />
 
         <com.kizitonwose.calendar.view.CalendarView
             android:id="@+id/calendarView"
@@ -181,8 +292,8 @@
             android:layout_height="50dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_plus"
             android:background="@drawable/shape_round"
+            android:src="@drawable/ic_plus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
