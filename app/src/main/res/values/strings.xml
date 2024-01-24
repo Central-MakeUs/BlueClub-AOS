@@ -95,4 +95,7 @@
     <string name="banner_title1">블루클럽과 함께하는</string>
     <string name="banner_title2">근무관리 잘하는 법 배워요</string>
 
+    <!-- work book -->
+    <string name="workbook">근무수첩</string>
+    <string name="monthly_record">%d월 기록</string>
 </resources>
