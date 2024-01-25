@@ -1,11 +1,17 @@
 package org.blueclub.presentation.home
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
 import androidx.core.view.children
+import androidx.core.view.marginLeft
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -14,6 +20,8 @@ import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.ViewContainer
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
 import org.blueclub.presentation.base.BindingFragment
@@ -23,13 +31,17 @@ import java.util.Locale
 
 class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragment_workbook) {
     private val viewModel: WorkbookViewModel by activityViewModels()
+    lateinit var rootView: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        rootView = binding.root
+
         initLayout()
+        collectData()
     }
 
     private fun initLayout() {
@@ -80,6 +92,43 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
             }
+    }
+
+    private fun collectData() {
+        viewModel.goalProgress.flowWithLifecycle(lifecycle).onEach {
+            var leftMargin = getProgressBarSize() * it / 100 - PROGRESS_MARGIN_MIN
+            if (leftMargin < PROGRESS_MARGIN_MIN)
+                leftMargin = PROGRESS_MARGIN_MIN
+            if (leftMargin > getProgressBarSize() - PROGRESS_MARGIN_MAX)
+                leftMargin = getProgressBarSize() - PROGRESS_MARGIN_MAX
+            var bubbleMargin = leftMargin - BUBBLE_WIDTH
+            if (bubbleMargin < PROGRESS_BUBBLE_MARGIN_MIN)
+                bubbleMargin = PROGRESS_BUBBLE_MARGIN_MIN
+            if (bubbleMargin > getProgressBarSize() - PROGRESS_BUBBLE_MARGIN_MAX)
+                bubbleMargin = getProgressBarSize() - PROGRESS_BUBBLE_MARGIN_MAX
+            binding.ivBubbleBelow.updateLayoutParams<MarginLayoutParams> {
+                this.marginStart = leftMargin
+            }
+            binding.tvBubbleAmount.updateLayoutParams<MarginLayoutParams> {
+                this.marginStart = bubbleMargin
+            }
+            binding.tvBubbleAmount.text = "$it%"
+        }.launchIn(lifecycleScope)
+    }
+
+    private fun getProgressBarSize(): Int {
+        val rect = Rect()
+        rootView.getWindowVisibleDisplayFrame(rect)
+        val screenWidth = rootView.rootView.width
+        return screenWidth - binding.pbGoal.marginLeft * 4
+    }
+
+    companion object {
+        const val PROGRESS_MARGIN_MIN = 15
+        const val PROGRESS_MARGIN_MAX = 30
+        const val PROGRESS_BUBBLE_MARGIN_MIN = 0
+        const val PROGRESS_BUBBLE_MARGIN_MAX = 110
+        const val BUBBLE_WIDTH = 40
     }
 
 }

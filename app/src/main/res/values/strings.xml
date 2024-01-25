@@ -40,7 +40,7 @@
     <string name="auth_year_setting_description">근무 시작년도를 선택해주세요</string>
     <string name="auth_choose_year">근무 시작년도 선택</string>
 
-    <string name="auth_job_setting_finish">$s로 설정완료</string>
+    <string name="auth_job_setting_finish">%s로 설정완료</string>
     <string name="auth_setting_finish_descriptin">가입완료까지 거의 다 왔어요!</string>
 
     <!-- goal setting -->
@@ -49,7 +49,7 @@
     <string name="goal_setting_hint">목표 금액 입력</string>
     <string name="goal_setting_wrong">50만원 이상 입력해주세요.</string>
     <string name="goal_setting_correct">멋진 목표 금액이에요!</string>
-    <string name="goal_setting_amount_info">%1$s 원</string>
+    <string name="goal_setting_amount_info">%1%s 원</string>
 
     <!-- year setting -->
     <string name="year_title">근무를 시작한 년도를\n선택해주세요</string>

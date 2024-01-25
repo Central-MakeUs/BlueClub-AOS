@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class WorkbookViewModel : ViewModel() {
     private val _isGoalViewExpanded = MutableStateFlow(false)
     val isGoalViewExpanded = _isGoalViewExpanded.asStateFlow()
-    private val _goalProgress = MutableStateFlow(3)
+    private val _goalProgress = MutableStateFlow(70)
     val goalProgress = _goalProgress.asStateFlow()
 
 
