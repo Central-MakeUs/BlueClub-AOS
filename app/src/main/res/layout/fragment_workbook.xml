@@ -217,17 +217,50 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/tv_calendar_month_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@{@string/calendar_month_info(viewModel.yearMonth.year, viewModel.yearMonth.month.value)}"
+            android:textAppearance="@style/TextAppearance.Subtitle2"
+            android:textColor="@color/gray_08"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_goal_income" />
+
+        <ImageView
+            android:id="@+id/iv_calendar_prev_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_triangle_left"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_calendar_month_info"
+            app:layout_constraintEnd_toStartOf="@+id/tv_calendar_month_info"
+            app:layout_constraintTop_toTopOf="@+id/tv_calendar_month_info" />
+
+        <ImageView
+            android:id="@+id/iv_calendar_next_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/ic_triangle_right"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_calendar_month_info"
+            app:layout_constraintStart_toEndOf="@+id/tv_calendar_month_info"
+            app:layout_constraintTop_toTopOf="@+id/tv_calendar_month_info" />
 
         <com.kizitonwose.calendar.view.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="20dp"
+            app:cv_daySize="seventhWidth"
             app:cv_dayViewResource="@layout/layout_calendar_day"
             app:cv_monthHeaderResource="@layout/layout_calendar_day_title_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_goal_income" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_calendar_month_info" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -238,6 +271,7 @@
             android:background="@color/white"
             android:paddingTop="24dp"
             android:paddingBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/calendarView">
@@ -255,7 +289,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:text="@string/monthly_record"
+                    android:text="@{@string/monthly_record(viewModel.today.month.value)}"
                     android:textAppearance="@style/TextAppearance.Subtitle1"
                     android:textColor="@color/gray_10"
                     app:layout_constraintStart_toStartOf="parent"

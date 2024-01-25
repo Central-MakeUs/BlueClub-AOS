@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.children
 import androidx.core.view.marginLeft
 import androidx.core.view.updateLayoutParams
@@ -17,8 +18,11 @@ import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
+import com.kizitonwose.calendar.core.nextMonth
+import com.kizitonwose.calendar.core.previousMonth
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
+import com.kizitonwose.calendar.view.MonthScrollListener
 import com.kizitonwose.calendar.view.ViewContainer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -31,7 +35,7 @@ import java.util.Locale
 
 class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragment_workbook) {
     private val viewModel: WorkbookViewModel by activityViewModels()
-    lateinit var rootView: View
+    private lateinit var rootView: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,39 +44,41 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.lifecycleOwner = this
         rootView = binding.root
 
-        initLayout()
+        initCalendar()
         collectData()
     }
 
-    private fun initLayout() {
+    private fun initCalendar() {
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 if (data.position == DayPosition.MonthDate) {
-                    container.textView.text = data.date.dayOfMonth.toString()
+                    container.tvDay.text = data.date.dayOfMonth.toString()
+                    container.tvDay.background =
+                        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
+                } else { // 이번 달이 아닌 경우
+                    container.tvDay.background = null
+                    container.tvAmount.text = ""
                 }
             }
 
-            // TODO outdate 일정의 경우 안 보이도록 수정하기
             override fun create(view: View): DayViewContainer = DayViewContainer(view)
 
         }
-        val currentMonth = YearMonth.now()
-        val startMonth = currentMonth.minusMonths(100)  // Adjust as needed
-        val endMonth = currentMonth.plusMonths(100)  // Adjust as needed
-        val firstDayOfWeek = firstDayOfWeekFromLocale() // Available from the library
-        binding.calendarView.setup(startMonth, endMonth, firstDayOfWeek)
-        binding.calendarView.scrollToMonth(currentMonth)
-
-
-        // TODO 코드 리팩토링 필요
-//        val titleContainer = requireActivity().findViewById<ViewGroup>(R.id.layout_title_container)
-//        titleContainer.children
-//            .map { it as TextView }
-//            .forEachIndexed { index, textView ->
-//                val dayOfWeek = daysOfWeek()[index]
-//                val title = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-//                textView.text = title
-//            }
+        val currentMonthPage = YearMonth.now()
+        val startMonth = currentMonthPage.minusMonths(12)
+        val firstDayOfWeek = firstDayOfWeekFromLocale()
+        binding.calendarView.setup(startMonth, currentMonthPage, firstDayOfWeek)
+        binding.ivCalendarPrevMonth.setOnClickListener {
+            viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
+        }
+        binding.ivCalendarNextMonth.setOnClickListener {
+            viewModel.setYearMonth(viewModel.yearMonth.value.nextMonth)
+        }
+        binding.calendarView.monthScrollListener = object : MonthScrollListener {
+            override fun invoke(calendar: CalendarMonth) {
+                viewModel.setYearMonth(calendar.yearMonth)
+            }
+        }
 
         binding.calendarView.monthHeaderBinder =
             object : MonthHeaderFooterBinder<MonthViewContainer> {
@@ -92,6 +98,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
             }
+        binding.calendarView.scrollToMonth(YearMonth.now())
     }
 
     private fun collectData() {
@@ -113,6 +120,9 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 this.marginStart = bubbleMargin
             }
             binding.tvBubbleAmount.text = "$it%"
+        }.launchIn(lifecycleScope)
+        viewModel.yearMonth.flowWithLifecycle(lifecycle).onEach {
+            binding.calendarView.smoothScrollToMonth(it)
         }.launchIn(lifecycleScope)
     }
 
