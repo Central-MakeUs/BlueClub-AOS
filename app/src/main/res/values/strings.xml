@@ -99,4 +99,9 @@
     <string name="workbook">근무수첩</string>
     <string name="monthly_record">%d월 기록</string>
     <string name="goal_setting">나의 목표 수입 설정</string>
+    <string name="calendar_month_info">%d년 %d월</string>
+
+    <!-- bottom navigation -->
+    <string name="home">홈</string>
+    <string name="mypage">마이페이지</string>
 </resources>
