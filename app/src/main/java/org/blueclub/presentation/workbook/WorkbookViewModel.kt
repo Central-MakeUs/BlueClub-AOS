@@ -1,8 +1,12 @@
 package org.blueclub.presentation.workbook
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import org.blueclub.util.extension.toStateFlow
 import java.time.YearMonth
 
 class WorkbookViewModel : ViewModel() {
@@ -15,6 +19,10 @@ class WorkbookViewModel : ViewModel() {
     private val _today = MutableStateFlow(YearMonth.now())
     val today = _today.asStateFlow()
 
+    val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
+    val incomeGoalValid : StateFlow<Int?> = incomeGoal.map {
+        it?.replace(",", "")?.toInt()
+    }.toStateFlow(viewModelScope, 0)
 
     fun onExpandBtnClick() {
         _isGoalViewExpanded.value = !_isGoalViewExpanded.value

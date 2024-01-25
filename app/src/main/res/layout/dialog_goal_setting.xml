@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.blueclub.presentation.workbook.WorkbookViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dialog_radius_14">
+
+        <TextView
+            android:id="@+id/tv_goal_setting_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/goal_setting_dialog_title"
+            android:textAppearance="@style/TextAppearance.H6_Bold"
+            android:textColor="@color/gray_10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_goal_setting_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/goal_setting_dialog_description"
+            android:textAppearance="@style/TextAppearance.Body2_Medium"
+            android:textColor="@color/gray_06"
+            app:layout_constraintStart_toStartOf="@+id/tv_goal_setting_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal_setting_title" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_goal_setting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/shape_border_radius_4"
+            android:backgroundTint="@color/gray_01"
+            android:gravity="top|end"
+            android:hint="@string/goal_setting_hint"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="16dp"
+            android:text="@={viewModel.incomeGoal}"
+            android:textAppearance="@style/TextAppearance.Body1"
+            android:textColorHint="@color/gray_06"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal_setting_description" />
+
+        <TextView
+            android:id="@+id/tv_goal_setting_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:text="@{viewModel.incomeGoalValid >= 100000 ? @string/goal_setting_correct : @string/goal_setting_wrong}"
+            android:textAppearance="@style/TextAppearance.Caption1"
+            android:textColor="@{viewModel.incomeGoalValid >= 100000 ? @color/primary_normal : @color/red}"
+            app:layout_constraintEnd_toEndOf="@+id/et_goal_setting"
+            app:layout_constraintTop_toBottomOf="@+id/et_goal_setting"
+            tools:text="@string/goal_setting_wrong" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_goal_setting_finished"
+            style="@style/Widget.Material.Button.Basic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_border_radius_12"
+            android:backgroundTint="@{viewModel.incomeGoalValid >= 100000 ? @color/primary_normal : @color/gray_04}"
+            android:enabled="@{viewModel.incomeGoalValid >= 100000}"
+            android:paddingVertical="17dp"
+            android:text="@string/next"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal_setting_guide" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

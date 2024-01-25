@@ -58,6 +58,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
             itemAnimator = null
             adapter = dailyWorkAdapter
         }
+        // TODO 더미 데이터 삭제
         dailyWorkAdapter.submitList(
             listOf(
                 DailyWorkInfo("1.2", "월", DailyWorkType.WORK, 15000000, 8),
@@ -68,6 +69,12 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 DailyWorkInfo("1.10", "월", DailyWorkType.WORK, 15000000, 8),
             )
         )
+        binding.ivSetting.setOnClickListener {
+            showGoalSettingBottomSheet()
+        }
+        binding.layoutGoalSetting.setOnClickListener {
+            showGoalSettingBottomSheet()
+        }
     }
 
     private fun initCalendar() {
@@ -120,8 +127,6 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
             }
-        //binding.calendarView.rootView.isNestedScrollingEnabled = false
-        binding.calendarView.isNestedScrollingEnabled = false
         binding.calendarView.scrollToMonth(YearMonth.now())
     }
 
@@ -155,6 +160,10 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         rootView.getWindowVisibleDisplayFrame(rect)
         val screenWidth = rootView.rootView.width
         return screenWidth - binding.pbGoal.marginLeft * 4
+    }
+
+    private fun showGoalSettingBottomSheet() {
+        GoalSettingBottomSheet().show(parentFragmentManager, "goalSetting")
     }
 
     companion object {
