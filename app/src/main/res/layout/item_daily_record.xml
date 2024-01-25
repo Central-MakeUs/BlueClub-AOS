@@ -2,6 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="dailyWorkInfo"
+            type="org.blueclub.domain.model.DailyWorkInfo" />
+
+        <variable
+            name="dailyWorkType"
+            type="org.blueclub.presentation.type.DailyWorkType" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:layout_marginStart="16dp"
-            android:text="12.28 월"
+            android:text="@{@string/workbook_daily_date_format(dailyWorkInfo.date, dailyWorkInfo.day)}"
             android:textAppearance="@style/TextAppearance.Subtitle2"
             android:textColor="@color/gray_07"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -28,12 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:background="@drawable/shape_border_radius_4"
-            android:backgroundTint="@color/primary_background"
+            android:backgroundTint="@{context.getColor(dailyWorkType.backgroundColor)}"
             android:paddingHorizontal="6dp"
             android:paddingVertical="2dp"
-            android:text="근무"
+            android:text="@{context.getString(dailyWorkType.titleRes)}"
             android:textAppearance="@style/TextAppearance.Caption2"
-            android:textColor="@color/primary_normal"
+            android:textColor="@{context.getColor(dailyWorkType.textColor)}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"
             app:layout_constraintStart_toEndOf="@+id/tv_date"
             app:layout_constraintTop_toTopOf="@+id/tv_date" />
@@ -43,9 +54,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:text="15,000,000 · 8건"
+            android:text="@{dailyWorkInfo.income == null ? @string/workbook_daily_refresh : @string/workbook_daily_income_format(dailyWorkInfo.income, dailyWorkInfo.workNum)}"
             android:textAppearance="@style/TextAppearance.Subtitle2"
-            android:textColor="@color/gray_10"
+            android:textColor="@{dailyWorkInfo.income == null ? @color/gray_05 : @color/gray_10}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"
             app:layout_constraintStart_toEndOf="@+id/tv_work_tag"
             app:layout_constraintTop_toTopOf="@+id/tv_date" />

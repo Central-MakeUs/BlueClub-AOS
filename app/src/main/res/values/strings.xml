@@ -101,6 +101,14 @@
     <string name="goal_setting">나의 목표 수입 설정</string>
     <string name="calendar_month_info">%d년 %d월</string>
 
+    <string name="workday">근무</string>
+    <string name="restday">휴무</string>
+    <string name="leaveday">조퇴</string>
+
+    <string name="workbook_daily_date_format">%s %s</string>
+    <string name="workbook_daily_income_format">%d·%d건</string>
+    <string name="workbook_daily_refresh">오늘은 충전하는 날</string>
+
     <!-- bottom navigation -->
     <string name="home">홈</string>
     <string name="mypage">마이페이지</string>

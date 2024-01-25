@@ -9,6 +9,7 @@
     <color name="primary_dark">#1861F1</color>
 
     <color name="red">#FE1D30</color>
+    <color name="red_background">#FFF1F1</color>
 
     <color name="gray_01">#F9F9F9</color>
     <color name="gray_02">#F3F3F3</color>

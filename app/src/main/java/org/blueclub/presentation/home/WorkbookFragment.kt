@@ -28,7 +28,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
+import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.presentation.base.BindingFragment
+import org.blueclub.presentation.type.DailyWorkType
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
@@ -36,6 +38,7 @@ import java.util.Locale
 class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragment_workbook) {
     private val viewModel: WorkbookViewModel by activityViewModels()
     private lateinit var rootView: View
+    private lateinit var dailyWorkAdapter: DailyWorkAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,8 +47,27 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.lifecycleOwner = this
         rootView = binding.root
 
+        initLayout()
         initCalendar()
         collectData()
+    }
+
+    private fun initLayout() {
+        dailyWorkAdapter = DailyWorkAdapter()
+        binding.rvDailyRecord.apply {
+            itemAnimator = null
+            adapter = dailyWorkAdapter
+        }
+        dailyWorkAdapter.submitList(
+            listOf(
+                DailyWorkInfo("1.2", "월", DailyWorkType.WORK, 15000000, 8),
+                DailyWorkInfo("1.3", "화", DailyWorkType.REST, null, null),
+                DailyWorkInfo("1.5", "수", DailyWorkType.EARLY, 15000000, 8),
+                DailyWorkInfo("1.8", "목", DailyWorkType.WORK, 15000000, 8),
+                DailyWorkInfo("1.9", "금", DailyWorkType.WORK, 15000000, 8),
+                DailyWorkInfo("1.10", "월", DailyWorkType.WORK, 15000000, 8),
+            )
+        )
     }
 
     private fun initCalendar() {
@@ -98,6 +120,8 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
             }
+        //binding.calendarView.rootView.isNestedScrollingEnabled = false
+        binding.calendarView.isNestedScrollingEnabled = false
         binding.calendarView.scrollToMonth(YearMonth.now())
     }
 
