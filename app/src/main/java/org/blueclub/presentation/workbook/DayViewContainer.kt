@@ -1,4 +1,4 @@
-package org.blueclub.presentation.home
+package org.blueclub.presentation.workbook
 
 import android.view.View
 import com.kizitonwose.calendar.view.ViewContainer

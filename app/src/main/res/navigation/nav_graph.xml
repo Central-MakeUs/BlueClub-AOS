@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/workbookFragment"
-        android:name="org.blueclub.presentation.home.WorkbookFragment"
+        android:name="org.blueclub.presentation.workbook.WorkbookFragment"
         android:label="WorkbookFragment"
         tools:layout="@layout/fragment_workbook" />
 

@@ -1,4 +1,4 @@
-package org.blueclub.presentation.home
+package org.blueclub.presentation.workbook
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

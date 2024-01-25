@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="org.blueclub.presentation.home.WorkbookViewModel" />
+            type="org.blueclub.presentation.workbook.WorkbookViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F8F9FC"
-        tools:context=".presentation.home.WorkbookFragment">
+        tools:context=".presentation.workbook.WorkbookFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_title_bar"
