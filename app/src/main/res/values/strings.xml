@@ -135,7 +135,7 @@
     <string name="daily_work_date_format">%s %s요일</string>
     
     <string name="daily_caddie_rounding">라운딩 수</string>
-    <string name="daily_caddie_caddie_p">캐디피 수입</string>
+    <string name="daily_caddie_p">캐디피 수입</string>
     <string name="daily_caddie_over_p">오버피 수입</string>
     <string name="daily_caddie_soil">배토 여부</string>
 </resources>
