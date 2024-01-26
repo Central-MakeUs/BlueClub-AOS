@@ -1,5 +1,6 @@
 package org.blueclub.presentation.workbook
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -30,6 +31,7 @@ import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
 import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.presentation.base.BindingFragment
+import org.blueclub.presentation.daily.DailyWorkDetailActivity
 import org.blueclub.presentation.type.DailyWorkType
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -53,7 +55,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
     }
 
     private fun initLayout() {
-        dailyWorkAdapter = DailyWorkAdapter()
+        dailyWorkAdapter = DailyWorkAdapter(::moveToDetail)
         binding.rvDailyRecord.apply {
             itemAnimator = null
             adapter = dailyWorkAdapter
@@ -75,6 +77,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.layoutGoalSetting.setOnClickListener {
             showGoalSettingBottomSheet()
         }
+        binding.ivPlus.setOnClickListener { moveToDetail() }
     }
 
     private fun initCalendar() {
@@ -164,6 +167,11 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
 
     private fun showGoalSettingBottomSheet() {
         GoalSettingBottomSheet().show(parentFragmentManager, "goalSetting")
+    }
+
+    private fun moveToDetail() {
+        val intent = Intent(requireActivity(), DailyWorkDetailActivity::class.java)
+        startActivity(intent)
     }
 
     companion object {

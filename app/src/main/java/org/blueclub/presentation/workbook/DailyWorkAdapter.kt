@@ -8,7 +8,9 @@ import org.blueclub.databinding.ItemDailyRecordBinding
 import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.util.ItemDiffCallback
 
-class DailyWorkAdapter : ListAdapter<DailyWorkInfo, RecyclerView.ViewHolder>(
+class DailyWorkAdapter(
+    private val moveToDetail: () -> Unit,
+) : ListAdapter<DailyWorkInfo, RecyclerView.ViewHolder>(
     ItemDiffCallback<DailyWorkInfo>(
         onContentsTheSame = { old, new -> old == new },
         onItemsTheSame = { old, new -> old.date == new.date }
@@ -21,9 +23,11 @@ class DailyWorkAdapter : ListAdapter<DailyWorkInfo, RecyclerView.ViewHolder>(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             dailyWorkInfo: DailyWorkInfo,
+            moveToDetail: () -> Unit,
         ) {
             binding.dailyWorkInfo = dailyWorkInfo
             binding.dailyWorkType = dailyWorkInfo.dailyWorkType
+            binding.ivMoveToDetail.setOnClickListener { moveToDetail() }
         }
     }
 
@@ -35,7 +39,7 @@ class DailyWorkAdapter : ListAdapter<DailyWorkInfo, RecyclerView.ViewHolder>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is DailyWorkViewHolder -> holder.bind(currentList[position])
+            is DailyWorkViewHolder -> holder.bind(currentList[position], moveToDetail)
         }
     }
 
