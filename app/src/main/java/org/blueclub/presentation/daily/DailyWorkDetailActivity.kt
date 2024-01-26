@@ -1,4 +1,4 @@
-package org.blueclub.presentation.workbook
+package org.blueclub.presentation.daily
 
 import android.os.Bundle
 import org.blueclub.R

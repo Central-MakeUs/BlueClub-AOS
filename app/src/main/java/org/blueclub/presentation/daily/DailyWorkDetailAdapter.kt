@@ -1,4 +1,4 @@
-package org.blueclub.presentation.workbook
+package org.blueclub.presentation.daily
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
