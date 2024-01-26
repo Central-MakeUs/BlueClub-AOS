@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_smile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_smile"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_daily_work_type_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_daily_work_type_title" />
+
+        <TextView
+            android:id="@+id/tv_daily_work_type_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="4dp"
+            android:text="@string/daily_work_type"
+            android:textAppearance="@style/TextAppearance.Body1_Medium"
+            android:textColor="@color/coolgray_06"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_smile"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            layout="@layout/view_necessary_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_daily_work_type_title"
+            app:layout_constraintStart_toEndOf="@+id/tv_daily_work_type_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_daily_work_type_title" />
+
+        <TextView
+            android:id="@+id/tv_daily_work_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:text="@string/select"
+            android:textAppearance="@style/TextAppearance.Body1_Medium"
+            android:textColor="@color/gray_04"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_select_work_type"
+            app:layout_constraintEnd_toStartOf="@+id/iv_select_work_type"
+            app:layout_constraintTop_toTopOf="@+id/iv_select_work_type" />
+
+        <ImageView
+            android:id="@+id/iv_select_work_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_daily_work_type_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_daily_work_type_title" />
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/gray_04"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_daily_work_type_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
