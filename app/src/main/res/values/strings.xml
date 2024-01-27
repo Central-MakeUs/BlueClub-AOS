@@ -138,4 +138,17 @@
     <string name="daily_caddie_p">캐디피 수입</string>
     <string name="daily_caddie_over_p">오버피 수입</string>
     <string name="daily_caddie_soil">배토 여부</string>
+    
+    <!-- my page -->
+    <string name="mypage_friend_invitation">친구 초대</string>
+    <string name="mypage_mail">문의하기</string>
+    <string name="mypage_service_comment">서비스 의견함</string>
+    <string name="mypage_notice">공지사항</string>
+    <string name="mypage_set_alarm">알림 설정</string>
+    <string name="mypage_tos">이용약관</string>
+    <string name="mypage_privacy">개인정보 처리방침</string>
+    <string name="mypage_version">버전정보</string>
+    <string name="mypage_kakao_comment">블루클럽 카카오 채널 문의</string>
+    <string name="mypage_comment_guide">궁금한 점이 있으면 언제든 문의해 주세요🤔</string>
+    <string name="mypage_update">업데이트</string>
 </resources>
