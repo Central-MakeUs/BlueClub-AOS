@@ -1,4 +1,4 @@
-package org.blueclub.presentation.home
+package org.blueclub.presentation.mypage
 
 import android.os.Bundle
 import android.view.View

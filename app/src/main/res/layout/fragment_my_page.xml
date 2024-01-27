@@ -5,7 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.home.MyPageFragment">
+        tools:context=".presentation.mypage.MyPageFragment">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
