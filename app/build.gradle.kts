@@ -111,4 +111,7 @@ dependencies {
 
     // Indicator
     implementation("com.github.zhpanvip:viewpagerindicator:1.2.3")
+
+    // Calendar
+    implementation("com.kizitonwose.calendar:view:2.4.1")
 }

@@ -3,16 +3,16 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_home"
-        android:title="홈"/>
+        android:icon="@drawable/selector_home_icon"
+        android:title="@string/home" />
 
     <item
         android:id="@+id/workbookFragment"
-        android:icon="@drawable/ic_workbook"
-        android:title="근무수첩"/>
+        android:icon="@drawable/selector_workbook_icon"
+        android:title="@string/workbook" />
 
     <item
         android:id="@+id/mypageFragment"
-        android:icon="@drawable/ic_mypage"
-        android:title="마이페이지"/>
+        android:icon="@drawable/selector_mypage_icon"
+        android:title="@string/mypage" />
 </menu>

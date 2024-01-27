@@ -9,6 +9,7 @@
     <color name="primary_dark">#1861F1</color>
 
     <color name="red">#FE1D30</color>
+    <color name="red_background">#FFF1F1</color>
 
     <color name="gray_01">#F9F9F9</color>
     <color name="gray_02">#F3F3F3</color>
@@ -27,7 +28,7 @@
     <color name="coolgray_04">#CBD5E0</color>
     <color name="coolgray_05">#A0AEC0</color>
     <color name="coolgray_06">#718096</color>
-    <color name="coolgray_07">#626F85</color>
+    <color name="coolgray_07">#3F444D</color>
     <color name="coolgray_08">#4A5568</color>
     <color name="coolgray_09">#2D3748</color>
     <color name="coolgray_10">#1A202C</color>
