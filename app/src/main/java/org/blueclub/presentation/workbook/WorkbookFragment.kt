@@ -87,8 +87,10 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                     container.tvDay.text = data.date.dayOfMonth.toString()
                     container.tvDay.background =
                         AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
+                    container.tvAmount.text = "10만원"
                 } else { // 이번 달이 아닌 경우
                     container.tvDay.background = null
+                    container.tvDay.text=""
                     container.tvAmount.text = ""
                 }
             }
