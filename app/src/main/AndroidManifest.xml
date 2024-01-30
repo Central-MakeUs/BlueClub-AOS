@@ -54,6 +54,11 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
+            android:name=".presentation.mypage.ProfileSettingActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
