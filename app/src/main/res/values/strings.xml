@@ -151,4 +151,14 @@
     <string name="mypage_kakao_comment">블루클럽 카카오 채널 문의</string>
     <string name="mypage_comment_guide">궁금한 점이 있으면 언제든 문의해 주세요🤔</string>
     <string name="mypage_update">업데이트</string>
+
+    <!-- profile setting -->
+    <string name="profile_setting">프로필 수정</string>
+    <string name="nickname">닉네임</string>
+    <string name="job">직업</string>
+    <string name="monthly_income_goal">매달 목표 수입</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdraw">회원탈퇴</string>
+    <string name="star">*</string>
+
 </resources>
