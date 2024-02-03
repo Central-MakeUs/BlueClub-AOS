@@ -35,6 +35,17 @@ class BCDataSource @Inject constructor(@ApplicationContext context: Context) {
             ""
         ) ?: ""
 
+    var refreshToken: String
+        set(value) = dataStore.edit { putString(REFRESH_TOKEN, value) }
+        get() = dataStore.getString(
+            REFRESH_TOKEN,
+            ""
+        ) ?: ""
+
+    var isLogin: Boolean
+        set(value) = dataStore.edit { putBoolean(IS_LOGIN, value) }
+        get() = dataStore.getBoolean(IS_LOGIN, false)
+
     var loginPlatform: LoginPlatformType
         set(value) = dataStore.edit { putString(LOGIN_PLATFORM, value.name) }
         get() = safeValueOf<LoginPlatformType>(dataStore.getString(LOGIN_PLATFORM, ""))
@@ -45,5 +56,6 @@ class BCDataSource @Inject constructor(@ApplicationContext context: Context) {
         const val ACCESS_TOKEN = "accessToken"
         const val REFRESH_TOKEN = "refreshToken"
         const val LOGIN_PLATFORM = "loginPlatform"
+        const val IS_LOGIN = "isLogin"
     }
 }

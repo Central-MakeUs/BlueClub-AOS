@@ -12,8 +12,10 @@ import org.blueclub.R
 import org.blueclub.data.service.KakaoAuthService
 import org.blueclub.data.service.NaverAuthService
 import org.blueclub.databinding.ActivityLoginBinding
+import org.blueclub.domain.type.SignType
 import org.blueclub.presentation.auth.setting.AuthSettingActivity
 import org.blueclub.presentation.base.BindingActivity
+import org.blueclub.presentation.home.MainActivity
 import org.blueclub.util.UiState
 import javax.inject.Inject
 
@@ -21,6 +23,7 @@ import javax.inject.Inject
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     @Inject
     lateinit var kakaoAuthService: KakaoAuthService
+
     @Inject
     lateinit var naverAuthService: NaverAuthService
     private val viewModel: LoginViewModel by viewModels()
@@ -45,18 +48,20 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         viewModel.loginUiState.flowWithLifecycle(lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
-                    moveToSetting()
+                    moveToNext(it.data)
                 }
                 is UiState.Error -> {
-
+                    // TODO 로그인 실패했을 때 UI
                 }
                 else -> {}
             }
         }.launchIn(lifecycleScope)
     }
 
-    private fun moveToSetting() {
-        startActivity(Intent(this, AuthSettingActivity::class.java))
+    private fun moveToNext(signType: SignType) {
+        val nextScreen = if (signType == SignType.SIGN_UP) AuthSettingActivity::class.java
+        else MainActivity::class.java
+        startActivity(Intent(this, nextScreen))
         finish()
     }
 }
