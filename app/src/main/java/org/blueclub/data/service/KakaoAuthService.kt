@@ -43,7 +43,7 @@ class KakaoAuthService @Inject constructor(
 
                 loginListener(
                     LoginPlatformType.KAKAO,
-                    oAuthToken.accessToken,
+                    user.id.toString(),
                     user.kakaoAccount?.email ?: "",
                     user.kakaoAccount?.profile?.nickname ?: "",
                     user.kakaoAccount?.profile?.profileImageUrl ?: "",

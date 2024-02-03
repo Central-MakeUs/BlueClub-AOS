@@ -53,7 +53,7 @@ class NaverAuthService @Inject constructor(
         NidOAuthLogin().callProfileApi(object : NidProfileCallback<NidProfileResponse> {
             override fun onSuccess(result: NidProfileResponse) {
                 loginListener(
-                    LoginPlatformType.NAVER, accessToken, result.profile?.email ?: "",
+                    LoginPlatformType.NAVER, result.profile?.id ?: "", result.profile?.email ?: "",
                     result.profile?.name ?: "",
                     result.profile?.profileImage ?: "",
                 )
