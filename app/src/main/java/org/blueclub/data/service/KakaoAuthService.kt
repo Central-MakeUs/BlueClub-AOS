@@ -16,7 +16,7 @@ class KakaoAuthService @Inject constructor(
         get() = client.isKakaoTalkLoginAvailable(context)
 
     fun loginKakao(
-        loginListener: ((LoginPlatformType, String) -> Unit),
+        loginListener: ((LoginPlatformType, String, String, String, String) -> Unit),
     ) {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) handleLoginError(error)
@@ -34,15 +34,22 @@ class KakaoAuthService @Inject constructor(
 
     private fun handleLoginSuccess(
         oAuthToken: OAuthToken,
-        loginListener: (LoginPlatformType, String) -> Unit,
+        loginListener: (LoginPlatformType, String, String, String, String) -> Unit,
     ) {
         client.me { user, error ->
             Timber.d(oAuthToken.accessToken)
-            loginListener(LoginPlatformType.KAKAO, oAuthToken.accessToken)
             if (error != null) Timber.e("kakao 사용자 정보 요청 실패 $error")
             else if (user != null) {
+
+                loginListener(
+                    LoginPlatformType.KAKAO,
+                    oAuthToken.accessToken,
+                    user.kakaoAccount?.email ?: "",
+                    user.kakaoAccount?.profile?.nickname ?: "",
+                    user.kakaoAccount?.profile?.profileImageUrl ?: "",
+                )
                 Timber.i(
-                    user.kakaoAccount?.profile?.nickname + user.kakaoAccount?.email
+                    user.kakaoAccount?.profile?.nickname + user.kakaoAccount?.email + user.kakaoAccount?.profile?.profileImageUrl
                 )
             }
         }
