@@ -51,11 +51,30 @@ class BCDataSource @Inject constructor(@ApplicationContext context: Context) {
         get() = safeValueOf<LoginPlatformType>(dataStore.getString(LOGIN_PLATFORM, ""))
             ?: LoginPlatformType.NONE
 
+    var nickname: String?
+        set(value) = dataStore.edit { putString(NICKNAME, value) }
+        get() = dataStore.getString(NICKNAME, "")
+
+    fun clear(isWithdrawal: Boolean = false) {
+        dataStore.edit {
+            if (isWithdrawal) {
+                clear()
+            } else {
+                remove(ACCESS_TOKEN)
+                remove(REFRESH_TOKEN)
+                remove(IS_LOGIN)
+                remove(LOGIN_PLATFORM)
+                remove(NICKNAME)
+            }
+        }
+    }
+
     companion object {
         const val FILE_NAME = "signSharedPreferences"
         const val ACCESS_TOKEN = "accessToken"
         const val REFRESH_TOKEN = "refreshToken"
         const val LOGIN_PLATFORM = "loginPlatform"
         const val IS_LOGIN = "isLogin"
+        const val NICKNAME = "nickname"
     }
 }
