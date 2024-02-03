@@ -28,6 +28,7 @@ android {
         buildConfigField("String","KAKAO_NATIVE_KEY",properties.getProperty("KAKAO_NATIVE_KEY"))
         buildConfigField("String","NAVER_CLIENT_ID",properties.getProperty("NAVER_CLIENT_ID"))
         buildConfigField("String","NAVER_CLIENT_SECRETE",properties.getProperty("NAVER_CLIENT_SECRETE"))
+        buildConfigField("String","BC_BASE_URL",properties.getProperty("BC_BASE_URL"))
     }
 
     buildTypes {
@@ -96,6 +97,7 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
+    implementation("com.google.code.gson:gson:2.10")
 
     // Splash
     implementation("androidx.core:core-splashscreen:1.0.1")
