@@ -30,7 +30,6 @@ class LoginViewModel @Inject constructor(
         profileImageUrl: String,
     ) {
         localStorage.loginPlatform = loginPlatform
-        //localStorage.accessToken = accessToken
         viewModelScope.launch {
             authRepository.login(
                 RequestAuth(
