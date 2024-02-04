@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
@@ -13,6 +14,7 @@ import org.blueclub.databinding.ActivityAuthSettingBinding
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.type.AuthSettingPageViewType
 
+@AndroidEntryPoint
 class AuthSettingActivity :
     BindingActivity<ActivityAuthSettingBinding>(R.layout.activity_auth_setting) {
     private val viewModel: AuthSettingViewModel by viewModels()
@@ -52,11 +54,11 @@ class AuthSettingActivity :
             val type = data.entries.find { it.value } ?: return@onEach
             binding.vpAuthsetting.currentItem++
             viewModel.setChosenJobType(type.key)
-            viewModel.setSelectedYear(null)
         }.launchIn(lifecycleScope)
         viewModel.goalSettingFinished.flowWithLifecycle(lifecycle).onEach {
             if (it)
                 binding.vpAuthsetting.currentItem++
         }.launchIn(lifecycleScope)
+
     }
 }

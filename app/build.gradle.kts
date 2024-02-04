@@ -116,4 +116,7 @@ dependencies {
 
     // Calendar
     implementation("com.kizitonwose.calendar:view:2.4.1")
+
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 }

@@ -10,4 +10,6 @@ class AuthDataSource @Inject constructor(
 ) {
     suspend fun login(requestAuth: RequestAuth): ResponseAuth = authService.login(requestAuth)
 
+    suspend fun checkNicknameDuplication(nickname: String) =
+        authService.checkDuplication(nickname)
 }
