@@ -22,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
+            android:gravity="center"
             android:text="@string/auth_finished_description"
             android:textAppearance="@style/TextAppearance.Subtitle2"
             android:textColor="@color/gray_07"

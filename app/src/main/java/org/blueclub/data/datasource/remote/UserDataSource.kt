@@ -9,4 +9,6 @@ class UserDataSource @Inject constructor(
 ) {
     suspend fun writeUserDetails(requestUserDetails: RequestUserDetails) =
         userService.writeUserDetails(requestUserDetails)
+
+    suspend fun deleteAccount() = userService.deleteAccount()
 }

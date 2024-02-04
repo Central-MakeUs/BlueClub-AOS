@@ -5,4 +5,6 @@ import org.blueclub.data.model.response.ResponseBase
 
 interface UserRepository {
     suspend fun writeUserDetails(requestUserDetails: RequestUserDetails) : Result<ResponseBase>
+
+    suspend fun deleteAccount(): Result<ResponseBase>
 }

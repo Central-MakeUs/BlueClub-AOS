@@ -24,4 +24,13 @@ class UserRepositoryImpl @Inject constructor(
         }.onFailure {
             Timber.e(it.message)
         }
+
+    override suspend fun deleteAccount(): Result<ResponseBase> =
+        runCatching {
+            userDataSource.deleteAccount()
+        }.onSuccess {
+            localStorage.clear(true)
+        }.onFailure {
+            Timber.e(it.message)
+        }
 }
