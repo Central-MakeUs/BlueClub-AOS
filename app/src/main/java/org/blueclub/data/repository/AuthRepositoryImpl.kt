@@ -18,9 +18,10 @@ class AuthRepositoryImpl @Inject constructor(
             authDataSource.login(requestAuth).result
         }.onSuccess {
             with(localStorage) {
-                accessToken = it.accessToken
-                refreshToken = it.refreshToken
-                nickname = it.nickname
+                this.accessToken = it.accessToken
+                this.refreshToken = it.refreshToken
+                this.nickname = it.nickname
+                this.job = it.job
                 it.job?.let {
                     isLogin = true
                 }

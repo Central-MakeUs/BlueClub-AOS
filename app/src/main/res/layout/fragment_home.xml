@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.blueclub.presentation.home.HomeViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,16 +36,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_workbook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_calendar"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_notice"
-                app:layout_constraintEnd_toStartOf="@+id/iv_notice"
-                app:layout_constraintTop_toTopOf="@+id/iv_notice" />
-
-            <ImageView
                 android:id="@+id/iv_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="16dp"
-            android:text="골프캐디"
+            android:text="@{viewModel.job}"
             android:textAppearance="@style/TextAppearance.H5_Bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_title_bar"
@@ -78,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="블루클럽님"
+            android:text="@{@string/home_nickname(viewModel.nickname)}"
             android:textAppearance="@style/TextAppearance.Subtitle2"
             android:textColor="@color/gray_08"
             app:layout_constraintBottom_toBottomOf="@+id/tv_job"
@@ -86,14 +83,44 @@
             app:layout_constraintTop_toTopOf="@+id/tv_job"
             tools:text="블루클럽님" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_home_banner"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_home_banner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="16dp"
+            android:background="@drawable/shape_border_radius_12"
+            android:backgroundTint="@color/primary_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_job" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_job">
+
+            <TextView
+                android:id="@+id/tv_banner_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/banner_title1"
+                android:textAppearance="@style/TextAppearance.Subtitle2"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_banner_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/banner_title2"
+                android:textAppearance="@style/TextAppearance.Subtitle1"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_banner_title1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_banner_title1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,11 +128,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shape_border_radius_12"
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vp_home_banner">
+            app:layout_constraintTop_toBottomOf="@+id/layout_home_banner">
 
             <ImageView
                 android:id="@+id/iv_coin"
@@ -278,6 +306,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_sharing_description" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/shape_border_radius_12"
+                android:backgroundTint="@color/primary_normal"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="3dp"
+                android:text="@string/release_info"
+                android:textAppearance="@style/TextAppearance.Caption3"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -328,7 +371,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_work_info_description" />
 
             <TextView
-                android:id="@+id/tv_release_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
