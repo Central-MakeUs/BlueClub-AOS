@@ -22,14 +22,13 @@ class TermsOfServiceBottomSheetDialog :
     private val viewModel: AuthSettingViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initLayout()
         collectData()
     }
 
     private fun initLayout() {
         binding.btnTos.setOnClickListener {
-            moveToFinish()
+            viewModel.writeUserDetails(::moveToFinish)
         }
         binding.ivClose.setOnClickListener {
             dismiss()
@@ -86,9 +85,12 @@ class TermsOfServiceBottomSheetDialog :
     }
 
     private fun moveToFinish() {
-        val intent = Intent(requireActivity(), AuthSettingFinishActivity::class.java)
-        startActivity(intent)
-        dismiss()
+        Intent(requireActivity(), AuthSettingFinishActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }.also {
+            startActivity(it)
+            dismiss()
+        }
     }
 
     private fun moveToWebPage(link: String) {

@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.blueclub.data.datasource.BCDataSource
+import org.blueclub.data.model.request.RequestUserDetails
 import org.blueclub.domain.repository.AuthRepository
+import org.blueclub.domain.repository.UserRepository
 import org.blueclub.presentation.type.AuthSettingPageViewType
 import org.blueclub.presentation.type.JobSettingViewType
 import org.blueclub.presentation.type.NicknameGuideType
@@ -22,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthSettingViewModel @Inject constructor(
     private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     private val localStorage: BCDataSource,
 ) : ViewModel() {
     private val _selectedJobType: MutableStateFlow<Map<JobSettingViewType, Boolean>> =
@@ -100,6 +103,7 @@ class AuthSettingViewModel @Inject constructor(
             ).apply {
                 this[jobType] = !isSelected
             }
+        _chosenJobType.value = jobType
     }
 
     fun setTosType(tosType: TosViewType) {
@@ -144,6 +148,21 @@ class AuthSettingViewModel @Inject constructor(
                     _isNicknameAvailable.value = false
                     _nicknameInputGuide.value = NicknameGuideType.ALREADY_USED
                 }
+        }
+    }
+
+    fun writeUserDetails(moveToFinish: () -> Unit){
+        viewModelScope.launch {
+            userRepository.writeUserDetails(
+                RequestUserDetails(
+                    nickname.value ?: "",
+                    chosenJobType.value.title,
+                    incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                    true
+                )
+            ).onSuccess {
+                moveToFinish()
+            }
         }
     }
 

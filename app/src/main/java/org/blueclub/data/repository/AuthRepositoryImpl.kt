@@ -33,9 +33,6 @@ class AuthRepositoryImpl @Inject constructor(
         runCatching {
             authDataSource.checkNicknameDuplication(nickname)
         }.onSuccess {
-            with(localStorage) {
-                this.nickname = nickname
-            }
         }.onFailure {
             Timber.e(it.message)
         }

@@ -5,7 +5,9 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.blueclub.data.repository.AuthRepositoryImpl
+import org.blueclub.data.repository.UserRepositoryImpl
 import org.blueclub.domain.repository.AuthRepository
+import org.blueclub.domain.repository.UserRepository
 import javax.inject.Singleton
 
 @Module
@@ -16,4 +18,10 @@ interface RepositoryModule {
     fun bindAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl,
     ): AuthRepository
+
+    @Binds
+    @Singleton
+    fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl,
+    ): UserRepository
 }

@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.blueclub.data.service.AuthService
+import org.blueclub.data.service.UserService
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -15,4 +16,9 @@ object ServiceModule {
     @Provides
     fun provideAuthService(retrofit: Retrofit): AuthService =
         retrofit.create(AuthService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideUserService(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
 }
