@@ -317,7 +317,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_privacy"
+            android:id="@+id/layout_age"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
@@ -328,7 +328,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_tos">
 
             <TextView
-                android:id="@+id/tv_privacy"
+                android:id="@+id/tv_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_privacy"
@@ -357,7 +357,7 @@
             android:layout_marginBottom="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_privacy">
+            app:layout_constraintTop_toBottomOf="@+id/layout_age">
 
             <TextView
                 android:id="@+id/tv_version"

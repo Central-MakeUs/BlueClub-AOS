@@ -15,6 +15,7 @@ import org.blueclub.domain.repository.AuthRepository
 import org.blueclub.presentation.type.AuthSettingPageViewType
 import org.blueclub.presentation.type.JobSettingViewType
 import org.blueclub.presentation.type.NicknameGuideType
+import org.blueclub.presentation.type.TosViewType
 import org.blueclub.util.extension.toStateFlow
 import javax.inject.Inject
 
@@ -56,6 +57,18 @@ class AuthSettingViewModel @Inject constructor(
         MutableLiveData(NicknameGuideType.VALID_NICKNAME)
     val nicknameInputGuide: LiveData<NicknameGuideType> get() = _nicknameInputGuide
 
+    private val _selectedTosType: MutableStateFlow<Map<TosViewType, Boolean>> =
+        MutableStateFlow(
+            mapOf(
+                TosViewType.AGE to false,
+                TosViewType.SERVICE to false,
+                TosViewType.PRIVACY to false,
+                TosViewType.MARKETING to false,
+                TosViewType.EVENT to false,
+            )
+        )
+    val selectedTosType = _selectedTosType.asStateFlow()
+
     init {
         _isNicknameCorrect.value = true
         _isNicknameAvailable.value = true
@@ -87,6 +100,25 @@ class AuthSettingViewModel @Inject constructor(
             ).apply {
                 this[jobType] = !isSelected
             }
+    }
+
+    fun setTosType(tosType: TosViewType) {
+        val isSelected = selectedTosType.value[tosType] ?: return
+        _selectedTosType.value = selectedTosType.value.toMutableMap().apply {
+            this[tosType] = !isSelected
+        }
+    }
+
+    fun setWholeTosType(): Boolean {
+        val isSelected = selectedTosType.value.values.contains(true)
+        _selectedTosType.value = mutableMapOf(
+            TosViewType.AGE to isSelected,
+            TosViewType.SERVICE to isSelected,
+            TosViewType.PRIVACY to isSelected,
+            TosViewType.MARKETING to isSelected,
+            TosViewType.EVENT to isSelected,
+        )
+        return isSelected
     }
 
     fun setNicknameCorrect(isCorrect: Boolean) {
