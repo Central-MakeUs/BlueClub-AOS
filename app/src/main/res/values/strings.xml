@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BlueClub-AOS</string>
-    <string name="empty" />
+    <string name="empty"> </string>
 
     <!-- onboarding -->
     <string name="onboarding1_title">근무기록과 수입관리를 한번에!</string>
@@ -45,7 +45,7 @@
 
     <!-- goal setting -->
     <string name="goal_setting_title">매달 수입 목표를 입력해주세요</string>
-    <string name="goal_setting_description">목표 금액은 최소 50만원부터 입력해주세요.</string>
+    <string name="goal_setting_description">목표 금액은 최소 10만원부터 입력해주세요.</string>
     <string name="goal_setting_hint">목표 금액 입력</string>
     <string name="goal_setting_wrong">10만원 이상 입력해주세요.</string>
     <string name="goal_setting_correct">멋진 목표 금액이에요!</string>
@@ -63,6 +63,7 @@
     <string name="check_duplication">중복확인</string>
 
     <string name="correct_nickname">사용 가능한 닉네임 입니다.</string>
+    <string name="already_used_nickname">이미 사용 중인 닉네임입니다.</string>
     <string name="wrong_nickname">띄어쓰기 없이 한글, 영문, 숫자만 가능해요</string>
     <string name="nickname_length_limit">%d / 10</string>
 
@@ -133,12 +134,12 @@
     <string name="show_my_income">수입 자랑하기✌️</string>
     <string name="calculating_yet">계산 중이에요</string>
     <string name="daily_work_date_format">%s %s요일</string>
-    
+
     <string name="daily_caddie_rounding">라운딩 수</string>
     <string name="daily_caddie_p">캐디피 수입</string>
     <string name="daily_caddie_over_p">오버피 수입</string>
     <string name="daily_caddie_soil">배토 여부</string>
-    
+
     <!-- my page -->
     <string name="mypage_friend_invitation">친구 초대</string>
     <string name="mypage_mail">문의하기</string>
@@ -160,7 +161,7 @@
     <string name="logout">로그아웃</string>
     <string name="withdraw">회원탈퇴</string>
     <string name="star">*</string>
-    
+
     <!-- notification -->
     <string name="noti_title">알림</string>
     <string name="noti_zero_title">아직 새로운 알림이 없어요</string>
