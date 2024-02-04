@@ -19,6 +19,7 @@ class UserRepositoryImpl @Inject constructor(
         }.onSuccess {
             with(localStorage) {
                 this.nickname = requestUserDetails.nickname
+                this.job = requestUserDetails.job
             }
         }.onFailure {
             Timber.e(it.message)

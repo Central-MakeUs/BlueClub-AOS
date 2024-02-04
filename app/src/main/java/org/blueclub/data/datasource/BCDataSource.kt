@@ -55,6 +55,10 @@ class BCDataSource @Inject constructor(@ApplicationContext context: Context) {
         set(value) = dataStore.edit { putString(NICKNAME, value) }
         get() = dataStore.getString(NICKNAME, "")
 
+    var job: String?
+        set(value) = dataStore.edit { putString(JOB, value) }
+        get() = dataStore.getString(JOB, "")
+
     fun clear(isWithdrawal: Boolean = false) {
         dataStore.edit {
             if (isWithdrawal) {
@@ -76,5 +80,6 @@ class BCDataSource @Inject constructor(@ApplicationContext context: Context) {
         const val LOGIN_PLATFORM = "loginPlatform"
         const val IS_LOGIN = "isLogin"
         const val NICKNAME = "nickname"
+        const val JOB = "job"
     }
 }
