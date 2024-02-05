@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import org.blueclub.R
 import org.blueclub.databinding.FragmentMyPageBinding
+import org.blueclub.presentation.WebActivity
 import org.blueclub.presentation.base.BindingFragment
 import org.blueclub.presentation.home.HomeViewModel
 
@@ -22,10 +23,29 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
         binding.ivMoveToSetting.setOnClickListener {
             moveToProfileSetting()
         }
+        binding.ivArrowTos.setOnClickListener {
+            moveToWebPage(SERVICE_LINK)
+        }
+        binding.ivArrowPrivacy.setOnClickListener {
+            moveToWebPage(PRIVACY_LINK)
+        }
     }
 
     private fun moveToProfileSetting() {
         startActivity(Intent(requireContext(), ProfileSettingActivity::class.java))
+    }
+
+    private fun moveToWebPage(link: String) {
+        Intent(requireActivity(), WebActivity::class.java).apply {
+            putExtra(WebActivity.ARG_WEB_VIEW_LINK, link)
+        }.also { startActivity(it) }
+    }
+
+    companion object {
+        private const val SERVICE_LINK =
+            "https://shore-knuckle-69b.notion.site/0905a99459cf470f908018d20f0d8d72?pvs=4"
+        private const val PRIVACY_LINK =
+            "https://shore-knuckle-69b.notion.site/ded29418f6604ad993b0d664a653c4d7?pvs=4"
     }
 
 }
