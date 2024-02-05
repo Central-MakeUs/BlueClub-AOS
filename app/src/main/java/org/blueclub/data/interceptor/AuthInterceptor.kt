@@ -35,7 +35,7 @@ class AuthInterceptor @Inject constructor(
 
 
     companion object {
-        private const val ACCESS_TOKEN = "access"
-        private const val REFRESH_TOKEN = "refresh"
+        private const val ACCESS_TOKEN = "Authorization"
+        private const val REFRESH_TOKEN = "Authorization-refresh"
     }
 }
