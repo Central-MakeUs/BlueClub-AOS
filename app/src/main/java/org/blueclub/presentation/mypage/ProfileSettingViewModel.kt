@@ -55,4 +55,8 @@ class ProfileSettingViewModel @Inject constructor(
             }
         }
     }
+
+    fun setJobType(jobType: JobSettingViewType) {
+        _chosenJobType.value = jobType
+    }
 }

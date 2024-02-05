@@ -6,6 +6,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -24,6 +27,7 @@ import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.type.LoginPlatformType
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.showToast
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,6 +43,9 @@ class ProfileSettingActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         initLayout()
         collectData()
@@ -71,9 +78,39 @@ class ProfileSettingActivity :
                 else -> {}
             }
         }
+        binding.ivJobSelection.setOnClickListener {
+            JobSelectingBottomSheet().show(supportFragmentManager, "jobSelecting")
+        }
         binding.ivBack.setOnClickListener {
             finish()
         }
+        val decimalFormat = DecimalFormat("#,###")
+        var result = ""
+        binding.etGoalSetting.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(txt: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (!TextUtils.isEmpty(txt!!.toString()) && txt.toString() != result) {
+                    //lessonPrice = txt.toString().replace(",", "").toInt()
+                    result =
+                        decimalFormat.format(txt.toString().replace(",", "").toDouble())
+                    binding.etGoalSetting.setText(result)
+                    binding.etGoalSetting.setSelection(result.length)
+                }
+
+//                if (TextUtils.isEmpty(txt.toString()) && txt.toString() != result) {
+//                    result = ""
+//                    binding.etGoalSetting.setText(result)
+//                    binding.tvGoalSettingAmountInfo.apply {
+//                        text = result
+//                        visibility = View.INVISIBLE
+//                    }
+//                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+
+        })
     }
 
     private fun collectData() {
@@ -93,9 +130,11 @@ class ProfileSettingActivity :
                     moveToSign()
                     finish()
                 }
+
                 is UiState.Error -> {
                     this.showToast(getString(R.string.withdraw_fail))
                 }
+
                 else -> {}
             }
         }.launchIn(lifecycleScope)
