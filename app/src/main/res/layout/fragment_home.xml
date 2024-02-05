@@ -151,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="12월 가나다라마바사아자차님의\n첫 기록이 기다려져요!"
+                android:text="@{@string/banner_info(viewModel.month, viewModel.nickname)}"
                 android:textAppearance="@style/TextAppearance.Subtitle2"
                 android:textColor="@color/gray_09"
                 app:layout_constraintBottom_toBottomOf="parent"

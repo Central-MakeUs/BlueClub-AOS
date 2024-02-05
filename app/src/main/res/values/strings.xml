@@ -99,6 +99,7 @@
     <string name="banner_title2">근무관리 잘하는 법 배워요</string>
 
     <string name="home_nickname">%s님</string>
+    <string name="banner_info">%d월 %s님의\n첫 기록이 기다려져요!</string>
 
     <!-- work book -->
     <string name="workbook">근무수첩</string>
@@ -172,7 +173,10 @@
     <string name="noti_zero_description">푸시 알림에 동의해 주시면\n새로운 소식을 가장 먼저 알려 드릴게요!</string>
     <string name="noti_move_to_setting">알림 설정하러 가기</string>
 
+    <!-- job selecting -->
+    <string name="select_job">직업을 선택해주세요</string>
 
+    <!-- withdraw -->
     <string name="withdraw_success">회원 탈퇴가 완료되었습니다.</string>
     <string name="withdraw_fail">회원 탈퇴에 실패하였습니다.</string>
 </resources>
