@@ -38,7 +38,7 @@ class AuthSettingViewModel @Inject constructor(
     val selectedJobType = _selectedJobType.asStateFlow()
     private val _chosenJobType: MutableStateFlow<JobSettingViewType> =
         MutableStateFlow(JobSettingViewType.GOLF)
-    val chosenJobType = _chosenJobType
+    val chosenJobType = _chosenJobType.asStateFlow()
     private val _goalSettingFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val goalSettingFinished = _goalSettingFinished.asStateFlow()
     private val _currentPage: MutableStateFlow<AuthSettingPageViewType> =
