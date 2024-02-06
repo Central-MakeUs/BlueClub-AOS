@@ -65,6 +65,11 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
+            android:name=".presentation.notice.NoticeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
