@@ -12,7 +12,6 @@ import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.domain.repository.WorkbookRepository
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.toStateFlow
-import timber.log.Timber
 import java.time.YearMonth
 import javax.inject.Inject
 
@@ -51,7 +50,6 @@ class WorkbookViewModel @Inject constructor(
             yearMonth += "0"
         }
         yearMonth += YearMonth.now().monthValue
-        Timber.d("오늘 날짜 : $yearMonth")
         viewModelScope.launch {
             workbookRepository.getMonthlyRecord(yearMonth)
                 .onSuccess { responseWorkbookData ->

@@ -7,4 +7,6 @@ class WorkbookDataSource @Inject constructor(
     private val workbookService: WorkbookService,
 ) {
     suspend fun getMonthlyRecord(date: String) = workbookService.getMonthlyRecord(date)
+
+    suspend fun getMonthlyInfo(date: String) = workbookService.getMonthlyInfo(date)
 }
