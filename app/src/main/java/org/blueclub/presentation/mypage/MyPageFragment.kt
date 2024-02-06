@@ -9,6 +9,7 @@ import org.blueclub.databinding.FragmentMyPageBinding
 import org.blueclub.presentation.WebActivity
 import org.blueclub.presentation.base.BindingFragment
 import org.blueclub.presentation.home.HomeViewModel
+import org.blueclub.presentation.notice.NoticeActivity
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
     private val viewModel: HomeViewModel by activityViewModels()
@@ -29,10 +30,17 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
         binding.ivArrowPrivacy.setOnClickListener {
             moveToWebPage(PRIVACY_LINK)
         }
+        binding.ivArrowNotice.setOnClickListener {
+            moveToNotice()
+        }
     }
 
     private fun moveToProfileSetting() {
         startActivity(Intent(requireContext(), ProfileSettingActivity::class.java))
+    }
+
+    private fun moveToNotice() {
+        startActivity(Intent(requireContext(), NoticeActivity::class.java))
     }
 
     private fun moveToWebPage(link: String) {

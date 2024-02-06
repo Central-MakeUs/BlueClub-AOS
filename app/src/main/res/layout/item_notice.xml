@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="noticeData"
+            type="org.blueclub.data.model.response.ResponseNotice.ResponseNoticeData" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:maxLines="2"
+            android:text="@{noticeData.title}"
             android:textAppearance="@style/TextAppearance.Subtitle1"
             android:textColor="@color/gray_10"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
             android:maxLines="2"
+            android:text="@{noticeData.content}"
             android:textAppearance="@style/TextAppearance.Body2"
             android:textColor="@color/gray_07"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="1일 전"
+            android:text="@{noticeData.createAt}"
             android:textAppearance="@style/TextAppearance.Caption1"
             android:textColor="@color/gray_06"
             app:layout_constraintStart_toStartOf="@+id/tv_notification_title"
