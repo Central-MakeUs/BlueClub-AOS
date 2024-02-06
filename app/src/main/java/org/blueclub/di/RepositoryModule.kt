@@ -7,9 +7,11 @@ import dagger.hilt.components.SingletonComponent
 import org.blueclub.data.repository.AuthRepositoryImpl
 import org.blueclub.data.repository.MyPageRepositoryImpl
 import org.blueclub.data.repository.UserRepositoryImpl
+import org.blueclub.data.repository.WorkbookRepositoryImpl
 import org.blueclub.domain.repository.AuthRepository
 import org.blueclub.domain.repository.MyPageRepository
 import org.blueclub.domain.repository.UserRepository
+import org.blueclub.domain.repository.WorkbookRepository
 import javax.inject.Singleton
 
 @Module
@@ -30,6 +32,12 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindMyPageRepository(
-        myPageRepositoryImpl: MyPageRepositoryImpl
+        myPageRepositoryImpl: MyPageRepositoryImpl,
     ): MyPageRepository
+
+    @Binds
+    @Singleton
+    fun bindWorkbookRepository(
+        workbookRepositoryImpl: WorkbookRepositoryImpl,
+    ): WorkbookRepository
 }
