@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:text="@{dailyWorkInfo.income == null ? @string/workbook_daily_refresh : @string/workbook_daily_income_format(dailyWorkInfo.income, dailyWorkInfo.workNum)}"
+            android:text="@{dailyWorkInfo.income == null ? @string/workbook_daily_refresh : @string/workbook_daily_income_format(dailyWorkInfo.income, dailyWorkInfo.numberOfCases)}"
             android:textAppearance="@style/TextAppearance.Subtitle2"
             android:textColor="@{dailyWorkInfo.income == null ? @color/gray_05 : @color/gray_10}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"

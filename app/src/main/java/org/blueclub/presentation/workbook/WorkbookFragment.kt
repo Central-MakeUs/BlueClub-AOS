@@ -25,6 +25,7 @@ import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.MonthScrollListener
 import com.kizitonwose.calendar.view.ViewContainer
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
@@ -33,10 +34,12 @@ import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.presentation.base.BindingFragment
 import org.blueclub.presentation.daily.DailyWorkDetailActivity
 import org.blueclub.presentation.type.DailyWorkType
+import org.blueclub.util.UiState
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
 
+@AndroidEntryPoint
 class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragment_workbook) {
     private val viewModel: WorkbookViewModel by activityViewModels()
     private lateinit var rootView: View
@@ -63,12 +66,12 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         // TODO 더미 데이터 삭제
         dailyWorkAdapter.submitList(
             listOf(
-                DailyWorkInfo("1.2", "월", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo("1.3", "화", DailyWorkType.REST, null, null),
-                DailyWorkInfo("1.5", "수", DailyWorkType.EARLY, 15000000, 8),
-                DailyWorkInfo("1.8", "목", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo("1.9", "금", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo("1.10", "월", DailyWorkType.WORK, 15000000, 8),
+                DailyWorkInfo(1, "1.2", "월", DailyWorkType.WORK, 15000000, 8),
+                DailyWorkInfo(2, "1.3", "화", DailyWorkType.REST, null, null),
+                DailyWorkInfo(3, "1.5", "수", DailyWorkType.EARLY, 15000000, 8),
+                DailyWorkInfo(4, "1.8", "목", DailyWorkType.WORK, 15000000, 8),
+                DailyWorkInfo(5, "1.9", "금", DailyWorkType.WORK, 15000000, 8),
+                DailyWorkInfo(6, "1.10", "월", DailyWorkType.WORK, 15000000, 8),
             )
         )
         binding.ivSetting.setOnClickListener {
@@ -90,7 +93,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                     container.tvAmount.text = "10만원"
                 } else { // 이번 달이 아닌 경우
                     container.tvDay.background = null
-                    container.tvDay.text=""
+                    container.tvDay.text = ""
                     container.tvAmount.text = ""
                 }
             }
@@ -157,6 +160,19 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         }.launchIn(lifecycleScope)
         viewModel.yearMonth.flowWithLifecycle(lifecycle).onEach {
             binding.calendarView.smoothScrollToMonth(it)
+        }.launchIn(lifecycleScope)
+        viewModel.monthlyRecordUiState.flowWithLifecycle(lifecycle).onEach {
+            when (it) {
+                is UiState.Loading -> {
+                    viewModel.getMonthlyRecord()
+                }
+
+                is UiState.Success -> {
+                    dailyWorkAdapter.submitList(it.data)
+                }
+
+                else -> {}
+            }
         }.launchIn(lifecycleScope)
     }
 
