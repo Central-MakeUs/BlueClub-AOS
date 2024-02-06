@@ -47,7 +47,10 @@ class AuthSettingViewModel @Inject constructor(
 
     val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
-        it?.replace(",", "")?.toInt()
+        var integerIncome = it?.replace(",", "")
+        if(integerIncome.isNullOrEmpty())
+            integerIncome = "0"
+        integerIncome.toInt()
     }.toStateFlow(viewModelScope, 0)
 
     val nickname = MutableStateFlow(localStorage.nickname)
