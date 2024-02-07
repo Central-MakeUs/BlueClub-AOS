@@ -179,4 +179,9 @@
     <!-- withdraw -->
     <string name="withdraw_success">회원 탈퇴가 완료되었습니다.</string>
     <string name="withdraw_fail">회원 탈퇴에 실패하였습니다.</string>
+
+    <!-- alert setting -->
+    <string name="alert_title">알림 설정</string>
+    <string name="push_alert">푸시알림</string>
+    <string name="marketing_alert">마케팅 수신 동의</string>
 </resources>

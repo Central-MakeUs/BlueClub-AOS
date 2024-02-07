@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import org.blueclub.R
 import org.blueclub.databinding.FragmentMyPageBinding
 import org.blueclub.presentation.WebActivity
+import org.blueclub.presentation.alert.AlertSettingActivity
 import org.blueclub.presentation.base.BindingFragment
 import org.blueclub.presentation.home.HomeViewModel
 import org.blueclub.presentation.notice.NoticeActivity
@@ -33,6 +34,9 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
         binding.ivArrowNotice.setOnClickListener {
             moveToNotice()
         }
+        binding.ivArrowAlarm.setOnClickListener {
+            moveToAlertSetting()
+        }
     }
 
     private fun moveToProfileSetting() {
@@ -41,6 +45,10 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
 
     private fun moveToNotice() {
         startActivity(Intent(requireContext(), NoticeActivity::class.java))
+    }
+
+    private fun moveToAlertSetting() {
+        startActivity(Intent(requireContext(), AlertSettingActivity::class.java))
     }
 
     private fun moveToWebPage(link: String) {
