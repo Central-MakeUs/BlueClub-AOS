@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.blueclub.presentation.home.HomeViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/job_golf"
+                android:text="@{viewModel.job}"
                 android:textAppearance="@style/TextAppearance.H7_Bold"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/iv_profile"
@@ -89,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="가나다라마바사아자차님"
+                android:text="@{@string/home_nickname(viewModel.nickname)}"
                 android:textAppearance="@style/TextAppearance.Subtitle2"
                 android:textColor="@color/coolgray_06"
                 app:layout_constraintStart_toStartOf="@+id/tv_my_job"
@@ -104,7 +111,7 @@
                 android:backgroundTint="@color/primary_background"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="2dp"
-                android:text="목표수입 1000만원"
+                android:text="@{@string/mypage_goal_income_text(viewModel.goalIncome)}"
                 android:textAppearance="@style/TextAppearance.Caption2"
                 android:textColor="@color/primary_normal"
                 app:layout_constraintStart_toStartOf="@id/tv_my_nickname"

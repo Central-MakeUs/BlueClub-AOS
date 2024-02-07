@@ -158,6 +158,8 @@
     <string name="mypage_comment_guide">궁금한 점이 있으면 언제든 문의해 주세요🤔</string>
     <string name="mypage_update">업데이트</string>
 
+    <string name="mypage_goal_income_text">목표수입 %s</string>
+
     <!-- profile setting -->
     <string name="profile_setting">프로필 수정</string>
     <string name="nickname">닉네임</string>
