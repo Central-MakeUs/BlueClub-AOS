@@ -32,13 +32,14 @@ data class ResponseWorkbook(
             fun toDailyWorkData() = DailyWorkInfo(
                 id,
                 date,
-                getDay(date),
+                getDayOfWeek(date),
                 DailyWorkType.valueOf(workType),
                 income,
-                numberOfCases
+                numberOfCases,
+                getDay(date),
             )
 
-            fun getDay(date: String): String {
+            fun getDayOfWeek(date: String): String {
                 val cal: Calendar = Calendar.getInstance()
                 val df = SimpleDateFormat(dateFormat)
                 var day = Date()
@@ -46,6 +47,10 @@ data class ResponseWorkbook(
                 cal.time = day
                 return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.KOREAN) ?: ""
 
+            }
+
+            private fun getDay(date: String): Int{
+                return date.slice(8..9).toIntOrNull() ?: 0
             }
 
             companion object {

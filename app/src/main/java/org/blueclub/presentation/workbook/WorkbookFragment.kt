@@ -30,11 +30,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
-import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.presentation.base.BindingFragment
-import org.blueclub.presentation.daily.DailyWorkDetailActivity
-import org.blueclub.presentation.type.DailyWorkType
+import org.blueclub.presentation.daily.WorkDetailCaddieActivity
 import org.blueclub.util.UiState
+import timber.log.Timber
+import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
@@ -64,33 +64,48 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
             adapter = dailyWorkAdapter
         }
         // TODO 더미 데이터 삭제
-        dailyWorkAdapter.submitList(
-            listOf(
-                DailyWorkInfo(1, "1.2", "월", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo(2, "1.3", "화", DailyWorkType.REST, null, null),
-                DailyWorkInfo(3, "1.5", "수", DailyWorkType.EARLY, 15000000, 8),
-                DailyWorkInfo(4, "1.8", "목", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo(5, "1.9", "금", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo(6, "1.10", "월", DailyWorkType.WORK, 15000000, 8),
-            )
-        )
+//        dailyWorkAdapter.submitList(
+//            listOf(
+//                DailyWorkInfo(1, "1.2", "월", DailyWorkType.WORK, 15000000, 8),
+//                DailyWorkInfo(2, "1.3", "화", DailyWorkType.REST, null, null),
+//                DailyWorkInfo(3, "1.5", "수", DailyWorkType.EARLY, 15000000, 8),
+//                DailyWorkInfo(4, "1.8", "목", DailyWorkType.WORK, 15000000, 8),
+//                DailyWorkInfo(5, "1.9", "금", DailyWorkType.WORK, 15000000, 8),
+//                DailyWorkInfo(6, "1.10", "월", DailyWorkType.WORK, 15000000, 8),
+//            )
+//        )
         binding.ivSetting.setOnClickListener {
             showGoalSettingBottomSheet()
         }
         binding.layoutGoalSetting.setOnClickListener {
             showGoalSettingBottomSheet()
         }
-        binding.ivPlus.setOnClickListener { moveToDetail() }
+        binding.ivPlus.setOnClickListener {
+            moveToDetail(LocalDate.now().toString())
+        }
     }
 
     private fun initCalendar() {
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun bind(container: DayViewContainer, data: CalendarDay) {
-                if (data.position == DayPosition.MonthDate) {
+                if (data.position == DayPosition.MonthDate) { // 이번 달에 해당하는 뷰
                     container.tvDay.text = data.date.dayOfMonth.toString()
-                    container.tvDay.background =
-                        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
-                    container.tvAmount.text = "10만원"
+                    if(viewModel.workData.value[data.date.dayOfMonth] != null){
+                        container.tvDay.background =
+                            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
+                        container.tvAmount.text = "10만원"
+                        container.tvDay.setTextColor(requireContext().getColor(R.color.white))
+                    }
+                    else{
+                        container.tvAmount.text = ""
+                        container.tvDay.background = null
+                        container.tvDay.setTextColor(requireContext().getColor(R.color.gray_08))
+
+                    }
+
+                    // 오늘인 경우
+
+
                 } else { // 이번 달이 아닌 경우
                     container.tvDay.background = null
                     container.tvDay.text = ""
@@ -139,7 +154,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
     }
 
     private fun collectData() {
-        viewModel.goalProgress.flowWithLifecycle(lifecycle).onEach {
+        viewModel.progress.flowWithLifecycle(lifecycle).onEach {
             var leftMargin = getProgressBarSize() * it / 100 - PROGRESS_MARGIN_MIN
             if (leftMargin < PROGRESS_MARGIN_MIN)
                 leftMargin = PROGRESS_MARGIN_MIN
@@ -160,15 +175,35 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         }.launchIn(lifecycleScope)
         viewModel.yearMonth.flowWithLifecycle(lifecycle).onEach {
             binding.calendarView.smoothScrollToMonth(it)
+            viewModel.setMonthlyRecordUiState(UiState.Loading)
         }.launchIn(lifecycleScope)
         viewModel.monthlyRecordUiState.flowWithLifecycle(lifecycle).onEach {
             when (it) {
                 is UiState.Loading -> {
-                    viewModel.getMonthlyRecord()
+                    val yM = viewModel.yearMonth.value
+                    var yearMonth = "${yM.year}-"
+                    if (yM.monthValue < 10) {
+                        yearMonth += "0"
+                    }
+                    yearMonth += yM.monthValue
+                    viewModel.getMonthlyRecord(yearMonth)
                 }
 
                 is UiState.Success -> {
                     dailyWorkAdapter.submitList(it.data)
+                }
+
+                else -> {}
+            }
+        }.launchIn(lifecycleScope)
+        viewModel.monthlyInfoUiState.flowWithLifecycle(lifecycle).onEach {
+            when (it) {
+                is UiState.Loading -> {
+                    viewModel.getMonthlyInfo()
+                }
+
+                is UiState.Success -> {
+                    binding.calendarView.notifyMonthChanged(viewModel.yearMonth.value)
                 }
 
                 else -> {}
@@ -187,9 +222,11 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         GoalSettingBottomSheet().show(parentFragmentManager, "goalSetting")
     }
 
-    private fun moveToDetail() {
-        val intent = Intent(requireActivity(), DailyWorkDetailActivity::class.java)
-        startActivity(intent)
+    private fun moveToDetail(date: String) {
+        Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
+            putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
+            Timber.d("디테일 전달: $date")
+        }.also { startActivity(it) }
     }
 
     companion object {

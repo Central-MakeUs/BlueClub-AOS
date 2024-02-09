@@ -14,8 +14,8 @@ data class ResponseMonthlyInfo(
         val straightDay: Int,
         val isRenew: Boolean,
         val straightMonth: Int,
-        val targetIncome: Int,
-        val totalIncome: Int,
-        val progress: Int,
+        val targetIncome: Int?,
+        val totalIncome: Int?,
+        val progress: Int?,
     )
 }
