@@ -49,10 +49,10 @@ class HomeViewModel @Inject constructor(
                 .onSuccess {
                     val decimalFormat = DecimalFormat("#,###")
                     _homeUiState.value = UiState.Success(it)
-                    _goalIncome.value = (it.targetIncome / 10000).toString() + "만원"
+                    _goalIncome.value = ((it.targetIncome ?: 0 ) / 10000).toString() + "만원"
                     _progress.value = it.progress ?: 0
-                    _totalIncome.value = it.totalIncome
-                    _totalIncomeString.value = decimalFormat.format(it.totalIncome) + "원"
+                    _totalIncome.value = it.totalIncome ?: 0
+                    _totalIncomeString.value = decimalFormat.format(it.totalIncome ?: 0) + "원"
                     _totalRecordDay.value = it.totalDay
                 }
                 .onFailure {
