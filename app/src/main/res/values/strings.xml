@@ -135,10 +135,10 @@
     <string name="auto_calculation">자동계산</string>
     <string name="expenditure_amount">지출액</string>
     <string name="saved_amount">저축액</string>
-    <string name="goal_achieved_amount">목표수입 %d 기여</string>
+    <string name="goal_achieved_amount">목표수입 %d%% 기여</string>
     <string name="show_my_income">수입 자랑하기✌️</string>
     <string name="calculating_yet">계산 중이에요</string>
-    <string name="daily_work_date_format">%s %s요일</string>
+    <string name="daily_work_date_format">%d.%d %s</string>
 
     <string name="daily_caddie_rounding">라운딩 수</string>
     <string name="daily_caddie_p">캐디피 수입</string>
@@ -186,4 +186,7 @@
     <string name="alert_title">알림 설정</string>
     <string name="push_alert">푸시알림</string>
     <string name="marketing_alert">마케팅 수신 동의</string>
+
+    <!-- work type -->
+    <string name="work_type_title">근무 형태를 골라주세요.</string>
 </resources>
