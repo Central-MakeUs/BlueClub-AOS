@@ -13,7 +13,7 @@ interface UserService {
     suspend fun writeUserDetails(@Body requestUserDetails: RequestUserDetails) : ResponseBase
 
     @DELETE("user/withdrawal")
-    suspend fun deleteAccount() : ResponseBase
+    suspend fun deleteAccount() : ResponseBase?
 
     // 알림 설정 api
     @POST("user/agreement")
