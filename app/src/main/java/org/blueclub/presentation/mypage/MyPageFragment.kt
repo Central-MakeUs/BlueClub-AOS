@@ -42,6 +42,15 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
         binding.ivNotice.setOnClickListener {
             moveToNotice()
         }
+        binding.btnKakaoComment.setOnClickListener {
+            moveToWebPage(KAKAO_LINK)
+        }
+        binding.layoutServiceComment.setOnClickListener {
+            moveToWebPage(KAKAO_LINK)
+        }
+        binding.layoutNotice.setOnClickListener {
+            moveToNotice()
+        }
     }
 
     private fun moveToProfileSetting() {
@@ -67,6 +76,7 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
             "https://shore-knuckle-69b.notion.site/0905a99459cf470f908018d20f0d8d72?pvs=4"
         private const val PRIVACY_LINK =
             "https://shore-knuckle-69b.notion.site/ded29418f6604ad993b0d664a653c4d7?pvs=4"
+        private const val KAKAO_LINK = "https://pf.kakao.com/_mxkCiG"
     }
 
 }
