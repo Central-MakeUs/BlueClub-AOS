@@ -126,6 +126,8 @@ class WorkDetailCaddieActivity :
                 is UiState.Success -> {
                     if(!it.data) // 자랑하기에서 온 경우
                         moveToCardLoading()
+                    else
+                        finish()
                 }
                 else -> {}
             }

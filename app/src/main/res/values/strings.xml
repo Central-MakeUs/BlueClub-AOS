@@ -116,7 +116,7 @@
     <string name="workbook_daily_income_format">%s · %d건</string>
     <string name="workbook_daily_refresh">오늘은 충전하는 날</string>
 
-    <string name="workbook_first_record">%d월의 첫 근무기록 남기러가기</string>
+    <string name="workbook_first_record">%d월의 근무기록이 없습니다.</string>
 
     <!-- bottom navigation -->
     <string name="home">홈</string>
