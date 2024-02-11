@@ -1,14 +1,21 @@
 package org.blueclub.presentation.daily
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.ActivityWorkDetailCaddieBinding
 import org.blueclub.presentation.base.BindingActivity
+import org.blueclub.presentation.card.WorkCardLoadingActivity
+import org.blueclub.util.UiState
 import java.text.DecimalFormat
 
 @AndroidEntryPoint
@@ -32,6 +39,12 @@ class WorkDetailCaddieActivity :
         }
         binding.ivBack.setOnClickListener {
             finish()
+        }
+        binding.btnShow.setOnClickListener {
+            viewModel.uploadCaddieWorkBook(false)
+        }
+        binding.tvSave.setOnClickListener {
+            viewModel.uploadCaddieWorkBook(true)
         }
         binding.ivSelectWorkType.setOnClickListener {
             WorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
@@ -108,6 +121,22 @@ class WorkDetailCaddieActivity :
     }
 
     private fun collectData() {
+        viewModel.isUploadedUiState.flowWithLifecycle(lifecycle).onEach {
+            when(it){
+                is UiState.Success -> {
+                    if(!it.data) // 자랑하기에서 온 경우
+                        moveToCardLoading()
+                }
+                else -> {}
+            }
+        }.launchIn(lifecycleScope)
+
+    }
+
+    private fun moveToCardLoading(){
+        // TODO diaryId 같이 보내기
+        startActivity(Intent(this, WorkCardLoadingActivity::class.java))
+        finish()
     }
 
     companion object {

@@ -1,6 +1,6 @@
 package org.blueclub.data.model.response
 
-import kotlinx.serialization.SerialName
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.presentation.type.DailyWorkType
@@ -24,20 +24,29 @@ data class ResponseWorkbook(
         data class DailyData(
             val id: Int,
             val date: String,
-            @SerialName("worktype")
+            @SerializedName("worktype")
             val workType: String,
             val income: Int,
-            val numberOfCases: Int,
+            val cases: Int,
         ) {
             fun toDailyWorkData() = DailyWorkInfo(
                 id,
                 date,
                 getDayOfWeek(date),
-                DailyWorkType.valueOf(workType),
+                getDailyWorkType(workType),
                 income,
-                numberOfCases,
+                cases,
                 getDay(date),
             )
+
+            fun getDailyWorkType(name: String?): DailyWorkType {
+                if (name == null) return DailyWorkType.DEFAULT
+                DailyWorkType.values().onEach {
+                    if (it.title == name)
+                        return it
+                }
+                return DailyWorkType.DEFAULT
+            }
 
             fun getDayOfWeek(date: String): String {
                 val cal: Calendar = Calendar.getInstance()
@@ -45,11 +54,11 @@ data class ResponseWorkbook(
                 var day = Date()
                 day = df.parse(date) ?: return ""
                 cal.time = day
-                return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.KOREAN) ?: ""
+                return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.KOREAN) ?: ""
 
             }
 
-            private fun getDay(date: String): Int{
+            private fun getDay(date: String): Int {
                 return date.slice(8..9).toIntOrNull() ?: 0
             }
 
