@@ -1,5 +1,6 @@
 package org.blueclub.presentation.home
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.FragmentHomeBinding
 import org.blueclub.presentation.base.BindingFragment
+import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.presentation.workbook.WorkbookFragment
 import org.blueclub.util.UiState
 
@@ -30,7 +32,14 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         binding.lifecycleOwner = this
         rootView = binding.root
 
+        initLayout()
         collectData()
+    }
+
+    private fun initLayout() {
+        binding.ivNotice.setOnClickListener {
+            moveToNotice()
+        }
     }
 
     private fun collectData() {
@@ -62,6 +71,10 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             }
             binding.tvBubbleAmount.text = "$it%"
         }.launchIn(lifecycleScope)
+    }
+
+    private fun moveToNotice() {
+        startActivity(Intent(requireActivity(), NoticeActivity::class.java))
     }
 
     private fun getProgressBarSize(): Int {

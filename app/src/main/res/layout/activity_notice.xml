@@ -31,7 +31,7 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/noti_title"
+                android:text="@string/mypage_notice"
                 android:textAppearance="@style/TextAppearance.Subtitle1"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"

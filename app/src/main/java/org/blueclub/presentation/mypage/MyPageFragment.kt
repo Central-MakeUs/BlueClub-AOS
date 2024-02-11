@@ -39,6 +39,9 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
         binding.ivArrowAlarm.setOnClickListener {
             moveToAlertSetting()
         }
+        binding.ivNotice.setOnClickListener {
+            moveToNotice()
+        }
     }
 
     private fun moveToProfileSetting() {

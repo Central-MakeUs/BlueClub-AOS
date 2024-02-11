@@ -34,6 +34,7 @@ import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
 import org.blueclub.presentation.base.BindingFragment
 import org.blueclub.presentation.daily.WorkDetailCaddieActivity
+import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.util.UiState
 import timber.log.Timber
 import java.time.LocalDate
@@ -73,6 +74,9 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         }
         binding.ivPlus.setOnClickListener {
             moveToDetail(LocalDate.now().toString())
+        }
+        binding.ivNotice.setOnClickListener {
+            moveToNotice()
         }
         lifecycleScope.launch {
             delay(100L)
@@ -230,6 +234,10 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
             putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
             Timber.d("디테일 전달: $date")
         }.also { startActivity(it) }
+    }
+
+    private fun moveToNotice() {
+        startActivity(Intent(requireActivity(), NoticeActivity::class.java))
     }
 
     companion object {
