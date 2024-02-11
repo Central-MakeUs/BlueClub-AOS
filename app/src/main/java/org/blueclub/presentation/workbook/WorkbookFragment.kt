@@ -26,8 +26,10 @@ import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.MonthScrollListener
 import com.kizitonwose.calendar.view.ViewContainer
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
 import org.blueclub.presentation.base.BindingFragment
@@ -52,8 +54,8 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.lifecycleOwner = this
         rootView = binding.root
 
-        initLayout()
         initCalendar()
+        initLayout()
         collectData()
     }
 
@@ -72,6 +74,10 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.ivPlus.setOnClickListener {
             moveToDetail(LocalDate.now().toString())
         }
+        lifecycleScope.launch {
+            delay(100L)
+            binding.calendarView.scrollToMonth(YearMonth.now())
+        }
     }
 
     private fun initCalendar() {
@@ -82,7 +88,8 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                     if(viewModel.workData.value[data.date.dayOfMonth] != null){
                         container.tvDay.background =
                             AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
-                        container.tvAmount.text = "10만원"
+
+                        container.tvAmount.text = ((viewModel.workData.value[data.date.dayOfMonth]?.income ?: 0) / 10000).toString() + " 만원"
                         container.tvDay.setTextColor(requireContext().getColor(R.color.white))
                     }
                     else{
@@ -111,10 +118,12 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         val firstDayOfWeek = firstDayOfWeekFromLocale()
         binding.calendarView.setup(startMonth, currentMonthPage, firstDayOfWeek)
         binding.ivCalendarPrevMonth.setOnClickListener {
-            viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
+            if(viewModel.yearMonth.value.previousMonth >= startMonth)
+                viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
         }
         binding.ivCalendarNextMonth.setOnClickListener {
-            viewModel.setYearMonth(viewModel.yearMonth.value.nextMonth)
+            if(viewModel.yearMonth.value.nextMonth <= currentMonthPage)
+                viewModel.setYearMonth(viewModel.yearMonth.value.nextMonth)
         }
         binding.calendarView.monthScrollListener = object : MonthScrollListener {
             override fun invoke(calendar: CalendarMonth) {
@@ -140,7 +149,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
             }
-        binding.calendarView.scrollToMonth(YearMonth.now())
+
     }
 
     private fun collectData() {
@@ -165,6 +174,9 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         }.launchIn(lifecycleScope)
         viewModel.yearMonth.flowWithLifecycle(lifecycle).onEach {
             binding.calendarView.smoothScrollToMonth(it)
+            binding.calendarView.notifyMonthChanged(viewModel.yearMonth.value)
+            viewModel.setWorkData(mapOf())
+            viewModel.setMonthlyInfoUiState(UiState.Loading)
             viewModel.setMonthlyRecordUiState(UiState.Loading)
         }.launchIn(lifecycleScope)
         viewModel.monthlyRecordUiState.flowWithLifecycle(lifecycle).onEach {
@@ -181,6 +193,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
 
                 is UiState.Success -> {
                     dailyWorkAdapter.submitList(it.data)
+                    binding.calendarView.notifyCalendarChanged()
                 }
 
                 else -> {}

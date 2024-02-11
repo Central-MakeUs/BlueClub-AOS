@@ -21,7 +21,7 @@ import javax.inject.Inject
 class WorkbookViewModel @Inject constructor(
     private val workbookRepository: WorkbookRepository,
 ) : ViewModel() {
-    private val _monthlyRecordUiState: MutableStateFlow<UiState<List< DailyWorkInfo>>> =
+    private val _monthlyRecordUiState: MutableStateFlow<UiState<List<DailyWorkInfo>>> =
         MutableStateFlow(UiState.Loading)
     val monthlyRecordUiState = _monthlyRecordUiState.asStateFlow()
     private val _workData: MutableStateFlow<Map<Int, DailyWorkInfo>> = MutableStateFlow(mapOf())
@@ -65,6 +65,14 @@ class WorkbookViewModel @Inject constructor(
         _monthlyRecordUiState.value = uiState
     }
 
+    fun setMonthlyInfoUiState(uiState: UiState<ResponseMonthlyInfo.ResponseMonthlyInfoData>){
+        _monthlyInfoUiState.value = uiState
+    }
+
+    fun setWorkData(workData: Map<Int, DailyWorkInfo>) {
+        _workData.value = workData
+    }
+
     fun getMonthlyRecord(yearMonth: String) {
         viewModelScope.launch {
             workbookRepository.getMonthlyRecord(yearMonth)
@@ -85,13 +93,13 @@ class WorkbookViewModel @Inject constructor(
     }
 
     fun getMonthlyInfo() {
-        var yearMonth = "${YearMonth.now().year}-"
-        if (YearMonth.now().monthValue < 10) {
-            yearMonth += "0"
+        var date = "${yearMonth.value.year}-"
+        if (yearMonth.value.monthValue < 10) {
+            date += "0"
         }
-        yearMonth += YearMonth.now().monthValue
+        date += yearMonth.value.monthValue
         viewModelScope.launch {
-            workbookRepository.getMonthlyInfo(yearMonth)
+            workbookRepository.getMonthlyInfo(date)
                 .onSuccess {
                     val decimalFormat = DecimalFormat("#,###")
                     _monthlyInfoUiState.value = UiState.Success(it)
