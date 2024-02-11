@@ -428,6 +428,7 @@
                     android:backgroundTint="@color/coolgray_01"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="6dp"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_baeto">
 
@@ -460,6 +461,7 @@
                     android:backgroundTint="@color/coolgray_01"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="6dp"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toEndOf="@+id/layout_add_memo"
                     app:layout_constraintTop_toTopOf="@+id/layout_add_memo">
 
