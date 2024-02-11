@@ -112,7 +112,7 @@
     <string name="leaveday">조퇴</string>
 
     <string name="workbook_daily_date_format">%s %s</string>
-    <string name="workbook_daily_income_format">%d·%d건</string>
+    <string name="workbook_daily_income_format">%s · %d건</string>
     <string name="workbook_daily_refresh">오늘은 충전하는 날</string>
 
     <!-- bottom navigation -->
