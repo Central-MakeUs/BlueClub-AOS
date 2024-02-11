@@ -94,7 +94,7 @@
             android:backgroundTint="@{viewModel.incomeGoalValid >= 100000 ? @color/primary_normal : @color/gray_04}"
             android:enabled="@{viewModel.incomeGoalValid >= 100000}"
             android:paddingVertical="17dp"
-            android:text="@string/next"
+            android:text="@string/goal_setting_finished"
             android:textAppearance="@style/TextAppearance.Subtitle1"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

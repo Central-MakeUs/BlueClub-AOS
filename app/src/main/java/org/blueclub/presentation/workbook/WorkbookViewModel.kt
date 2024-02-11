@@ -8,11 +8,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.blueclub.data.model.request.RequestGoalSetting
 import org.blueclub.data.model.response.ResponseMonthlyInfo
 import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.domain.repository.WorkbookRepository
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.toStateFlow
+import timber.log.Timber
 import java.text.DecimalFormat
 import java.time.YearMonth
 import javax.inject.Inject
@@ -33,10 +35,14 @@ class WorkbookViewModel @Inject constructor(
     private val _today = MutableStateFlow(YearMonth.now())
     val today = _today.asStateFlow()
 
+    // 목표 설정 바텀시트 관련
     val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
         it?.replace(",", "")?.toInt()
     }.toStateFlow(viewModelScope, 0)
+    private val _goalSettingUiState: MutableStateFlow<UiState<Boolean>> =
+        MutableStateFlow(UiState.Loading)
+    val goalSettingUiState = _goalSettingUiState.asStateFlow()
 
     // 달성 수입 관련
     private val _monthlyInfoUiState: MutableStateFlow<UiState<ResponseMonthlyInfo.ResponseMonthlyInfoData>> =
@@ -65,7 +71,7 @@ class WorkbookViewModel @Inject constructor(
         _monthlyRecordUiState.value = uiState
     }
 
-    fun setMonthlyInfoUiState(uiState: UiState<ResponseMonthlyInfo.ResponseMonthlyInfoData>){
+    fun setMonthlyInfoUiState(uiState: UiState<ResponseMonthlyInfo.ResponseMonthlyInfoData>) {
         _monthlyInfoUiState.value = uiState
     }
 
@@ -108,10 +114,32 @@ class WorkbookViewModel @Inject constructor(
                     _totalIncome.value = it.totalIncome ?: 0
                     _totalIncomeString.value = decimalFormat.format(it.totalIncome ?: 0) + "원"
                     _totalRecordDay.value = it.totalDay
+                    incomeGoal.value = decimalFormat.format(it.targetIncome ?: 0)
+                    _goalSettingUiState.value = UiState.Loading
                 }
                 .onFailure {
                     _monthlyInfoUiState.value = UiState.Error(it.message)
                 }
+        }
+    }
+
+    fun uploadMonthlyGoal() {
+        var date = "${yearMonth.value.year}-"
+        if (yearMonth.value.monthValue < 10) {
+            date += "0"
+        }
+        date += yearMonth.value.monthValue
+        viewModelScope.launch {
+            workbookRepository.uploadMonthlyGoal(
+                RequestGoalSetting(
+                    date, incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 100000
+                )
+            ).onSuccess {
+                _goalSettingUiState.value = UiState.Success(true)
+                _monthlyInfoUiState.value = UiState.Loading
+            }.onFailure {
+                Timber.d(it.message)
+            }
         }
     }
 }

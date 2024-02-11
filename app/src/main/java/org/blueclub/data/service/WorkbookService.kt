@@ -2,9 +2,12 @@ package org.blueclub.data.service
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.blueclub.data.model.request.RequestGoalSetting
+import org.blueclub.data.model.response.ResponseBase
 import org.blueclub.data.model.response.ResponseCaddieDiary
 import org.blueclub.data.model.response.ResponseMonthlyInfo
 import org.blueclub.data.model.response.ResponseWorkbook
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -31,4 +34,7 @@ interface WorkbookService {
 
     @GET("diary/record/{yearMonth}")
     suspend fun getMonthlyInfo(@Path("yearMonth") date: String): ResponseMonthlyInfo
+
+    @POST("monthly_goal")
+    suspend fun uploadMonthlyGoal(@Body requestGoalSetting: RequestGoalSetting) : ResponseBase
 }

@@ -2,7 +2,7 @@ package org.blueclub.data.datasource.remote
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.blueclub.data.model.request.RequestCaddieDiary
+import org.blueclub.data.model.request.RequestGoalSetting
 import org.blueclub.data.service.WorkbookService
 import javax.inject.Inject
 
@@ -18,4 +18,7 @@ class WorkbookDataSource @Inject constructor(
     suspend fun getMonthlyRecord(date: String) = workbookService.getMonthlyRecord(date)
 
     suspend fun getMonthlyInfo(date: String) = workbookService.getMonthlyInfo(date)
+
+    suspend fun uploadMonthlyGoal(requestGoalSetting: RequestGoalSetting) =
+        workbookService.uploadMonthlyGoal(requestGoalSetting)
 }

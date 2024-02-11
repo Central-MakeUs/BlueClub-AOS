@@ -79,7 +79,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
             moveToNotice()
         }
         lifecycleScope.launch {
-            delay(100L)
+            delay(10L)
             binding.calendarView.scrollToMonth(YearMonth.now())
         }
     }
