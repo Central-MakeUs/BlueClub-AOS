@@ -189,4 +189,20 @@
 
     <!-- work type -->
     <string name="work_type_title">근무 형태를 골라주세요.</string>
+    
+    <!-- work card -->
+    <string name="work_card_close">닫기</string>
+    <string name="work_card_title">수입인증 카드로\n근무 성과를 자랑해봐요</string>
+    <string name="work_card_job">%s중</string>
+    <string name="work_card_percentage">상위 %d%%</string>
+    <string name="work_card_income_tag">수입</string>
+    <string name="work_card_worked_day">총 %d건 수행</string>
+    <string name="work_card_certification">수입인증 BLUECLUB</string>
+    <string name="work_card_save">저장하기</string>
+    <string name="work_card_share">공유하기</string>
+    <string name="work_card_income">%s원</string>
+
+    <!-- work card loading -->
+    <string name="card_loading_title">근무기록 저장 후\n이미지로 추출중이에요</string>
+    <string name="card_loading_description">열심히 수입인증 카드를 만들고 있어요!</string>
 </resources>
