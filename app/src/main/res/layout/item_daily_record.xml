@@ -11,6 +11,14 @@
         <variable
             name="dailyWorkType"
             type="org.blueclub.presentation.type.DailyWorkType" />
+
+        <variable
+            name="date"
+            type="String" />
+
+        <variable
+            name="income"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:layout_marginStart="16dp"
-            android:text="@{@string/workbook_daily_date_format(dailyWorkInfo.date, dailyWorkInfo.dayOfWeek)}"
+            android:text="@{@string/workbook_daily_date_format(date, dailyWorkInfo.dayOfWeek)}"
             android:textAppearance="@style/TextAppearance.Subtitle2"
             android:textColor="@color/gray_07"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,7 +49,7 @@
             android:background="@drawable/shape_border_radius_4"
             android:backgroundTint="@{context.getColor(dailyWorkType.backgroundColor)}"
             android:paddingHorizontal="6dp"
-            android:paddingVertical="2dp"
+            android:paddingVertical="4dp"
             android:text="@{context.getString(dailyWorkType.titleRes)}"
             android:textAppearance="@style/TextAppearance.Caption2"
             android:textColor="@{context.getColor(dailyWorkType.textColor)}"
@@ -54,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:text="@{dailyWorkInfo.income == null ? @string/workbook_daily_refresh : @string/workbook_daily_income_format(dailyWorkInfo.income, dailyWorkInfo.numberOfCases)}"
+            android:text="@{dailyWorkInfo.income == null ? @string/workbook_daily_refresh : @string/workbook_daily_income_format(income, dailyWorkInfo.numberOfCases)}"
             android:textAppearance="@style/TextAppearance.Subtitle2"
             android:textColor="@{dailyWorkInfo.income == null ? @color/gray_05 : @color/gray_10}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"

@@ -63,17 +63,6 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
             itemAnimator = null
             adapter = dailyWorkAdapter
         }
-        // TODO 더미 데이터 삭제
-//        dailyWorkAdapter.submitList(
-//            listOf(
-//                DailyWorkInfo(1, "1.2", "월", DailyWorkType.WORK, 15000000, 8),
-//                DailyWorkInfo(2, "1.3", "화", DailyWorkType.REST, null, null),
-//                DailyWorkInfo(3, "1.5", "수", DailyWorkType.EARLY, 15000000, 8),
-//                DailyWorkInfo(4, "1.8", "목", DailyWorkType.WORK, 15000000, 8),
-//                DailyWorkInfo(5, "1.9", "금", DailyWorkType.WORK, 15000000, 8),
-//                DailyWorkInfo(6, "1.10", "월", DailyWorkType.WORK, 15000000, 8),
-//            )
-//        )
         binding.ivSetting.setOnClickListener {
             showGoalSettingBottomSheet()
         }
@@ -98,7 +87,8 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                     }
                     else{
                         container.tvAmount.text = ""
-                        container.tvDay.background = null
+                        container.tvDay.background =
+                            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin_gray)
                         container.tvDay.setTextColor(requireContext().getColor(R.color.gray_08))
 
                     }
