@@ -161,7 +161,8 @@ class AuthSettingViewModel @Inject constructor(
                     nickname.value ?: "",
                     chosenJobType.value.title,
                     incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                    true
+                    tosAgree = true,
+                    pushAgree = true,
                 )
             ).onSuccess {
                 moveToFinish()

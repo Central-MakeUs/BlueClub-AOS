@@ -8,4 +8,5 @@ data class RequestUserDetails(
     val job: String,
     val monthlyTargetIncome: Int,
     val tosAgree: Boolean,
+    val pushAgree: Boolean,
 )
