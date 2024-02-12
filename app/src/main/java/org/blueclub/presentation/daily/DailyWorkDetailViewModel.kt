@@ -13,6 +13,7 @@ import org.blueclub.domain.repository.WorkbookRepository
 import org.blueclub.presentation.type.DailyWorkType
 import org.blueclub.util.UiState
 import timber.log.Timber
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -42,9 +43,15 @@ class DailyWorkDetailViewModel @Inject constructor(
     private val _baeto = MutableStateFlow(false)
     val baeto = _baeto.asStateFlow()
 
+    private val _workId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val workId = _workId.asStateFlow()
+
     private val _isUploadedUiState: MutableStateFlow<UiState<Boolean>> =
         MutableStateFlow(UiState.Loading)
     val isUploadedUiState = _isUploadedUiState.asStateFlow()
+    private val _isFetchedUiState: MutableStateFlow<UiState<Boolean>> =
+        MutableStateFlow(UiState.Loading)
+    val isFetchedUiState = _isFetchedUiState.asStateFlow()
 
     val isInputCompleted = combine(
         _workType,
@@ -57,6 +64,8 @@ class DailyWorkDetailViewModel @Inject constructor(
 
     private val _memo = MutableStateFlow("")
     val memo = _memo.asStateFlow()
+    private val _income = MutableStateFlow("계산 중이에요")
+    val income = _income.asStateFlow()
     val spentAmount: MutableStateFlow<String?> = MutableStateFlow(null)
     val savingsAmount: MutableStateFlow<String?> = MutableStateFlow(null)
 
@@ -95,32 +104,89 @@ class DailyWorkDetailViewModel @Inject constructor(
         _baeto.value = !baeto.value
     }
 
+    fun getCaddieWorkBook() {
+        viewModelScope.launch {
+            workbookRepository.getDetailRecord("골프캐디", date.value)
+                .onSuccess {
+                    if (it != null) {
+                        val decimalFormat = DecimalFormat("#,###")
+                        _workId.value = it.id
+                        _workType.value = getDailyWorkType(it.workType)
+                        _income.value = decimalFormat.format(it.income)
+                        spentAmount.value = decimalFormat.format(it.expenditure)
+                        savingsAmount.value = decimalFormat.format(it.saving)
+                        _rounding.value = it.rounding
+                        caddieP.value = decimalFormat.format(it.caddyFee)
+                        overP.value = decimalFormat.format(it.overFee)
+                        _baeto.value = it.topDressing
+                    }
+                }
+                .onFailure {
+                    UiState.Error(it.message)
+                    Timber.d(it.message)
+                }
+        }
+    }
+
+    fun getDailyWorkType(name: String): DailyWorkType {
+        DailyWorkType.values().onEach { if (it.title == name) return it }
+        return DailyWorkType.WORK
+    }
+
     fun uploadCaddieWorkBook(isSave: Boolean) { // 자랑하기 인지 단순 저장인지
         var totalIncome = 0
         totalIncome += caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0
         totalIncome += overP.value?.replace(",", "")?.toIntOrNull() ?: 0
 
         viewModelScope.launch {
-            workbookRepository.uploadCaddieDiary(
-                "골프 캐디",
-                RequestCaddieDiary(
-                    workType = workType.value.title,
-                    memo = "",
-                    income = totalIncome,
-                    expenditure = spentAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                    saving = savingsAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                    date = date.value,
-                    imageUrlList = listOf(),
-                    rounding = rounding.value,
-                    caddyFee = caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                    overFee = overP.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                    topDressing = baeto.value,
-                ).toJsonObject(),
-                null
-            ).onSuccess {
-                _isUploadedUiState.value = UiState.Success(isSave)
-            }.onFailure {
-                Timber.e(it.message)
+            val id = workId.value
+            if (id != null && id > 0) { // modify
+                workbookRepository.modifyCaddieDiary(
+                    id,
+                    "골프 캐디",
+                    RequestCaddieDiary(
+                        workType = workType.value.title,
+                        memo = "",
+                        income = totalIncome,
+                        expenditure = spentAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                        saving = savingsAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                        date = date.value,
+                        imageUrlList = listOf(),
+                        rounding = rounding.value,
+                        caddyFee = caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                        overFee = overP.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                        topDressing = baeto.value,
+                    ).toJsonObject(),
+                    null
+                ).onSuccess {
+                    _workId.value = it.result.id
+                    _isUploadedUiState.value = UiState.Success(isSave)
+                }.onFailure {
+                    Timber.e(it.message)
+                }
+            } else {
+                workbookRepository.uploadCaddieDiary(
+                    "골프 캐디",
+                    RequestCaddieDiary(
+                        workType = workType.value.title,
+                        memo = "",
+                        income = totalIncome,
+                        expenditure = spentAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                        saving = savingsAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                        date = date.value,
+                        imageUrlList = listOf(),
+                        rounding = rounding.value,
+                        caddyFee = caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                        overFee = overP.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                        topDressing = baeto.value,
+                    ).toJsonObject(),
+                    null
+                ).onSuccess {
+                    _workId.value = it.result.id
+                    _isUploadedUiState.value = UiState.Success(isSave)
+                }.onFailure {
+                    Timber.e(it.message)
+                }
             }
         }
     }

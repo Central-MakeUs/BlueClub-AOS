@@ -10,10 +10,6 @@ data class ResponseCaddieDiary(
 ) {
     @Serializable
     data class ResponseCaddieDiaryData(
-        val job: String,
-        val workAt: String,
-        val rank: String,
-        val income: Int,
-        val cases: Int?,
+        val id: Int,
     )
 }

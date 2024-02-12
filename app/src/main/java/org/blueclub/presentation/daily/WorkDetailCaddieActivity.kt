@@ -15,7 +15,9 @@ import org.blueclub.R
 import org.blueclub.databinding.ActivityWorkDetailCaddieBinding
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.card.WorkCardLoadingActivity
+import org.blueclub.presentation.card.WorkCardLoadingActivity.Companion.ARG_WORK_BOOK_ID
 import org.blueclub.util.UiState
+import timber.log.Timber
 import java.text.DecimalFormat
 
 @AndroidEntryPoint
@@ -35,7 +37,9 @@ class WorkDetailCaddieActivity :
 
     private fun initLayout() {
         intent.getStringExtra(ARG_DATE)?.let {
+            Timber.d("날짜: $it")
             viewModel.setDate(it)
+            viewModel.getCaddieWorkBook()
         }
         binding.ivBack.setOnClickListener {
             finish()
@@ -77,8 +81,8 @@ class WorkDetailCaddieActivity :
                 if (!TextUtils.isEmpty(txt!!.toString()) && txt.toString() != resultOverP) {
                     resultOverP =
                         decimalFormat.format(txt.toString().replace(",", "").toDouble())
-                    binding.etAmountOverP.setText(resultCaddieP)
-                    binding.etAmountOverP.setSelection(resultCaddieP.length)
+                    binding.etAmountOverP.setText(resultOverP)
+                    binding.etAmountOverP.setSelection(resultOverP.length)
                 }
             }
 
@@ -125,7 +129,7 @@ class WorkDetailCaddieActivity :
             when(it){
                 is UiState.Success -> {
                     if(!it.data) // 자랑하기에서 온 경우
-                        moveToCardLoading()
+                        moveToCardLoading(viewModel.workId.value)
                     else
                         finish()
                 }
@@ -135,9 +139,10 @@ class WorkDetailCaddieActivity :
 
     }
 
-    private fun moveToCardLoading(){
-        // TODO diaryId 같이 보내기
-        startActivity(Intent(this, WorkCardLoadingActivity::class.java))
+    private fun moveToCardLoading(workBookId: Int?){
+        Intent(this, WorkCardLoadingActivity::class.java).apply {
+            putExtra(ARG_WORK_BOOK_ID, workBookId)
+        }.also { startActivity(it) }
         finish()
     }
 
