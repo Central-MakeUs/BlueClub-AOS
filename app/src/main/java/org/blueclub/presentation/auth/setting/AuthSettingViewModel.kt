@@ -74,6 +74,8 @@ class AuthSettingViewModel @Inject constructor(
             )
         )
     val selectedTosType = _selectedTosType.asStateFlow()
+    private val _tosEntireSelected = MutableStateFlow(false)
+    val tosEntireSelected = _tosEntireSelected.asStateFlow()
 
     init {
         _isNicknameCorrect.value = true
@@ -114,6 +116,10 @@ class AuthSettingViewModel @Inject constructor(
         _selectedTosType.value = selectedTosType.value.toMutableMap().apply {
             this[tosType] = !isSelected
         }
+    }
+
+    fun setEntireTosSelected(isSelected: Boolean){
+        _tosEntireSelected.value = isSelected
     }
 
     fun setWholeTosType(): Boolean {

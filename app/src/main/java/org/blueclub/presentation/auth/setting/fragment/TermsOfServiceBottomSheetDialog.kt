@@ -54,14 +54,23 @@ class TermsOfServiceBottomSheetDialog :
                 binding.btnTos.isEnabled = false
                 binding.btnTos.setBackgroundColor(requireActivity().getColor(R.color.gray_04))
             }
+
+            if(it[TosViewType.AGE] == true && it[TosViewType.SERVICE] == true && it[TosViewType.PRIVACY] == true
+                && it[TosViewType.EVENT] == true && it[TosViewType.MARKETING] == true){
+                //binding.ivCheck.isSelected = true
+                viewModel.setEntireTosSelected(true)
+            }else if(it[TosViewType.AGE] == false || it[TosViewType.SERVICE] == false || it[TosViewType.PRIVACY] == false
+                || it[TosViewType.EVENT] == false || it[TosViewType.MARKETING] == false){
+                viewModel.setEntireTosSelected(false)
+            }
         }.launchIn(lifecycleScope)
     }
 
     private fun checkboxClickEvent() {
-        binding.layoutTosEntire.setOnClickListener {
-            val isSelected = viewModel.setWholeTosType()
-            binding.ivCheck.isSelected = isSelected
-        }
+//        binding.layoutTosEntire.setOnClickListener {
+//            val isSelected = viewModel.setWholeTosType()
+//            binding.ivCheck.isSelected = isSelected
+//        }
         binding.ivCheckAge.setOnClickListener {
             it.isSelected = !it.isSelected
             viewModel.setTosType(TosViewType.AGE)
