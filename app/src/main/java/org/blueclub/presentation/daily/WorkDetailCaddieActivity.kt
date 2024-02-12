@@ -17,6 +17,7 @@ import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.card.WorkCardLoadingActivity
 import org.blueclub.presentation.card.WorkCardLoadingActivity.Companion.ARG_WORK_BOOK_ID
 import org.blueclub.util.UiState
+import org.blueclub.util.extension.showToast
 import timber.log.Timber
 import java.text.DecimalFormat
 
@@ -128,10 +129,14 @@ class WorkDetailCaddieActivity :
         viewModel.isUploadedUiState.flowWithLifecycle(lifecycle).onEach {
             when(it){
                 is UiState.Success -> {
+                    this.showToast("저장에 성공했습니다.")
                     if(!it.data) // 자랑하기에서 온 경우
                         moveToCardLoading(viewModel.workId.value)
                     else
                         finish()
+                }
+                is UiState.Error -> {
+                    this.showToast("저장에 실패했습니다.")
                 }
                 else -> {}
             }
@@ -148,8 +153,5 @@ class WorkDetailCaddieActivity :
 
     companion object {
         const val ARG_DATE = "date"
-        const val ARG_YEAR = "year"
-        const val ARG_MONTH = "month"
-        const val ARG_DAY = "day"
     }
 }

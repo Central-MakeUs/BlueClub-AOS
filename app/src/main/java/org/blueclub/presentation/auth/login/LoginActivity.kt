@@ -17,6 +17,7 @@ import org.blueclub.presentation.auth.setting.AuthSettingActivity
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.home.MainActivity
 import org.blueclub.util.UiState
+import org.blueclub.util.extension.showToast
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,10 +49,12 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         viewModel.loginUiState.flowWithLifecycle(lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
+                    this.showToast("로그인에 성공했습니다.")
                     moveToNext(it.data)
                 }
                 is UiState.Error -> {
                     // TODO 로그인 실패했을 때 UI
+                    this.showToast("로그인에 실패했습니다.")
                 }
                 else -> {}
             }
