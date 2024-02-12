@@ -54,6 +54,7 @@ class HomeViewModel @Inject constructor(
                     _totalIncome.value = it.totalIncome ?: 0
                     _totalIncomeString.value = decimalFormat.format(it.totalIncome ?: 0) + "원"
                     _totalRecordDay.value = it.totalDay
+                    localStorage.incomeGoal = it.targetIncome
                 }
                 .onFailure {
                     _homeUiState.value = UiState.Error(it.message)

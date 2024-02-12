@@ -25,6 +25,7 @@ import org.blueclub.databinding.ActivityProfileSettingBinding
 import org.blueclub.presentation.auth.login.LoginActivity
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.type.LoginPlatformType
+import org.blueclub.presentation.type.NicknameGuideType
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.showToast
 import java.text.DecimalFormat
@@ -84,6 +85,12 @@ class ProfileSettingActivity :
         binding.ivBack.setOnClickListener {
             finish()
         }
+        binding.tvSave.setOnClickListener {
+            viewModel.modifyUserDetails()
+        }
+        binding.btnCheckDuplication.setOnClickListener {
+            viewModel.checkNicknameDuplication(binding.etNickname.text.toString())
+        }
         val decimalFormat = DecimalFormat("#,###")
         var result = ""
         binding.etGoalSetting.addTextChangedListener(object : TextWatcher {
@@ -91,21 +98,11 @@ class ProfileSettingActivity :
 
             override fun onTextChanged(txt: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (!TextUtils.isEmpty(txt!!.toString()) && txt.toString() != result) {
-                    //lessonPrice = txt.toString().replace(",", "").toInt()
                     result =
                         decimalFormat.format(txt.toString().replace(",", "").toDouble())
                     binding.etGoalSetting.setText(result)
                     binding.etGoalSetting.setSelection(result.length)
                 }
-
-//                if (TextUtils.isEmpty(txt.toString()) && txt.toString() != result) {
-//                    result = ""
-//                    binding.etGoalSetting.setText(result)
-//                    binding.tvGoalSettingAmountInfo.apply {
-//                        text = result
-//                        visibility = View.INVISIBLE
-//                    }
-//                }
             }
 
             override fun afterTextChanged(p0: Editable?) {}
@@ -138,6 +135,32 @@ class ProfileSettingActivity :
                 else -> {}
             }
         }.launchIn(lifecycleScope)
+        viewModel.modifiedAccountUiState.flowWithLifecycle(lifecycle).onEach {
+            when (it) {
+                is UiState.Success -> {
+                    this.showToast("프로필 수정에 성공했습니다.")
+                }
+
+                is UiState.Error -> {
+                    this.showToast("프로필 수정에 실패했습니다.")
+                }
+
+                else -> {}
+            }
+        }.launchIn(lifecycleScope)
+        viewModel.nickname.flowWithLifecycle(lifecycle).onEach {
+            if(it.isNullOrEmpty()){
+                viewModel.setNicknameInputGuide(NicknameGuideType.DEFAULT)
+            }
+            viewModel.setNicknameCorrect(verifyNickname(it ?: ""))
+            viewModel.setNicknameAvailable(null)
+        }.launchIn(lifecycleScope)
+        viewModel.isNicknameCorrect.observe(this) {
+            if (it)
+                viewModel.setNicknameInputGuide(NicknameGuideType.DEFAULT)
+            else
+                viewModel.setNicknameInputGuide(NicknameGuideType.INVALID_NICKNAME)
+        }
     }
 
     private fun moveToSign() {
@@ -171,5 +194,8 @@ class ProfileSettingActivity :
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         pickImageLauncher.launch(gallery)
     }
+
+    fun verifyNickname(nickname: String): Boolean =
+        nickname.matches(Regex("^[ㄱ-ㅣ가-힣a-zA-Z0-9]{0,10}$"))
 
 }

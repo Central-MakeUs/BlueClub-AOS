@@ -3,6 +3,7 @@ package org.blueclub.data.repository
 import org.blueclub.data.datasource.BCDataSource
 import org.blueclub.data.datasource.remote.UserDataSource
 import org.blueclub.data.model.request.RequestAgreement
+import org.blueclub.data.model.request.RequestModifyUserDetails
 import org.blueclub.data.model.request.RequestUserDetails
 import org.blueclub.data.model.response.ResponseBase
 import org.blueclub.domain.repository.UserRepository
@@ -17,6 +18,18 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun writeUserDetails(requestUserDetails: RequestUserDetails): Result<ResponseBase> =
         runCatching {
             userDataSource.writeUserDetails(requestUserDetails)
+        }.onSuccess {
+            with(localStorage) {
+                this.nickname = requestUserDetails.nickname
+                this.job = requestUserDetails.job
+            }
+        }.onFailure {
+            Timber.e(it.message)
+        }
+
+    override suspend fun modifyUserDetails(requestUserDetails: RequestModifyUserDetails): Result<ResponseBase> =
+        runCatching {
+            userDataSource.modifyUserDetails(requestUserDetails)
         }.onSuccess {
             with(localStorage) {
                 this.nickname = requestUserDetails.nickname
