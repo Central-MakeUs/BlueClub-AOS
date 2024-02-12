@@ -16,9 +16,13 @@ import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.FragmentHomeBinding
 import org.blueclub.presentation.base.BindingFragment
+import org.blueclub.presentation.daily.WorkDetailCaddieActivity
 import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.presentation.workbook.WorkbookFragment
 import org.blueclub.util.UiState
+import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @AndroidEntryPoint
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
@@ -39,6 +43,12 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     private fun initLayout() {
         binding.ivNotice.setOnClickListener {
             moveToNotice()
+        }
+        binding.layoutMoveToDetail.setOnClickListener {
+            val dateFormat = "yyyy-MM-dd"
+            val date = Date(System.currentTimeMillis())
+            val todayDate = SimpleDateFormat(dateFormat).format(date)
+            moveToDetail(todayDate)
         }
     }
 
@@ -75,6 +85,13 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private fun moveToNotice() {
         startActivity(Intent(requireActivity(), NoticeActivity::class.java))
+    }
+
+    private fun moveToDetail(date: String) {
+        Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
+            putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
+            Timber.d("디테일 전달: $date")
+        }.also { startActivity(it) }
     }
 
     private fun getProgressBarSize(): Int {

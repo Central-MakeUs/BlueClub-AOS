@@ -36,7 +36,6 @@ import org.blueclub.presentation.base.BindingFragment
 import org.blueclub.presentation.daily.WorkDetailCaddieActivity
 import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.util.UiState
-import timber.log.Timber
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -232,7 +231,6 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
     private fun moveToDetail(date: String) {
         Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
             putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
-            Timber.d("디테일 전달: $date")
         }.also { startActivity(it) }
     }
 
