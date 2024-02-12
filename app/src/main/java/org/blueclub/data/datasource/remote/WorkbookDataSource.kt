@@ -15,10 +15,22 @@ class WorkbookDataSource @Inject constructor(
         image: MultipartBody.Part?,
     ) = workbookService.uploadCaddieRecord(job, requestCaddieDiary, image)
 
+    suspend fun modifyCaddieDiary(
+        workId: String,
+        jobName: String,
+        requestCaddieDiary: RequestBody,
+        image: MultipartBody.Part?,
+    ) = workbookService.modifyCaddieRecord(workId, jobName, requestCaddieDiary, image)
+
+    suspend fun getDetailRecord(jobName: String, date: String) =
+        workbookService.getDetailRecord(jobName, date)
+
     suspend fun getMonthlyRecord(date: String) = workbookService.getMonthlyRecord(date)
 
     suspend fun getMonthlyInfo(date: String) = workbookService.getMonthlyInfo(date)
 
     suspend fun uploadMonthlyGoal(requestGoalSetting: RequestGoalSetting) =
         workbookService.uploadMonthlyGoal(requestGoalSetting)
+
+    suspend fun getCardDetail(workId: Int) = workbookService.getCardDetail(workId)
 }

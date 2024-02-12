@@ -22,7 +22,13 @@ class WorkCardLoadingActivity :
     }
 
     private fun moveToWorkCard() {
-        startActivity(Intent(this, WorkCardActivity::class.java))
+        Intent(this, WorkCardActivity::class.java).apply {
+            putExtra(ARG_WORK_BOOK_ID, intent.getIntExtra(ARG_WORK_BOOK_ID, -1))
+        }.also { startActivity(it) }
         finish()
+    }
+
+    companion object{
+        val ARG_WORK_BOOK_ID = "workBookId"
     }
 }

@@ -6,6 +6,8 @@ import org.blueclub.data.datasource.remote.WorkbookDataSource
 import org.blueclub.data.model.request.RequestGoalSetting
 import org.blueclub.data.model.response.ResponseBase
 import org.blueclub.data.model.response.ResponseCaddieDiary
+import org.blueclub.data.model.response.ResponseCard
+import org.blueclub.data.model.response.ResponseDailyWorkDetail
 import org.blueclub.data.model.response.ResponseMonthlyInfo
 import org.blueclub.data.model.response.ResponseWorkbook
 import org.blueclub.domain.repository.WorkbookRepository
@@ -26,6 +28,18 @@ class WorkbookRepositoryImpl @Inject constructor(
             Timber.d(it)
         }
 
+    override suspend fun modifyCaddieDiary(
+        workId: Int,
+        jobName: String,
+        requestCaddieDiary: RequestBody,
+        image: MultipartBody.Part?
+    ): Result<ResponseCaddieDiary> =
+        runCatching {
+            workbookDataSource.modifyCaddieDiary(workId.toString(), jobName, requestCaddieDiary, image)
+        }.onFailure {
+            Timber.d(it)
+        }
+
     override suspend fun getMonthlyRecord(date: String): Result<ResponseWorkbook.ResponseWorkbookData> =
         runCatching {
             workbookDataSource.getMonthlyRecord(date).result
@@ -40,9 +54,26 @@ class WorkbookRepositoryImpl @Inject constructor(
             Timber.d(it)
         }
 
+    override suspend fun getDetailRecord(
+        jobName: String,
+        date: String
+    ): Result<ResponseDailyWorkDetail.ResponseDailyWorkDetailData?> =
+        runCatching {
+            workbookDataSource.getDetailRecord(jobName, date)?.result
+        }.onFailure {
+            Timber.d(it)
+        }
+
     override suspend fun uploadMonthlyGoal(requestGoalSetting: RequestGoalSetting): Result<ResponseBase> =
         runCatching {
             workbookDataSource.uploadMonthlyGoal(requestGoalSetting)
+        }.onFailure {
+            Timber.d(it)
+        }
+
+    override suspend fun getCardDetail(workId: Int): Result<ResponseCard.ResponseCardData> =
+        runCatching {
+            workbookDataSource.getCardDetail(workId).result
         }.onFailure {
             Timber.d(it)
         }
