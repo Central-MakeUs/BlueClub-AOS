@@ -148,6 +148,9 @@
     <string name="daily_caddie_over_p">오버피 수입</string>
     <string name="daily_caddie_soil">배토 여부</string>
 
+    <string name="rest_title">오늘 하루는 제대로 충전해요</string>
+    <string name="rest_description">휴무도 꾸준히 기록하는 습관\n너무 잘하고 있어요!</string>
+
     <!-- my page -->
     <string name="mypage_friend_invitation">친구 초대</string>
     <string name="mypage_mail">문의하기</string>

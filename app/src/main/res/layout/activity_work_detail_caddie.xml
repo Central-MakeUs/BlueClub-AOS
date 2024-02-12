@@ -5,6 +5,10 @@
 
     <data>
 
+        <import type="org.blueclub.presentation.type.DailyWorkType" />
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="org.blueclub.presentation.daily.DailyWorkDetailViewModel" />
@@ -37,10 +41,10 @@
                 android:id="@+id/tv_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="@{viewModel.isInputCompleted}"
+                android:clickable="@{viewModel.isSaveAvailable}"
                 android:text="@string/save"
                 android:textAppearance="@style/TextAppearance.Subtitle1"
-                android:textColor="@{viewModel.isInputCompleted ? @color/primary_normal :@color/gray_05}"
+                android:textColor="@{viewModel.isSaveAvailable ? @color/primary_normal :@color/gray_05}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -151,6 +155,7 @@
                     android:id="@+id/layout_rounding"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_work_type">
@@ -238,6 +243,7 @@
                     android:id="@+id/layout_caddie_p"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_rounding">
@@ -308,6 +314,7 @@
                     android:id="@+id/layout_over_p"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_caddie_p">
@@ -368,6 +375,7 @@
                     android:id="@+id/layout_baeto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_over_p">
@@ -493,6 +501,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="36dp"
                     android:background="@drawable/background_income_info_top"
+                    android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_add_memo">
@@ -608,6 +617,7 @@
                     android:text="@string/goal_achieved_amount"
                     android:textAppearance="@style/TextAppearance.Body1_Medium"
                     android:textColor="@color/coolgray_06"
+                    android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_income_info_top" />
@@ -631,9 +641,55 @@
                     app:layout_constraintTop_toBottomOf="@+id/layout_income_info_bottom"
                     tools:backgroundTint="@color/gray_04" />
 
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibility="@{viewModel.workType.name == DailyWorkType.REST.name}">
+
+            <ImageView
+                android:id="@+id/iv_rest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_coin_smile_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_rest_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/rest_title"
+                android:textAppearance="@style/TextAppearance.H6_Bold"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_rest" />
+
+            <TextView
+                android:id="@+id/tv_rest_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/rest_description"
+                android:textAppearance="@style/TextAppearance.Subtitle2"
+                android:textColor="@color/gray_07"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rest_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

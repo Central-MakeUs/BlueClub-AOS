@@ -58,8 +58,21 @@ class DailyWorkDetailViewModel @Inject constructor(
         _rounding,
         caddieP
     ) { workType, rounding, caddieP ->
-        workType != DailyWorkType.DEFAULT && rounding > 0 && (caddieP?.replace(",", "")
+        workType != DailyWorkType.REST && workType != DailyWorkType.DEFAULT && rounding > 0 && (caddieP?.replace(
+            ",",
+            ""
+        )
             ?.toIntOrNull() ?: 0) > 0
+    }.asLiveData()
+
+    val isSaveAvailable = combine(
+        _workType,
+        _rounding,
+        caddieP
+    ) { workType, rounding, caddieP ->
+        workType == DailyWorkType.REST || ( workType != DailyWorkType.DEFAULT
+                && rounding > 0
+                && (caddieP?.replace(",","")?.toIntOrNull() ?: 0) > 0)
     }.asLiveData()
 
     private val _memo = MutableStateFlow("")
@@ -140,23 +153,40 @@ class DailyWorkDetailViewModel @Inject constructor(
 
         viewModelScope.launch {
             val id = workId.value
+            val request = if (workType.value == DailyWorkType.REST) {
+                RequestCaddieDiary(
+                    workType = workType.value.title,
+                    memo = "",
+                    income = 0,
+                    expenditure = 0,
+                    saving = 0,
+                    date = date.value,
+                    imageUrlList = listOf(),
+                    rounding = 0,
+                    caddyFee = 0,
+                    overFee = 0,
+                    topDressing = baeto.value,
+                ).toJsonObject()
+            } else {
+                RequestCaddieDiary(
+                    workType = workType.value.title,
+                    memo = "",
+                    income = totalIncome,
+                    expenditure = spentAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                    saving = savingsAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                    date = date.value,
+                    imageUrlList = listOf(),
+                    rounding = rounding.value,
+                    caddyFee = caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                    overFee = overP.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                    topDressing = baeto.value,
+                ).toJsonObject()
+            }
             if (id != null && id > 0) { // modify
                 workbookRepository.modifyCaddieDiary(
                     id,
                     "골프 캐디",
-                    RequestCaddieDiary(
-                        workType = workType.value.title,
-                        memo = "",
-                        income = totalIncome,
-                        expenditure = spentAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                        saving = savingsAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                        date = date.value,
-                        imageUrlList = listOf(),
-                        rounding = rounding.value,
-                        caddyFee = caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                        overFee = overP.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                        topDressing = baeto.value,
-                    ).toJsonObject(),
+                    request,
                     null
                 ).onSuccess {
                     _workId.value = it.result.id
@@ -167,19 +197,7 @@ class DailyWorkDetailViewModel @Inject constructor(
             } else {
                 workbookRepository.uploadCaddieDiary(
                     "골프 캐디",
-                    RequestCaddieDiary(
-                        workType = workType.value.title,
-                        memo = "",
-                        income = totalIncome,
-                        expenditure = spentAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                        saving = savingsAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                        date = date.value,
-                        imageUrlList = listOf(),
-                        rounding = rounding.value,
-                        caddyFee = caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                        overFee = overP.value?.replace(",", "")?.toIntOrNull() ?: 0,
-                        topDressing = baeto.value,
-                    ).toJsonObject(),
+                    request,
                     null
                 ).onSuccess {
                     _workId.value = it.result.id
