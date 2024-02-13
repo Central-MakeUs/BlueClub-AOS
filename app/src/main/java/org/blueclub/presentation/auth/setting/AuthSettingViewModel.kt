@@ -1,16 +1,32 @@
 package org.blueclub.presentation.auth.setting
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import org.blueclub.data.datasource.BCDataSource
+import org.blueclub.data.model.request.RequestUserDetails
+import org.blueclub.domain.repository.AuthRepository
+import org.blueclub.domain.repository.UserRepository
 import org.blueclub.presentation.type.AuthSettingPageViewType
 import org.blueclub.presentation.type.JobSettingViewType
+import org.blueclub.presentation.type.NicknameGuideType
+import org.blueclub.presentation.type.TosViewType
 import org.blueclub.util.extension.toStateFlow
+import javax.inject.Inject
 
-class AuthSettingViewModel : ViewModel() {
+@HiltViewModel
+class AuthSettingViewModel @Inject constructor(
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
+    private val localStorage: BCDataSource,
+) : ViewModel() {
     private val _selectedJobType: MutableStateFlow<Map<JobSettingViewType, Boolean>> =
         MutableStateFlow(
             mapOf(
@@ -22,9 +38,7 @@ class AuthSettingViewModel : ViewModel() {
     val selectedJobType = _selectedJobType.asStateFlow()
     private val _chosenJobType: MutableStateFlow<JobSettingViewType> =
         MutableStateFlow(JobSettingViewType.GOLF)
-    val chosenJobType = _chosenJobType
-    private val _selectedYear: MutableStateFlow<String?> = MutableStateFlow(null)
-    val selectedYear = _selectedYear.asStateFlow()
+    val chosenJobType = _chosenJobType.asStateFlow()
     private val _goalSettingFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val goalSettingFinished = _goalSettingFinished.asStateFlow()
     private val _currentPage: MutableStateFlow<AuthSettingPageViewType> =
@@ -32,21 +46,45 @@ class AuthSettingViewModel : ViewModel() {
     val currentPage = _currentPage.asStateFlow()
 
     val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
-    val incomeGoalValid : StateFlow<Int?> = incomeGoal.map {
-        it?.replace(",", "")?.toInt()
+    val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
+        var integerIncome = it?.replace(",", "")
+        if(integerIncome.isNullOrEmpty())
+            integerIncome = "0"
+        integerIncome.toInt()
     }.toStateFlow(viewModelScope, 0)
 
-    val nickname = MutableStateFlow("")
-    private val _isNicknameCorrect = MutableStateFlow(false)
-    val isNicknameCorrect = _isNicknameCorrect.asStateFlow()
-    // TODO 닉네임 중복확인 후 버튼 활성화하는 작업 필요
+    val nickname = MutableStateFlow(localStorage.nickname)
+    private val _isNicknameCorrect = MutableLiveData(true)
+    val isNicknameCorrect: LiveData<Boolean> get() = _isNicknameCorrect
+    private val _isNicknameAvailable: MutableLiveData<Boolean?> =
+        MutableLiveData(true) // 중복인지 확인하는 변수 : null(아무 값 안보임), false (중복), true(생성 가능)
+    val isNicknameAvailable: LiveData<Boolean?> get() = _isNicknameAvailable
+    private val _nicknameInputGuide: MutableLiveData<NicknameGuideType> =
+        MutableLiveData(NicknameGuideType.VALID_NICKNAME)
+    val nicknameInputGuide: LiveData<NicknameGuideType> get() = _nicknameInputGuide
+
+    private val _selectedTosType: MutableStateFlow<Map<TosViewType, Boolean>> =
+        MutableStateFlow(
+            mapOf(
+                TosViewType.AGE to false,
+                TosViewType.SERVICE to false,
+                TosViewType.PRIVACY to false,
+                TosViewType.MARKETING to false,
+                TosViewType.EVENT to false,
+            )
+        )
+    val selectedTosType = _selectedTosType.asStateFlow()
+    private val _tosEntireSelected = MutableStateFlow(false)
+    val tosEntireSelected = _tosEntireSelected.asStateFlow()
+
+    init {
+        _isNicknameCorrect.value = true
+        _isNicknameAvailable.value = true
+        _nicknameInputGuide.value = NicknameGuideType.VALID_NICKNAME
+    }
 
     fun setChosenJobType(jobType: JobSettingViewType) {
         _chosenJobType.value = jobType
-    }
-
-    fun setSelectedYear(selectedYear: String?) {
-        _selectedYear.value = selectedYear
     }
 
     fun isGoalSettingFinished(selected: Boolean) {
@@ -70,5 +108,72 @@ class AuthSettingViewModel : ViewModel() {
             ).apply {
                 this[jobType] = !isSelected
             }
+        _chosenJobType.value = jobType
     }
+
+    fun setTosType(tosType: TosViewType) {
+        val isSelected = selectedTosType.value[tosType] ?: return
+        _selectedTosType.value = selectedTosType.value.toMutableMap().apply {
+            this[tosType] = !isSelected
+        }
+    }
+
+    fun setEntireTosSelected(isSelected: Boolean){
+        _tosEntireSelected.value = isSelected
+    }
+
+    fun setWholeTosType(): Boolean {
+        val isSelected = selectedTosType.value.values.contains(true)
+        _selectedTosType.value = mutableMapOf(
+            TosViewType.AGE to isSelected,
+            TosViewType.SERVICE to isSelected,
+            TosViewType.PRIVACY to isSelected,
+            TosViewType.MARKETING to isSelected,
+            TosViewType.EVENT to isSelected,
+        )
+        return isSelected
+    }
+
+    fun setNicknameCorrect(isCorrect: Boolean) {
+        _isNicknameCorrect.value = isCorrect
+    }
+
+    fun setNicknameAvailable(isAvailable: Boolean?) {
+        _isNicknameAvailable.value = isAvailable
+    }
+
+    fun setNicknameInputGuide(inputGuideType: NicknameGuideType) {
+        _nicknameInputGuide.value = inputGuideType
+    }
+
+    fun checkNicknameDuplication(nickname: String) {
+        viewModelScope.launch {
+            authRepository.checkDuplication(nickname)
+                .onSuccess {
+                    _isNicknameAvailable.value = true
+                    _nicknameInputGuide.value = NicknameGuideType.VALID_NICKNAME
+                }
+                .onFailure {
+                    _isNicknameAvailable.value = false
+                    _nicknameInputGuide.value = NicknameGuideType.ALREADY_USED
+                }
+        }
+    }
+
+    fun writeUserDetails(moveToFinish: () -> Unit){
+        viewModelScope.launch {
+            userRepository.writeUserDetails(
+                RequestUserDetails(
+                    nickname.value ?: "",
+                    //chosenJobType.value.title,
+                    "골프캐디",
+                    incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                    tosAgree = true,
+                )
+            ).onSuccess {
+                moveToFinish()
+            }
+        }
+    }
+
 }

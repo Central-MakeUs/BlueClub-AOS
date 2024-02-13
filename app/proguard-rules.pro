@@ -19,3 +19,32 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.kakao.sdk.**.model.* { <fields>; }
+-keep class * extends com.google.gson.TypeAdapter
+-keep interface com.kakao.sdk.auth.*
+-keep interface com.kakao.sdk.**.*Api
+-dontwarn org.bouncycastle.jsse.**
+-dontwarn org.conscrypt.*
+-dontwarn org.openjsse.**
+
+ -keep,allowobfuscation,allowshrinking interface retrofit2.Call
+ -keep,allowobfuscation,allowshrinking class retrofit2.Response
+ -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+ -keepclasseswithmembers class kotlinx.serialization.json.** {
+     kotlinx.serialization.KSerializer serializer(...);
+ }
+ -keepclassmembers class kotlinx.serialization.json.** {
+      *** Companion;
+  }
+-keepnames class * extends android.os.Parcelable
+-keepnames class * extends java.io.Serializable
+-keep class org.blueclub.data.model.** { *; }
+
+# To use naver login with proguard
+-keep public class com.navercorp.nid.** { public *; }
+-keep public class com.navercorp.nid.oauth.** {*;}
+
+# To use naver login profile with proguard
+-keep public class com.navercorp.nid.profile.data.** {*;}

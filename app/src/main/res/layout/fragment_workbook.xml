@@ -105,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="1000,000,000원"
+                        android:text="@{viewModel.totalIncomeString}"
                         android:textAppearance="@style/TextAppearance.Subtitle1"
                         android:textColor="@color/coolgray_10"
                         app:layout_constraintBottom_toBottomOf="@id/tv_income_achievement"
@@ -167,7 +167,7 @@
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="8dp"
                             android:max="100"
-                            android:progress="@{(viewModel.goalProgress > 3) ? viewModel.goalProgress : 3 }"
+                            android:progress="@{(viewModel.progress > 3) ? viewModel.progress : 3 }"
                             android:progressDrawable="@drawable/progressbar_goal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -179,7 +179,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:text="1000만원"
+                            android:text="@{viewModel.goalIncome}"
                             android:textAppearance="@style/TextAppearance.Caption3"
                             android:textColor="@color/coolgray_05"
                             app:layout_constraintEnd_toEndOf="@id/pb_goal"
@@ -307,9 +307,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:text="@{@string/monthly_record(viewModel.today.month.value)}"
+                            android:layout_marginBottom="20dp"
+                            android:text="@{@string/monthly_record(viewModel.yearMonth.month.value)}"
                             android:textAppearance="@style/TextAppearance.Subtitle1"
                             android:textColor="@color/gray_10"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -318,7 +320,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:text="28"
+                            android:text="@{viewModel.totalRecordDay.toString()}"
                             android:textAppearance="@style/TextAppearance.Subtitle1"
                             android:textColor="@color/primary_normal"
                             app:layout_constraintStart_toEndOf="@+id/tv_daily_record_title"
@@ -332,11 +334,53 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="50dp"
                         android:nestedScrollingEnabled="false"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_daily_record_title" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_empty_record"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/background_job_selected"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_daily_record_title"
+                        app:visibility="@{viewModel.totalRecordDay == 0}">
+
+                        <TextView
+                            android:id="@+id/tv_first_record"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="20dp"
+                            android:layout_marginStart="20dp"
+                            android:text="@{@string/workbook_first_record(viewModel.yearMonth.month.value)}"
+                            android:textAppearance="@style/TextAppearance.Subtitle2"
+                            android:textColor="@color/primary_normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/ic_arrow_right_blue"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/layout_daily_record_title" />

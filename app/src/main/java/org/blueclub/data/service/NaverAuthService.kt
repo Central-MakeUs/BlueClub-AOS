@@ -23,14 +23,13 @@ class NaverAuthService @Inject constructor(
     }
 
     fun loginNaver(
-        loginListener: ((LoginPlatformType, String) -> Unit),
+        loginListener: ((LoginPlatformType, String, String, String, String) -> Unit),
     ) {
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
                 val accessToken = requireNotNull(NaverIdLoginSDK.getAccessToken())
                 Timber.d(accessToken)
-                loginListener(LoginPlatformType.NAVER, accessToken)
-                getAccountInfo()
+                getAccountInfo(loginListener, accessToken)
             }
 
             override fun onFailure(httpStatus: Int, message: String) {
@@ -47,9 +46,17 @@ class NaverAuthService @Inject constructor(
         )
     }
 
-    fun getAccountInfo() {
+    fun getAccountInfo(
+        loginListener: ((LoginPlatformType, String, String, String, String) -> Unit),
+        accessToken: String,
+    ) {
         NidOAuthLogin().callProfileApi(object : NidProfileCallback<NidProfileResponse> {
             override fun onSuccess(result: NidProfileResponse) {
+                loginListener(
+                    LoginPlatformType.NAVER, result.profile?.id ?: "", result.profile?.email ?: "",
+                    result.profile?.name ?: "",
+                    result.profile?.profileImage ?: "",
+                )
                 Timber.d("${result.profile?.name} , ${result.profile?.email}")
             }
 
@@ -70,6 +77,7 @@ class NaverAuthService @Inject constructor(
 
     fun deleteAccountNaver(deleteAccountListener: (() -> Unit)) {
         NidOAuthLogin().callDeleteTokenApi(
+            context,
             object : OAuthLoginCallback {
                 override fun onSuccess() {
                     Timber.d("연결 끊기 성공. SDK에서 토큰 삭제 됨")

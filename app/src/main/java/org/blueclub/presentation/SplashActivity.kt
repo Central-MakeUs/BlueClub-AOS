@@ -18,7 +18,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
         installSplashScreen()
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
-            delay(1000L)
+            delay(2000L)
             moveToLogin()
         }
     }

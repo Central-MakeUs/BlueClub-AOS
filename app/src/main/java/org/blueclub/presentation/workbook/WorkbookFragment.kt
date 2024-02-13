@@ -25,18 +25,23 @@ import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.MonthScrollListener
 import com.kizitonwose.calendar.view.ViewContainer
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
-import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.presentation.base.BindingFragment
-import org.blueclub.presentation.daily.DailyWorkDetailActivity
-import org.blueclub.presentation.type.DailyWorkType
+import org.blueclub.presentation.daily.WorkDetailCaddieActivity
+import org.blueclub.presentation.notice.NoticeActivity
+import org.blueclub.util.UiState
+import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
 
+@AndroidEntryPoint
 class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragment_workbook) {
     private val viewModel: WorkbookViewModel by activityViewModels()
     private lateinit var rootView: View
@@ -49,8 +54,8 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.lifecycleOwner = this
         rootView = binding.root
 
-        initLayout()
         initCalendar()
+        initLayout()
         collectData()
     }
 
@@ -60,37 +65,50 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
             itemAnimator = null
             adapter = dailyWorkAdapter
         }
-        // TODO 더미 데이터 삭제
-        dailyWorkAdapter.submitList(
-            listOf(
-                DailyWorkInfo("1.2", "월", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo("1.3", "화", DailyWorkType.REST, null, null),
-                DailyWorkInfo("1.5", "수", DailyWorkType.EARLY, 15000000, 8),
-                DailyWorkInfo("1.8", "목", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo("1.9", "금", DailyWorkType.WORK, 15000000, 8),
-                DailyWorkInfo("1.10", "월", DailyWorkType.WORK, 15000000, 8),
-            )
-        )
         binding.ivSetting.setOnClickListener {
             showGoalSettingBottomSheet()
         }
         binding.layoutGoalSetting.setOnClickListener {
             showGoalSettingBottomSheet()
         }
-        binding.ivPlus.setOnClickListener { moveToDetail() }
+        binding.ivPlus.setOnClickListener {
+            moveToDetail(LocalDate.now().toString())
+        }
+        binding.ivNotice.setOnClickListener {
+            moveToNotice()
+        }
+        lifecycleScope.launch {
+            delay(10L)
+            binding.calendarView.scrollToMonth(YearMonth.now())
+        }
     }
 
     private fun initCalendar() {
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun bind(container: DayViewContainer, data: CalendarDay) {
-                if (data.position == DayPosition.MonthDate) {
+                if (data.position == DayPosition.MonthDate) { // 이번 달에 해당하는 뷰
                     container.tvDay.text = data.date.dayOfMonth.toString()
-                    container.tvDay.background =
-                        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
-                    container.tvAmount.text = "10만원"
+                    if(viewModel.workData.value[data.date.dayOfMonth] != null){
+                        container.tvDay.background =
+                            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
+
+                        container.tvAmount.text = ((viewModel.workData.value[data.date.dayOfMonth]?.income ?: 0) / 10000).toString() + " 만원"
+                        container.tvDay.setTextColor(requireContext().getColor(R.color.white))
+                    }
+                    else{
+                        container.tvAmount.text = ""
+                        container.tvDay.background =
+                            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin_gray)
+                        container.tvDay.setTextColor(requireContext().getColor(R.color.gray_08))
+
+                    }
+
+                    // 오늘인 경우
+
+
                 } else { // 이번 달이 아닌 경우
                     container.tvDay.background = null
-                    container.tvDay.text=""
+                    container.tvDay.text = ""
                     container.tvAmount.text = ""
                 }
             }
@@ -103,10 +121,12 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         val firstDayOfWeek = firstDayOfWeekFromLocale()
         binding.calendarView.setup(startMonth, currentMonthPage, firstDayOfWeek)
         binding.ivCalendarPrevMonth.setOnClickListener {
-            viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
+            if(viewModel.yearMonth.value.previousMonth >= startMonth)
+                viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
         }
         binding.ivCalendarNextMonth.setOnClickListener {
-            viewModel.setYearMonth(viewModel.yearMonth.value.nextMonth)
+            if(viewModel.yearMonth.value.nextMonth <= currentMonthPage)
+                viewModel.setYearMonth(viewModel.yearMonth.value.nextMonth)
         }
         binding.calendarView.monthScrollListener = object : MonthScrollListener {
             override fun invoke(calendar: CalendarMonth) {
@@ -132,11 +152,11 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
             }
-        binding.calendarView.scrollToMonth(YearMonth.now())
+
     }
 
     private fun collectData() {
-        viewModel.goalProgress.flowWithLifecycle(lifecycle).onEach {
+        viewModel.progress.flowWithLifecycle(lifecycle).onEach {
             var leftMargin = getProgressBarSize() * it / 100 - PROGRESS_MARGIN_MIN
             if (leftMargin < PROGRESS_MARGIN_MIN)
                 leftMargin = PROGRESS_MARGIN_MIN
@@ -157,6 +177,43 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         }.launchIn(lifecycleScope)
         viewModel.yearMonth.flowWithLifecycle(lifecycle).onEach {
             binding.calendarView.smoothScrollToMonth(it)
+            binding.calendarView.notifyMonthChanged(viewModel.yearMonth.value)
+            viewModel.setWorkData(mapOf())
+            viewModel.setMonthlyInfoUiState(UiState.Loading)
+            viewModel.setMonthlyRecordUiState(UiState.Loading)
+        }.launchIn(lifecycleScope)
+        viewModel.monthlyRecordUiState.flowWithLifecycle(lifecycle).onEach {
+            when (it) {
+                is UiState.Loading -> {
+                    val yM = viewModel.yearMonth.value
+                    var yearMonth = "${yM.year}-"
+                    if (yM.monthValue < 10) {
+                        yearMonth += "0"
+                    }
+                    yearMonth += yM.monthValue
+                    viewModel.getMonthlyRecord(yearMonth)
+                }
+
+                is UiState.Success -> {
+                    dailyWorkAdapter.submitList(it.data)
+                    binding.calendarView.notifyCalendarChanged()
+                }
+
+                else -> {}
+            }
+        }.launchIn(lifecycleScope)
+        viewModel.monthlyInfoUiState.flowWithLifecycle(lifecycle).onEach {
+            when (it) {
+                is UiState.Loading -> {
+                    viewModel.getMonthlyInfo()
+                }
+
+                is UiState.Success -> {
+                    binding.calendarView.notifyMonthChanged(viewModel.yearMonth.value)
+                }
+
+                else -> {}
+            }
         }.launchIn(lifecycleScope)
     }
 
@@ -171,9 +228,14 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         GoalSettingBottomSheet().show(parentFragmentManager, "goalSetting")
     }
 
-    private fun moveToDetail() {
-        val intent = Intent(requireActivity(), DailyWorkDetailActivity::class.java)
-        startActivity(intent)
+    private fun moveToDetail(date: String) {
+        Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
+            putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
+        }.also { startActivity(it) }
+    }
+
+    private fun moveToNotice() {
+        startActivity(Intent(requireActivity(), NoticeActivity::class.java))
     }
 
     companion object {

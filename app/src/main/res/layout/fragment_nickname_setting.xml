@@ -70,12 +70,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:background="@drawable/shape_border_radius_4"
+            android:enabled="@{viewModel.nickname != null  &amp; viewModel.isNicknameAvailable != true &amp; viewModel.isNicknameCorrect}"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
             android:text="@string/check_duplication"
             android:textAppearance="@style/TextAppearance.Subtitle3"
             android:textColor="@color/white"
-            app:backgroundTint="@color/gray_06"
+            app:backgroundTint="@drawable/selector_btn_radius_4"
             app:layout_constraintBottom_toBottomOf="@id/et_nickname"
             app:layout_constraintEnd_toEndOf="@+id/et_nickname"
             app:layout_constraintTop_toTopOf="@+id/et_nickname" />
@@ -86,11 +87,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
+            android:text="@{context.getString(viewModel.nicknameInputGuide.strRes)}"
             android:textAppearance="@style/TextAppearance.Caption1"
+            android:textColor="@{context.getColor(viewModel.nicknameInputGuide.colorRes)}"
             app:layout_constraintStart_toStartOf="@id/et_nickname"
-            app:layout_constraintTop_toBottomOf="@id/et_nickname"
-            tools:text="@{viewModel.isNicknameCorrect ? @string/correct_nickname : @string/wrong_nickname}"
-            tools:textColor="@{viewModel.isNicknameCorrect ? @color/primary_normal : @color/red}" />
+            app:layout_constraintTop_toBottomOf="@id/et_nickname"/>
 
         <TextView
             android:id="@+id/tv_nickname_length_limit"
@@ -113,6 +114,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/shape_border_radius_12"
+            android:enabled="@{viewModel.isNicknameAvailable == true}"
             android:paddingVertical="17dp"
             android:text="@string/next"
             android:textAppearance="@style/TextAppearance.Subtitle1"

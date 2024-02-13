@@ -1,20 +1,28 @@
 package org.blueclub.presentation.daily
 
 import android.os.Bundle
+import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.blueclub.R
 import org.blueclub.databinding.ActivityDailyWorkDetailBinding
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.model.DailyWorkDetailOption
 import org.blueclub.presentation.type.DailyWorkDetailOptionType
 
+@AndroidEntryPoint
 class DailyWorkDetailActivity :
     BindingActivity<ActivityDailyWorkDetailBinding>(R.layout.activity_daily_work_detail) {
     private lateinit var dailyworkAdapter: DailyWorkDetailAdapter
+    private val viewModel: DailyWorkDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
         initLayout()
+        collectData()
     }
 
     private fun initLayout() {
@@ -49,7 +57,17 @@ class DailyWorkDetailActivity :
         )
     }
 
+    private fun collectData(){
+    }
+
     private fun showWorkTypeDialog() {}
 
     private fun showMemoDialog() {}
+
+    companion object {
+        const val ARG_DATE = "date"
+        const val ARG_YEAR = "year"
+        const val ARG_MONTH = "month"
+        const val ARG_DAY = "day"
+    }
 }

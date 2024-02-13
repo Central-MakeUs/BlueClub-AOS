@@ -40,11 +40,6 @@ class GoalSettingFragment :
                     result =
                         decimalFormat.format(txt.toString().replace(",", "").toDouble())
                     binding.etGoalSetting.setText(result)
-//                    binding.tvGoalSettingAmountInfo.apply {
-//                        text = getString(R.string.goal_setting_amount_info, result)
-//                        visibility = View.VISIBLE
-//                    }
-
                     binding.etGoalSetting.setSelection(result.length)
                 }
 

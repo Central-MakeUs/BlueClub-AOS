@@ -2,6 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <import type="org.blueclub.presentation.type.TosViewType" />
+
+        <variable
+            name="viewModel"
+            type="org.blueclub.presentation.auth.setting.AuthSettingViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,17 +43,21 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="14dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_tos_title">
 
-            <ImageView
+
+            <CheckBox
                 android:id="@+id/iv_check"
+                style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/ic_check_blue"
+                android:checked="@{viewModel.tosEntireSelected}"
+                android:clickable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +86,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_privacy"
+            android:id="@+id/layout_age"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="33dp"
@@ -82,35 +95,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_tos_entire">
 
-            <ImageView
-                android:id="@+id/iv_check_privacy"
+            <CheckBox
+                android:id="@+id/iv_check_age"
+                style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_check_blue"
+                android:checked="@{viewModel.selectedTosType.get(TosViewType.AGE)}"
+                android:clickable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_privacy"
+                android:id="@+id/tv_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:text="@string/tos_privacy"
+                android:text="@string/tos_age"
                 android:textAppearance="@style/TextAppearance.Body2_Medium"
                 android:textColor="@color/gray_06"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_check_privacy"
+                app:layout_constraintStart_toEndOf="@+id/iv_check_age"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/iv_privacy_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,15 +126,19 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="33dp"
             android:layout_marginTop="20dp"
+            android:onClick="@{()->viewModel.setTosType(TosViewType.SERVICE)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_privacy">
+            app:layout_constraintTop_toBottomOf="@+id/layout_age">
 
-            <ImageView
+            <CheckBox
                 android:id="@+id/iv_check_service"
+                style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_check_blue"
+                android:checked="@{viewModel.selectedTosType.get(TosViewType.SERVICE)}"
+                android:clickable="false"
+                android:src="@drawable/selector_check"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -155,79 +166,42 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_third"
+            android:id="@+id/layout_privacy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="33dp"
             android:layout_marginTop="20dp"
+            android:onClick="@{()->viewModel.setTosType(TosViewType.PRIVACY)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_service">
 
-            <ImageView
-                android:id="@+id/iv_check_third"
+            <CheckBox
+                android:id="@+id/iv_check_privacy"
+                style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_check_blue"
+                android:checked="@{viewModel.selectedTosType.get(TosViewType.PRIVACY)}"
+                android:clickable="false"
+                android:src="@drawable/selector_check"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_third"
+                android:id="@+id/tv_privacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:text="@string/tos_third"
+                android:text="@string/tos_privacy"
                 android:textAppearance="@style/TextAppearance.Body2_Medium"
                 android:textColor="@color/gray_06"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_check_third"
+                app:layout_constraintStart_toEndOf="@+id/iv_check_privacy"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_third_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_phone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="33dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_third">
-
-            <ImageView
-                android:id="@+id/iv_check_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_check_blue"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="@string/tos_phone"
-                android:textAppearance="@style/TextAppearance.Body2_Medium"
-                android:textColor="@color/gray_06"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_check_phone"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/iv_phone_detail"
+                android:id="@+id/iv_privacy_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_right"
@@ -242,15 +216,19 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="33dp"
             android:layout_marginTop="20dp"
+            android:onClick="@{()->viewModel.setTosType(TosViewType.MARKETING)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_phone">
+            app:layout_constraintTop_toBottomOf="@+id/layout_privacy">
 
-            <ImageView
+            <CheckBox
                 android:id="@+id/iv_check_marketing"
+                style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_check_blue"
+                android:checked="@{viewModel.selectedTosType.get(TosViewType.MARKETING)}"
+                android:clickable="false"
+                android:src="@drawable/selector_check"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -267,14 +245,43 @@
                 app:layout_constraintStart_toEndOf="@+id/iv_check_marketing"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/iv_marketing_detail"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_event"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="33dp"
+            android:layout_marginTop="20dp"
+            android:onClick="@{()->viewModel.setTosType(TosViewType.EVENT)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_marketing">
+
+            <CheckBox
+                android:id="@+id/iv_check_event"
+                style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right"
+                android:checked="@{viewModel.selectedTosType.get(TosViewType.EVENT)}"
+                android:clickable="false"
+                android:src="@drawable/selector_check"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="@string/tos_event"
+                android:textAppearance="@style/TextAppearance.Body2_Medium"
+                android:textColor="@color/gray_06"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_check_event"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -285,16 +292,16 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/coolgray_10"
+            android:backgroundTint="@color/gray_04"
             android:paddingVertical="17dp"
-            android:text="확인"
+            android:text="@string/confirm"
             android:textAppearance="@style/TextAppearance.Subtitle1"
             android:textColor="@color/white"
             app:cornerRadius="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_marketing"
+            app:layout_constraintTop_toBottomOf="@+id/layout_event"
             app:rippleColor="@color/coolgray_10" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

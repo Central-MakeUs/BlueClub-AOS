@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import org.blueclub.databinding.ItemDailyRecordBinding
 import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.util.ItemDiffCallback
+import java.text.DecimalFormat
 
 class DailyWorkAdapter(
-    private val moveToDetail: () -> Unit,
+    private val moveToDetail: (String) -> Unit,
 ) : ListAdapter<DailyWorkInfo, RecyclerView.ViewHolder>(
     ItemDiffCallback<DailyWorkInfo>(
         onContentsTheSame = { old, new -> old == new },
@@ -23,11 +24,14 @@ class DailyWorkAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             dailyWorkInfo: DailyWorkInfo,
-            moveToDetail: () -> Unit,
+            moveToDetail: (String) -> Unit,
         ) {
             binding.dailyWorkInfo = dailyWorkInfo
             binding.dailyWorkType = dailyWorkInfo.dailyWorkType
-            binding.ivMoveToDetail.setOnClickListener { moveToDetail() }
+            binding.date = dailyWorkInfo.date.slice(5..9).replace("-", ".")
+            binding.ivMoveToDetail.setOnClickListener { moveToDetail(dailyWorkInfo.date) }
+            val decimalFormat = DecimalFormat("#,###")
+            binding.income = decimalFormat.format(dailyWorkInfo.income ?: 0)
         }
     }
 

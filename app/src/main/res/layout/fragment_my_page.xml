@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.blueclub.presentation.home.HomeViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/job_golf"
+                android:text="@{viewModel.job}"
                 android:textAppearance="@style/TextAppearance.H7_Bold"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/iv_profile"
@@ -89,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="가나다라마바사아자차님"
+                android:text="@{@string/home_nickname(viewModel.nickname)}"
                 android:textAppearance="@style/TextAppearance.Subtitle2"
                 android:textColor="@color/coolgray_06"
                 app:layout_constraintStart_toStartOf="@+id/tv_my_job"
@@ -104,7 +111,7 @@
                 android:backgroundTint="@color/primary_background"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="2dp"
-                android:text="목표수입 1000만원"
+                android:text="@{@string/mypage_goal_income_text(viewModel.goalIncome)}"
                 android:textAppearance="@style/TextAppearance.Caption2"
                 android:textColor="@color/primary_normal"
                 app:layout_constraintStart_toStartOf="@id/tv_my_nickname"
@@ -317,7 +324,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_privacy"
+            android:id="@+id/layout_age"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
@@ -328,7 +335,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_tos">
 
             <TextView
-                android:id="@+id/tv_privacy"
+                android:id="@+id/tv_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_privacy"
@@ -357,7 +364,7 @@
             android:layout_marginBottom="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_privacy">
+            app:layout_constraintTop_toBottomOf="@+id/layout_age">
 
             <TextView
                 android:id="@+id/tv_version"
@@ -371,6 +378,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_version_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="1.0.0"
+                android:textAppearance="@style/TextAppearance.Body2_Medium"
+                android:textColor="@color/gray_05"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_version"
+                app:layout_constraintStart_toEndOf="@+id/tv_version"
+                app:layout_constraintTop_toTopOf="@+id/tv_version" />
+
+            <TextView
                 android:id="@+id/tv_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -381,6 +400,7 @@
                 android:text="@string/mypage_update"
                 android:textAppearance="@style/TextAppearance.Subtitle3"
                 android:textColor="@color/white"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
