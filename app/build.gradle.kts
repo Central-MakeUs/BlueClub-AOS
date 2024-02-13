@@ -21,8 +21,8 @@ android {
         applicationId = "org.blueclub"
         minSdk = 28
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String","KAKAO_NATIVE_KEY",properties.getProperty("KAKAO_NATIVE_KEY"))
@@ -103,10 +103,10 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Kakao
-    implementation("com.kakao.sdk:v2-user:2.19.0")
+    implementation("com.kakao.sdk:v2-user:2.12.0")
 
     // Naver
-    implementation("com.navercorp.nid:oauth:5.9.0")
+    implementation("com.navercorp.nid:oauth:5.6.0")
 
     // Lottie
     implementation("com.airbnb.android:lottie:6.3.0")

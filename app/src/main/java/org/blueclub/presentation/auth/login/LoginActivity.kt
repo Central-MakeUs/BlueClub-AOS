@@ -65,6 +65,5 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         val nextScreen = if (signType == SignType.SIGN_UP) AuthSettingActivity::class.java
         else MainActivity::class.java
         startActivity(Intent(this, nextScreen))
-        finish()
     }
 }
