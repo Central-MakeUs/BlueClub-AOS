@@ -48,7 +48,7 @@ class AuthSettingViewModel @Inject constructor(
     val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
         var integerIncome = it?.replace(",", "")
-        if(integerIncome.isNullOrEmpty())
+        if (integerIncome.isNullOrEmpty())
             integerIncome = "0"
         integerIncome.toInt()
     }.toStateFlow(viewModelScope, 0)
@@ -63,9 +63,9 @@ class AuthSettingViewModel @Inject constructor(
         MutableLiveData(NicknameGuideType.VALID_NICKNAME)
     val nicknameInputGuide: LiveData<NicknameGuideType> get() = _nicknameInputGuide
 
-    private val _selectedTosType: MutableStateFlow<Map<TosViewType, Boolean>> =
+    private val _selectedTosType: MutableStateFlow<MutableMap<TosViewType, Boolean>> =
         MutableStateFlow(
-            mapOf(
+            mutableMapOf(
                 TosViewType.AGE to false,
                 TosViewType.SERVICE to false,
                 TosViewType.PRIVACY to false,
@@ -74,8 +74,6 @@ class AuthSettingViewModel @Inject constructor(
             )
         )
     val selectedTosType = _selectedTosType.asStateFlow()
-    private val _tosEntireSelected = MutableStateFlow(false)
-    val tosEntireSelected = _tosEntireSelected.asStateFlow()
 
     init {
         _isNicknameCorrect.value = true
@@ -118,12 +116,7 @@ class AuthSettingViewModel @Inject constructor(
         }
     }
 
-    fun setEntireTosSelected(isSelected: Boolean){
-        _tosEntireSelected.value = isSelected
-    }
-
-    fun setWholeTosType(): Boolean {
-        val isSelected = selectedTosType.value.values.contains(true)
+    fun setWholeTosType(isSelected: Boolean) {
         _selectedTosType.value = mutableMapOf(
             TosViewType.AGE to isSelected,
             TosViewType.SERVICE to isSelected,
@@ -131,7 +124,6 @@ class AuthSettingViewModel @Inject constructor(
             TosViewType.MARKETING to isSelected,
             TosViewType.EVENT to isSelected,
         )
-        return isSelected
     }
 
     fun setNicknameCorrect(isCorrect: Boolean) {
@@ -160,7 +152,7 @@ class AuthSettingViewModel @Inject constructor(
         }
     }
 
-    fun writeUserDetails(moveToFinish: () -> Unit){
+    fun writeUserDetails(moveToFinish: () -> Unit) {
         viewModelScope.launch {
             userRepository.writeUserDetails(
                 RequestUserDetails(
