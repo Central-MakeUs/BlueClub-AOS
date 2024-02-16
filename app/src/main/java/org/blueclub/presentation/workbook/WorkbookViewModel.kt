@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.blueclub.data.datasource.BCDataSource
 import org.blueclub.data.model.request.RequestGoalSetting
 import org.blueclub.data.model.response.ResponseMonthlyInfo
 import org.blueclub.domain.model.DailyWorkInfo
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WorkbookViewModel @Inject constructor(
     private val workbookRepository: WorkbookRepository,
+    private val localStorage: BCDataSource,
 ) : ViewModel() {
     private val _monthlyRecordUiState: MutableStateFlow<UiState<List<DailyWorkInfo>>> =
         MutableStateFlow(UiState.Loading)
@@ -34,6 +36,8 @@ class WorkbookViewModel @Inject constructor(
     val yearMonth = _yearMonth.asStateFlow()
     private val _today = MutableStateFlow(YearMonth.now())
     val today = _today.asStateFlow()
+
+    val job = localStorage.job
 
     // 목표 설정 바텀시트 관련
     val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)

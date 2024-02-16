@@ -74,11 +74,13 @@ class ProfileSettingViewModel @Inject constructor(
                 userRepository.modifyUserDetails(
                     RequestModifyUserDetails(
                         nickname.value!!,
-                        "골프캐디",
+                        chosenJobType.value.title,
+                        //"골프캐디",
                         incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 100000
                     )
                 ).onSuccess {
                     _modifiedAccountUiState.value = UiState.Success(true)
+                    localStorage.job=chosenJobType.value.title
                 }.onFailure {
                     _modifiedAccountUiState.value = UiState.Error(it.message)
                 }
