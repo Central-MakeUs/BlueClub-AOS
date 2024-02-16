@@ -1,4 +1,4 @@
-package org.blueclub.presentation.daily
+package org.blueclub.presentation.daily.caddie
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +16,7 @@ import org.blueclub.databinding.ActivityWorkDetailCaddieBinding
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.card.WorkCardLoadingActivity
 import org.blueclub.presentation.card.WorkCardLoadingActivity.Companion.ARG_WORK_BOOK_ID
+import org.blueclub.presentation.daily.WorkTypeSettingBottomSheet
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.showToast
 import timber.log.Timber
@@ -24,7 +25,7 @@ import java.text.DecimalFormat
 @AndroidEntryPoint
 class WorkDetailCaddieActivity :
     BindingActivity<ActivityWorkDetailCaddieBinding>(R.layout.activity_work_detail_caddie) {
-    private val viewModel: DailyWorkDetailViewModel by viewModels()
+    private val viewModel: WorkDetailCaddieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

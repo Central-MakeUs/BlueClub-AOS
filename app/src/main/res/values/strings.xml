@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BlueClub-AOS</string>
+    <string name="app_name">BlueClub</string>
     <string name="empty"> </string>
 
     <!-- onboarding -->
@@ -147,6 +147,11 @@
     <string name="daily_caddie_p">캐디피 수입</string>
     <string name="daily_caddie_over_p">오버피 수입</string>
     <string name="daily_caddie_soil">배토 여부</string>
+
+    <string name="daily_delivery_count">배달 건수</string>
+    <string name="daily_delivery_income">배달 수입</string>
+    <string name="daily_delivery_promotion_count">프로모션 건수</string>
+    <string name="daily_delivery_promotion_income">프로모션 수입</string>
 
     <string name="rest_title">오늘 하루는 제대로 충전해요</string>
     <string name="rest_description">휴무도 꾸준히 기록하는 습관\n너무 잘하고 있어요!</string>

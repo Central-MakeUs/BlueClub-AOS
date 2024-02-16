@@ -16,7 +16,8 @@ import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.FragmentHomeBinding
 import org.blueclub.presentation.base.BindingFragment
-import org.blueclub.presentation.daily.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.caddie.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.rider.WorkDetailRiderActivity
 import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.presentation.workbook.WorkbookFragment
 import org.blueclub.util.UiState
@@ -88,10 +89,18 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun moveToDetail(date: String) {
-        Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
-            putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
-            Timber.d("디테일 전달: $date")
-        }.also { startActivity(it) }
+
+        Timber.d("직업: ${viewModel.job}")
+        if(viewModel.job.toString() == "골프캐디"){
+            Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
+                putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
+            }.also { startActivity(it) }
+        }
+        else if(viewModel.job.toString() == "배달라이더"){
+            Intent(requireActivity(), WorkDetailRiderActivity::class.java).apply {
+                putExtra(WorkDetailRiderActivity.ARG_DATE, date)
+            }.also { startActivity(it) }
+        }
     }
 
     private fun getProgressBarSize(): Int {

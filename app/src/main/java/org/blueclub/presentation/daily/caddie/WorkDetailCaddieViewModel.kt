@@ -1,4 +1,4 @@
-package org.blueclub.presentation.daily
+package org.blueclub.presentation.daily.caddie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -12,16 +12,13 @@ import org.blueclub.data.model.request.RequestCaddieDiary
 import org.blueclub.domain.repository.WorkbookRepository
 import org.blueclub.presentation.type.DailyWorkType
 import org.blueclub.util.UiState
+import org.blueclub.util.getDayOfWeek
 import timber.log.Timber
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class DailyWorkDetailViewModel @Inject constructor(
+class WorkDetailCaddieViewModel @Inject constructor(
     private val workbookRepository: WorkbookRepository,
 ) : ViewModel() {
 
@@ -70,9 +67,9 @@ class DailyWorkDetailViewModel @Inject constructor(
         _rounding,
         caddieP
     ) { workType, rounding, caddieP ->
-        workType == DailyWorkType.REST || ( workType != DailyWorkType.DEFAULT
+        workType == DailyWorkType.REST || (workType != DailyWorkType.DEFAULT
                 && rounding > 0
-                && (caddieP?.replace(",","")?.toIntOrNull() ?: 0) > 0)
+                && (caddieP?.replace(",", "")?.toIntOrNull() ?: 0) > 0)
     }.asLiveData()
 
     private val _memo = MutableStateFlow("")
@@ -88,15 +85,6 @@ class DailyWorkDetailViewModel @Inject constructor(
         _month.value = date.slice(5..6).toIntOrNull() ?: 0
         _day.value = date.slice(8..9).toIntOrNull() ?: 0
         _dow.value = getDayOfWeek(date)
-    }
-
-    fun getDayOfWeek(date: String): String {
-        val cal: Calendar = Calendar.getInstance()
-        val df = SimpleDateFormat(dateFormat)
-        var day = Date()
-        day = df.parse(date) ?: return ""
-        cal.time = day
-        return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.KOREAN) ?: ""
     }
 
     fun minusRounding() {

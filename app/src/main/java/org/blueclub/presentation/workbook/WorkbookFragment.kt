@@ -33,9 +33,11 @@ import kotlinx.coroutines.launch
 import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
 import org.blueclub.presentation.base.BindingFragment
-import org.blueclub.presentation.daily.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.caddie.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.rider.WorkDetailRiderActivity
 import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.util.UiState
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -229,9 +231,18 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
     }
 
     private fun moveToDetail(date: String) {
-        Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
-            putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
-        }.also { startActivity(it) }
+        Timber.d("직업: ${viewModel.job}")
+        if(viewModel.job.toString() == "골프캐디"){
+            Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
+                putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
+            }.also { startActivity(it) }
+        }
+        else if(viewModel.job.toString() == "배달라이더"){
+            Intent(requireActivity(), WorkDetailRiderActivity::class.java).apply {
+                putExtra(WorkDetailRiderActivity.ARG_DATE, date)
+            }.also { startActivity(it) }
+        }
+
     }
 
     private fun moveToNotice() {

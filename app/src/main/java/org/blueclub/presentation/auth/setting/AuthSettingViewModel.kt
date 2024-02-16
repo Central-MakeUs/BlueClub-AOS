@@ -157,8 +157,8 @@ class AuthSettingViewModel @Inject constructor(
             userRepository.writeUserDetails(
                 RequestUserDetails(
                     nickname.value ?: "",
-                    //chosenJobType.value.title,
-                    "골프캐디",
+                    chosenJobType.value.title,
+                    //"골프캐디",
                     incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 0,
                     tosAgree = true,
                 )
