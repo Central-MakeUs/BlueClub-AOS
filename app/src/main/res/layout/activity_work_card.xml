@@ -132,6 +132,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/shape_border_radius_25"
                 android:backgroundTint="#4472CD"
+                android:paddingVertical="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view_card_circle">
@@ -141,7 +142,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="20dp"
                     android:background="@drawable/shape_border_radius_4"
                     android:backgroundTint="@color/primary_background"
                     android:paddingHorizontal="6dp"
@@ -169,13 +169,13 @@
                     android:id="@+id/tv_card_worked_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:text="@{@string/work_card_worked_day(viewModel.cardData.cases)}"
+                    android:text="@{viewModel.cardData.cases == null ? `` : @string/work_card_worked_day(viewModel.cardData.cases)}"
                     android:textAppearance="@style/TextAppearance.Subtitle1"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tv_card_income"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_card_income" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_card_income"
+                    app:visibility="@{viewModel.cardData.cases != null}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -192,7 +192,49 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_card_info" />
+
+            <ImageView
+                android:id="@+id/iv_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_check_badge"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_card_certification"
+                app:layout_constraintStart_toEndOf="@+id/tv_card_certification"
+                app:layout_constraintTop_toTopOf="@+id/tv_card_certification" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            style="@style/Widget.FullButton.Basic"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/primary_background"
+            android:text="@string/work_card_save"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            android:textColor="@color/primary_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_share"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_share"
+            style="@style/Widget.FullButton.Basic"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/primary_normal"
+            android:text="@string/work_card_share"
+            android:textAppearance="@style/TextAppearance.Subtitle1"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_save" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

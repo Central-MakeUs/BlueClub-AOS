@@ -11,6 +11,7 @@ import org.blueclub.R
 import org.blueclub.databinding.ActivityWorkCardBinding
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.util.UiState
+import org.blueclub.util.extension.showToast
 
 
 @AndroidEntryPoint
@@ -31,6 +32,8 @@ class WorkCardActivity : BindingActivity<ActivityWorkCardBinding>(R.layout.activ
     private fun initLayout() {
         binding.ivBack.setOnClickListener { finish() }
         binding.tvClose.setOnClickListener { finish() }
+        binding.btnSave.setOnClickListener { this.showToast(getString(R.string.ready)) }
+        binding.btnShare.setOnClickListener { this.showToast(getString(R.string.ready)) }
     }
 
     private fun collectData() {
@@ -38,6 +41,15 @@ class WorkCardActivity : BindingActivity<ActivityWorkCardBinding>(R.layout.activ
             when (it) {
                 is UiState.Loading -> {
                     viewModel.getCardInfo()
+                }
+
+                is UiState.Success -> {
+                    if (it.data.rank.contains("5"))
+                        binding.ivCardCoin.setImageResource(R.drawable.img_coin_gold)
+                    else if (it.data.rank.contains("30"))
+                        binding.ivCardCoin.setImageResource(R.drawable.img_coin_silver)
+                    else
+                        binding.ivCardCoin.setImageResource(R.drawable.img_coin_bronze)
                 }
 
                 else -> {}
