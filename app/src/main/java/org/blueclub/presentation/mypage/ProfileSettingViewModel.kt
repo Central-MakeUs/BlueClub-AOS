@@ -45,9 +45,9 @@ class ProfileSettingViewModel @Inject constructor(
     val chosenJobType = _chosenJobType
 
     val incomeGoal: MutableStateFlow<String?> =
-        MutableStateFlow(DecimalFormat("#,###").format(localStorage.incomeGoal))
+        MutableStateFlow(DecimalFormat("#,###").format(localStorage.incomeGoal ?: 0))
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
-        it?.replace(",", "")?.toInt() ?: 100000
+        it?.replace(",", "")?.toIntOrNull() ?: 0
     }.toStateFlow(viewModelScope, 0)
 
     val isSaveAvailable = combine(

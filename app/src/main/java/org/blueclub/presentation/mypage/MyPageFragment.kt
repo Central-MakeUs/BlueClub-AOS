@@ -15,6 +15,10 @@ import org.blueclub.presentation.notice.NoticeActivity
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
     private val viewModel: HomeViewModel by activityViewModels()
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.restart()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel

@@ -139,6 +139,7 @@ class ProfileSettingActivity :
             when (it) {
                 is UiState.Success -> {
                     this.showToast("프로필 수정에 성공했습니다.")
+                    finish()
                 }
 
                 is UiState.Error -> {

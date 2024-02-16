@@ -34,8 +34,8 @@ class HomeViewModel @Inject constructor(
     val totalIncome = _totalIncome.asStateFlow()
     private val _totalRecordDay = MutableStateFlow(0) // 홈 뷰 달성일
     val totalRecordDay = _totalRecordDay.asStateFlow()
-    val nickname = localStorage.nickname
-    val job = localStorage.job
+    var nickname = localStorage.nickname
+    var job = localStorage.job
     val month = LocalDateTime.now().month.value
 
     fun getMonthlyInfo() {
@@ -64,5 +64,7 @@ class HomeViewModel @Inject constructor(
 
     fun restart(){
         _homeUiState.value = UiState.Loading
+        job = localStorage.job
+        nickname = localStorage.nickname
     }
 }
