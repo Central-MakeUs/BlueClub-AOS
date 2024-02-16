@@ -75,7 +75,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".presentation.daily.WorkDetailCaddieActivity"
+            android:name=".presentation.daily.caddie.WorkDetailCaddieActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
@@ -86,6 +86,11 @@
 
         <activity
             android:name=".presentation.card.WorkCardLoadingActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".presentation.daily.rider.WorkDetailRiderActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
