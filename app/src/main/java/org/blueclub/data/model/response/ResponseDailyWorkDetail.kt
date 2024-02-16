@@ -24,9 +24,15 @@ data class ResponseDailyWorkDetail(
         val overFee: Int,
         @SerializedName("topdressing")
         val topDressing: Boolean,
+
         val numberOfDeliveries: Int,
         val incomeOfDeliveries: Int,
         val numberOfPromotions: Int,
         val incomeOfPromotions: Int,
+
+        val place: String,
+        val dailyWage: Int,
+        val typeOfJob: String,
+        val numberOfWork: Double,
     )
 }

@@ -9,5 +9,5 @@ enum class JobSettingViewType(
 ) {
     GOLF(R.string.job_golf, "골프캐디"),
     RIDER(R.string.job_rider, "배달라이더"),
-    DAY_LABOR(R.string.job_day_labor, "일용직근로자"),
+    DAY_LABOR(R.string.job_day_labor, "일용직 노동자"),
 }

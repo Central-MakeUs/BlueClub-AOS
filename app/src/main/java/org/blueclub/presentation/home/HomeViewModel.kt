@@ -61,4 +61,8 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
+
+    fun restart(){
+        _homeUiState.value = UiState.Loading
+    }
 }

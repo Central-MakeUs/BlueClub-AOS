@@ -34,6 +34,7 @@ import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
 import org.blueclub.presentation.base.BindingFragment
 import org.blueclub.presentation.daily.caddie.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.daylabor.WorkDetailDayLaborActivity
 import org.blueclub.presentation.daily.rider.WorkDetailRiderActivity
 import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.util.UiState
@@ -240,6 +241,11 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         else if(viewModel.job.toString() == "배달라이더"){
             Intent(requireActivity(), WorkDetailRiderActivity::class.java).apply {
                 putExtra(WorkDetailRiderActivity.ARG_DATE, date)
+            }.also { startActivity(it) }
+        }
+        else if (viewModel.job.toString() == "일용직노동자") {
+            Intent(requireActivity(), WorkDetailDayLaborActivity::class.java).apply {
+                putExtra(WorkDetailDayLaborActivity.ARG_DATE, date)
             }.also { startActivity(it) }
         }
 

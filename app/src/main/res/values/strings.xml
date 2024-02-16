@@ -2,6 +2,8 @@
     <string name="app_name">BlueClub</string>
     <string name="empty"> </string>
 
+    <string name="ready">준비 중인 기능이에요!</string>
+
     <!-- onboarding -->
     <string name="onboarding1_title">근무기록과 수입관리를 한번에!</string>
     <string name="onboarding1_description">매일 다른 근무 내용과 수입 내역을\n한 곳에서 기록하고 체계적으로 관리해 보세요</string>
@@ -152,6 +154,13 @@
     <string name="daily_delivery_income">배달 수입</string>
     <string name="daily_delivery_promotion_count">프로모션 건수</string>
     <string name="daily_delivery_promotion_income">프로모션 수입</string>
+    
+    <string name="daily_labor_name">현장명</string>
+    <string name="daily_labor_income">일당</string>
+    <string name="daily_labor_type">직종</string>
+    <string name="daily_labor_man_hour">공수</string>
+    <string name="daily_labor_place_name_hint">근무 현장명 입력</string>
+    <string name="daily_labor_type_hint">직종명 입력</string>
 
     <string name="rest_title">오늘 하루는 제대로 충전해요</string>
     <string name="rest_description">휴무도 꾸준히 기록하는 습관\n너무 잘하고 있어요!</string>
