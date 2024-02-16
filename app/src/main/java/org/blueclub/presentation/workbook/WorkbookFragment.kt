@@ -40,6 +40,7 @@ import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.util.UiState
 import timber.log.Timber
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
@@ -90,26 +91,38 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 if (data.position == DayPosition.MonthDate) { // 이번 달에 해당하는 뷰
+
                     container.tvDay.text = data.date.dayOfMonth.toString()
                     if(viewModel.workData.value[data.date.dayOfMonth] != null){
                         container.tvDay.background =
                             AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
 
+                        container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
                         container.tvAmount.text = ((viewModel.workData.value[data.date.dayOfMonth]?.income ?: 0) / 10000).toString() + " 만원"
                         container.tvDay.setTextColor(requireContext().getColor(R.color.white))
                     }
                     else{
-                        container.tvAmount.text = ""
+                        // 오늘인 경우
+                        if(viewModel.yearMonth.value.monthValue == YearMonth.now().monthValue
+                            && viewModel.yearMonth.value.year == YearMonth.now().year
+                            && LocalDateTime.now().dayOfMonth == data.date.dayOfMonth ){
+                            container.tvAmount.text = "Today"
+                            container.tvAmount.setTextColor(requireContext().getColor(R.color.primary_normal))
+                        }
+                        else{
+                            container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
+                            container.tvAmount.text = ""
+                        }
                         container.tvDay.background =
                             AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin_gray)
                         container.tvDay.setTextColor(requireContext().getColor(R.color.gray_08))
-
                     }
 
-                    // 오늘인 경우
+
 
 
                 } else { // 이번 달이 아닌 경우
+                    container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
                     container.tvDay.background = null
                     container.tvDay.text = ""
                     container.tvAmount.text = ""
