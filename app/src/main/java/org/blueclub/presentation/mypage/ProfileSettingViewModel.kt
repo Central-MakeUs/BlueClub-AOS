@@ -52,9 +52,10 @@ class ProfileSettingViewModel @Inject constructor(
 
     val isSaveAvailable = combine(
         _isNicknameAvailable.asFlow(),
+        nickname,
         incomeGoalValid
-    ) { nicknameAvailable, income, ->
-        nicknameAvailable == true && income != null && income >= 100000 && income <= 99999999
+    ) { nicknameAvailable, nickname, income ->
+        (nicknameAvailable == true || nickname == localStorage.nickname) && income != null && income >= 100000 && income <= 99999999
     }.asLiveData()
 
     private val _logoutUiState: MutableStateFlow<UiState<Boolean>> =
@@ -70,7 +71,7 @@ class ProfileSettingViewModel @Inject constructor(
 
     fun modifyUserDetails() {
         viewModelScope.launch {
-            if(nickname.value != null){
+            if (nickname.value != null) {
                 userRepository.modifyUserDetails(
                     RequestModifyUserDetails(
                         nickname.value!!,
@@ -80,7 +81,8 @@ class ProfileSettingViewModel @Inject constructor(
                     )
                 ).onSuccess {
                     _modifiedAccountUiState.value = UiState.Success(true)
-                    localStorage.job=chosenJobType.value.title
+                    localStorage.job = chosenJobType.value.title
+                    localStorage.nickname = nickname.value
                 }.onFailure {
                     _modifiedAccountUiState.value = UiState.Error(it.message)
                 }
@@ -123,7 +125,10 @@ class ProfileSettingViewModel @Inject constructor(
     }
 
     fun setNicknameAvailable(isAvailable: Boolean?) {
-        _isNicknameAvailable.value = isAvailable
+        if(nickname.value != localStorage.nickname)
+            _isNicknameAvailable.value = isAvailable
+        else
+            _isNicknameAvailable.value = true
     }
 
     fun setNicknameInputGuide(inputGuideType: NicknameGuideType) {
