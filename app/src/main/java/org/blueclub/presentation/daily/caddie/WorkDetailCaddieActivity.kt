@@ -72,7 +72,9 @@ class WorkDetailCaddieActivity :
                 }
             }
 
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.calculateIncome()
+            }
 
         })
         var resultOverP = ""
@@ -88,7 +90,9 @@ class WorkDetailCaddieActivity :
                 }
             }
 
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.calculateIncome()
+            }
 
         })
         var spentAmount = ""
@@ -128,24 +132,26 @@ class WorkDetailCaddieActivity :
 
     private fun collectData() {
         viewModel.isUploadedUiState.flowWithLifecycle(lifecycle).onEach {
-            when(it){
+            when (it) {
                 is UiState.Success -> {
                     this.showToast("저장에 성공했습니다.")
-                    if(!it.data) // 자랑하기에서 온 경우
+                    if (!it.data) // 자랑하기에서 온 경우
                         moveToCardLoading(viewModel.workId.value)
                     else
                         finish()
                 }
+
                 is UiState.Error -> {
                     this.showToast("저장에 실패했습니다.")
                 }
+
                 else -> {}
             }
         }.launchIn(lifecycleScope)
 
     }
 
-    private fun moveToCardLoading(workBookId: Int?){
+    private fun moveToCardLoading(workBookId: Int?) {
         Intent(this, WorkCardLoadingActivity::class.java).apply {
             putExtra(ARG_WORK_BOOK_ID, workBookId)
         }.also { startActivity(it) }

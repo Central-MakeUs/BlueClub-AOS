@@ -105,6 +105,16 @@ class WorkDetailCaddieViewModel @Inject constructor(
         _baeto.value = !baeto.value
     }
 
+    fun calculateIncome() {
+        val decimalFormat = DecimalFormat("#,###")
+        val income = (caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0) +
+                (overP.value?.replace(",", "")?.toIntOrNull() ?: 0)
+        if (income == 0)
+            _income.value = "계산 중이에요"
+        else
+            _income.value = decimalFormat.format(income) + " 원"
+    }
+
     fun getCaddieWorkBook() {
         viewModelScope.launch {
             workbookRepository.getDetailRecord("골프캐디", date.value)

@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WorkDetailRiderViewModel @Inject constructor(
     private val workbookRepository: WorkbookRepository,
-): ViewModel() {
+) : ViewModel() {
     private val _month = MutableStateFlow(1)
     val month = _month.asStateFlow()
     private val _day = MutableStateFlow(1)
@@ -60,7 +60,7 @@ class WorkDetailRiderViewModel @Inject constructor(
     ) { workType, deliveryCount, deliveryIncome ->
         workType != DailyWorkType.REST && workType != DailyWorkType.DEFAULT
                 && deliveryCount > 0
-                && (deliveryIncome?.replace(",","")?.toIntOrNull() ?: 0) > 0
+                && (deliveryIncome?.replace(",", "")?.toIntOrNull() ?: 0) > 0
     }.asLiveData()
 
     val isSaveAvailable = combine(
@@ -68,9 +68,9 @@ class WorkDetailRiderViewModel @Inject constructor(
         _deliveryCount,
         deliveryIncome
     ) { workType, rounding, caddieP ->
-        workType == DailyWorkType.REST || ( workType != DailyWorkType.DEFAULT
+        workType == DailyWorkType.REST || (workType != DailyWorkType.DEFAULT
                 && rounding > 0
-                && (caddieP?.replace(",","")?.toIntOrNull() ?: 0) > 0)
+                && (caddieP?.replace(",", "")?.toIntOrNull() ?: 0) > 0)
     }.asLiveData()
 
 
@@ -105,11 +105,21 @@ class WorkDetailRiderViewModel @Inject constructor(
             _promotionCount.value++
     }
 
-    fun getRiderWorkBook(){
+    fun calculateIncome() {
+        val decimalFormat = DecimalFormat("#,###")
+        val income = (deliveryIncome.value?.replace(",", "")?.toIntOrNull() ?: 0) +
+                (promotionIncome.value?.replace(",", "")?.toIntOrNull() ?: 0)
+        if (income == 0)
+            _income.value = "계산 중이에요"
+        else
+            _income.value = decimalFormat.format(income) + " 원"
+    }
+
+    fun getRiderWorkBook() {
         viewModelScope.launch {
             workbookRepository.getDetailRecord("배달라이더", date.value)
                 .onSuccess {
-                    if(it != null){
+                    if (it != null) {
                         val decimalFormat = DecimalFormat("#,###")
                         _workId.value = it.id
                         _workType.value = getDailyWorkType(it.workType)
@@ -162,7 +172,8 @@ class WorkDetailRiderViewModel @Inject constructor(
                     numberOfDeliveries = deliveryCount.value,
                     incomeOfDeliveries = deliveryIncome.value?.replace(",", "")?.toIntOrNull() ?: 0,
                     numberOfPromotions = promotionCount.value,
-                    incomeOfPromotions = promotionIncome.value?.replace(",", "")?.toIntOrNull() ?: 0,
+                    incomeOfPromotions = promotionIncome.value?.replace(",", "")?.toIntOrNull()
+                        ?: 0,
                 ).toJsonObject()
             }
             if (id != null && id > 0) { // modify

@@ -545,7 +545,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:text="@string/calculating_yet"
+                        android:text="@{viewModel.income}"
                         android:textColor="@color/primary_normal"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_total_income_title"
                         app:layout_constraintEnd_toEndOf="parent"

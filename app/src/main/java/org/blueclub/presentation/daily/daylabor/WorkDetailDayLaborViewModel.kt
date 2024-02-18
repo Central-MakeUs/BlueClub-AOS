@@ -95,6 +95,15 @@ class WorkDetailDayLaborViewModel @Inject constructor(
             _manHour.value = DecimalFormat("#.#").format(manHour.value + 0.1).toDouble()
     }
 
+    fun calculateIncome() {
+        val decimalFormat = DecimalFormat("#,###")
+        val income = (dayLaborIncome.value?.replace(",", "")?.toIntOrNull() ?: 0)
+        if (income == 0)
+            _income.value = "계산 중이에요"
+        else
+            _income.value = decimalFormat.format(income) + " 원"
+    }
+
     fun getDayLoborWorkBook() {
         viewModelScope.launch {
             workbookRepository.getDetailRecord("일용직근로자", date.value)

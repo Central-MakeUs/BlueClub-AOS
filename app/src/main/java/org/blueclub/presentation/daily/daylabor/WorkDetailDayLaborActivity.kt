@@ -67,7 +67,9 @@ class WorkDetailDayLaborActivity :
                 }
             }
 
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.calculateIncome()
+            }
 
         })
 

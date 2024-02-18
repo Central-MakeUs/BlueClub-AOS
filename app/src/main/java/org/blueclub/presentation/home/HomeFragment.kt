@@ -102,7 +102,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             Intent(requireActivity(), WorkDetailRiderActivity::class.java).apply {
                 putExtra(WorkDetailRiderActivity.ARG_DATE, date)
             }.also { startActivity(it) }
-        } else if (viewModel.job.toString() == "일용직근로자") {
+        } else if (viewModel.job.toString() == "일용직 근로자") {
             Intent(requireActivity(), WorkDetailDayLaborActivity::class.java).apply {
                 putExtra(WorkDetailDayLaborActivity.ARG_DATE, date)
             }.also { startActivity(it) }
