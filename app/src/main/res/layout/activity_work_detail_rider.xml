@@ -640,7 +640,7 @@
                     android:background="@drawable/background_income_info_bottom"
                     android:gravity="center"
                     android:paddingVertical="16dp"
-                    android:text="@string/goal_achieved_amount"
+                    android:text="@{@string/goal_achieved_amount(viewModel.incomePercentage)}"
                     android:textAppearance="@style/TextAppearance.Body1_Medium"
                     android:textColor="@color/coolgray_06"
                     android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"

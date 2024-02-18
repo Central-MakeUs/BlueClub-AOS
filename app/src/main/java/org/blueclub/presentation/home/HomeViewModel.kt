@@ -38,6 +38,8 @@ class HomeViewModel @Inject constructor(
     var job = localStorage.job
     val month = LocalDateTime.now().month.value
 
+    val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
+
     fun getMonthlyInfo() {
         var yearMonth = "${YearMonth.now().year}-"
         if (YearMonth.now().monthValue < 10) {
@@ -55,6 +57,7 @@ class HomeViewModel @Inject constructor(
                     _totalIncomeString.value = decimalFormat.format(it.totalIncome ?: 0) + "원"
                     _totalRecordDay.value = it.totalDay
                     localStorage.incomeGoal = it.targetIncome
+                    incomeGoal.value = decimalFormat.format(it.targetIncome ?: 0)
                 }
                 .onFailure {
                     _homeUiState.value = UiState.Error(it.message)

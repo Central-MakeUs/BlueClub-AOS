@@ -41,6 +41,10 @@ class WorkDetailDayLaborActivity :
             viewModel.setDate(it)
             viewModel.getDayLoborWorkBook()
         }
+        intent.getIntExtra(WorkDetailCaddieActivity.ARG_GOAL, 0).let{
+            Timber.d("목표금액: $it")
+            viewModel.incomeGoal.value = it
+        }
         binding.ivBack.setOnClickListener {
             finish()
         }
@@ -137,5 +141,6 @@ class WorkDetailDayLaborActivity :
 
     companion object {
         const val ARG_DATE = "date"
+        const val ARG_GOAL = "goal"
     }
 }

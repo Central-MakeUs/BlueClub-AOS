@@ -140,7 +140,7 @@
     <string name="auto_calculation">자동계산</string>
     <string name="expenditure_amount">지출액</string>
     <string name="saved_amount">저축액</string>
-    <string name="goal_achieved_amount">목표수입 N% 기여</string>
+    <string name="goal_achieved_amount">목표수입 %s%% 기여</string>
     <string name="show_my_income">수입 자랑하기✌️</string>
     <string name="calculating_yet">계산 중이에요</string>
     <string name="daily_work_date_format">%d.%d %s</string>

@@ -248,17 +248,21 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
 
     private fun moveToDetail(date: String) {
         Timber.d("직업: ${viewModel.job}")
+        Timber.d("목표금액: ${viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0}")
         if (viewModel.job.toString() == "골프캐디") {
             Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
                 putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
+                putExtra(WorkDetailCaddieActivity.ARG_GOAL, viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0)
             }.also { startActivity(it) }
         } else if (viewModel.job.toString() == "배달라이더") {
             Intent(requireActivity(), WorkDetailRiderActivity::class.java).apply {
                 putExtra(WorkDetailRiderActivity.ARG_DATE, date)
+                putExtra(WorkDetailRiderActivity.ARG_GOAL, viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0)
             }.also { startActivity(it) }
-        } else if (viewModel.job.toString() == "일용직 근로자") {
+        } else if (viewModel.job.toString() == "일용직 근로자" || viewModel.job.toString() == "일용직근로자") {
             Intent(requireActivity(), WorkDetailDayLaborActivity::class.java).apply {
                 putExtra(WorkDetailDayLaborActivity.ARG_DATE, date)
+                putExtra(WorkDetailDayLaborActivity.ARG_GOAL, viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0)
             }.also { startActivity(it) }
         }
 

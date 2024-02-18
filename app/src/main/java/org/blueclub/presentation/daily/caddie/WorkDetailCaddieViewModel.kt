@@ -78,6 +78,9 @@ class WorkDetailCaddieViewModel @Inject constructor(
     val income = _income.asStateFlow()
     val spentAmount: MutableStateFlow<String?> = MutableStateFlow(null)
     val savingsAmount: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val _incomePercentage = MutableStateFlow("N")
+    val incomePercentage = _incomePercentage.asStateFlow()
+    val incomeGoal = MutableStateFlow(0)
 
 
     fun setDate(date: String) {
@@ -113,6 +116,13 @@ class WorkDetailCaddieViewModel @Inject constructor(
             _income.value = "계산 중이에요"
         else
             _income.value = decimalFormat.format(income) + " 원"
+        if(incomeGoal.value == 0){
+            _incomePercentage.value = "N"
+        }
+        else {
+            val percentage = (income * 100) / incomeGoal.value
+            _incomePercentage.value = if (percentage == 0) "N" else percentage.toString()
+        }
     }
 
     fun getCaddieWorkBook() {
