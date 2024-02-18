@@ -256,7 +256,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 putExtra(WorkDetailRiderActivity.ARG_DATE, date)
             }.also { startActivity(it) }
         }
-        else if (viewModel.job.toString() == "일용직노동자") {
+        else if (viewModel.job.toString() == "일용직근로자") {
             Intent(requireActivity(), WorkDetailDayLaborActivity::class.java).apply {
                 putExtra(WorkDetailDayLaborActivity.ARG_DATE, date)
             }.also { startActivity(it) }

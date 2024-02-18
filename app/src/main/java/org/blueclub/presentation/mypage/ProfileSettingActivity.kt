@@ -24,6 +24,7 @@ import org.blueclub.data.service.NaverAuthService
 import org.blueclub.databinding.ActivityProfileSettingBinding
 import org.blueclub.presentation.auth.login.LoginActivity
 import org.blueclub.presentation.base.BindingActivity
+import org.blueclub.presentation.home.MainActivity
 import org.blueclub.presentation.type.LoginPlatformType
 import org.blueclub.presentation.type.NicknameGuideType
 import org.blueclub.util.UiState
@@ -139,7 +140,12 @@ class ProfileSettingActivity :
             when (it) {
                 is UiState.Success -> {
                     this.showToast("프로필 수정에 성공했습니다.")
-                    finish()
+                    Intent(this, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }.also {
+                        startActivity(it)
+                        finish()
+                    }
                 }
 
                 is UiState.Error -> {

@@ -97,7 +97,7 @@ class WorkDetailDayLaborViewModel @Inject constructor(
 
     fun getDayLoborWorkBook() {
         viewModelScope.launch {
-            workbookRepository.getDetailRecord("일용직노동자", date.value)
+            workbookRepository.getDetailRecord("일용직근로자", date.value)
                 .onSuccess {
                     if (it != null) {
                         val decimalFormat = DecimalFormat("#,###")
@@ -157,7 +157,7 @@ class WorkDetailDayLaborViewModel @Inject constructor(
             if (id != null && id > 0) { // modify
                 workbookRepository.modifyCaddieDiary(
                     id,
-                    "일용직 노동자",
+                    "일용직 근로자",
                     request,
                     null
                 ).onSuccess {
@@ -168,7 +168,7 @@ class WorkDetailDayLaborViewModel @Inject constructor(
                 }
             } else {
                 workbookRepository.uploadCaddieDiary(
-                    "일용직 노동자",
+                    "일용직 근로자",
                     request,
                     null
                 ).onSuccess {
