@@ -52,18 +52,27 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
                     this.showToast("로그인에 성공했습니다.")
                     moveToNext(it.data)
                 }
+
                 is UiState.Error -> {
                     // TODO 로그인 실패했을 때 UI
                     this.showToast("로그인에 실패했습니다.")
                 }
+
                 else -> {}
             }
         }.launchIn(lifecycleScope)
     }
 
     private fun moveToNext(signType: SignType) {
-        val nextScreen = if (signType == SignType.SIGN_UP) AuthSettingActivity::class.java
-        else MainActivity::class.java
-        startActivity(Intent(this, nextScreen))
+        if (signType == SignType.SIGN_UP) {
+            startActivity(Intent(this, AuthSettingActivity::class.java))
+        } else {
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }.also {
+                startActivity(it)
+                finish()
+            }
+        }
     }
 }

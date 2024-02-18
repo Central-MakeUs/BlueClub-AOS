@@ -93,32 +93,34 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 if (data.position == DayPosition.MonthDate) { // 이번 달에 해당하는 뷰
 
                     container.tvDay.text = data.date.dayOfMonth.toString()
-                    if(viewModel.workData.value[data.date.dayOfMonth] != null){
+                    if (viewModel.workData.value[data.date.dayOfMonth] != null) {
                         container.tvDay.background =
                             AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
 
                         container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
-                        container.tvAmount.text = ((viewModel.workData.value[data.date.dayOfMonth]?.income ?: 0) / 10000).toString() + " 만원"
+                        container.tvAmount.text =
+                            ((viewModel.workData.value[data.date.dayOfMonth]?.income
+                                ?: 0) / 10000).toString() + " 만원"
                         container.tvDay.setTextColor(requireContext().getColor(R.color.white))
-                    }
-                    else{
+                    } else {
                         // 오늘인 경우
-                        if(viewModel.yearMonth.value.monthValue == YearMonth.now().monthValue
+                        if (viewModel.yearMonth.value.monthValue == YearMonth.now().monthValue
                             && viewModel.yearMonth.value.year == YearMonth.now().year
-                            && LocalDateTime.now().dayOfMonth == data.date.dayOfMonth ){
+                            && LocalDateTime.now().dayOfMonth == data.date.dayOfMonth
+                        ) {
                             container.tvAmount.text = "Today"
                             container.tvAmount.setTextColor(requireContext().getColor(R.color.primary_normal))
-                        }
-                        else{
+                        } else {
                             container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
                             container.tvAmount.text = ""
                         }
                         container.tvDay.background =
-                            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin_gray)
+                            AppCompatResources.getDrawable(
+                                requireContext(),
+                                R.drawable.ic_coin_gray
+                            )
                         container.tvDay.setTextColor(requireContext().getColor(R.color.gray_08))
                     }
-
-
 
 
                 } else { // 이번 달이 아닌 경우
@@ -137,11 +139,11 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         val firstDayOfWeek = firstDayOfWeekFromLocale()
         binding.calendarView.setup(startMonth, currentMonthPage, firstDayOfWeek)
         binding.ivCalendarPrevMonth.setOnClickListener {
-            if(viewModel.yearMonth.value.previousMonth >= startMonth)
+            if (viewModel.yearMonth.value.previousMonth >= startMonth)
                 viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
         }
         binding.ivCalendarNextMonth.setOnClickListener {
-            if(viewModel.yearMonth.value.nextMonth <= currentMonthPage)
+            if (viewModel.yearMonth.value.nextMonth <= currentMonthPage)
                 viewModel.setYearMonth(viewModel.yearMonth.value.nextMonth)
         }
         binding.calendarView.monthScrollListener = object : MonthScrollListener {
@@ -246,17 +248,15 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
 
     private fun moveToDetail(date: String) {
         Timber.d("직업: ${viewModel.job}")
-        if(viewModel.job.toString() == "골프캐디"){
+        if (viewModel.job.toString() == "골프캐디") {
             Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
                 putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
             }.also { startActivity(it) }
-        }
-        else if(viewModel.job.toString() == "배달라이더"){
+        } else if (viewModel.job.toString() == "배달라이더") {
             Intent(requireActivity(), WorkDetailRiderActivity::class.java).apply {
                 putExtra(WorkDetailRiderActivity.ARG_DATE, date)
             }.also { startActivity(it) }
-        }
-        else if (viewModel.job.toString() == "일용직근로자") {
+        } else if (viewModel.job.toString() == "일용직근로자") {
             Intent(requireActivity(), WorkDetailDayLaborActivity::class.java).apply {
                 putExtra(WorkDetailDayLaborActivity.ARG_DATE, date)
             }.also { startActivity(it) }
