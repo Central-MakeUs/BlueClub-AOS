@@ -60,7 +60,7 @@ class WorkbookViewModel @Inject constructor(
     val totalIncomeString = _totalIncomeString.asStateFlow()
     private val _totalIncome = MutableStateFlow(0) // 홈 뷰 달성 수입
     val totalIncome = _totalIncome.asStateFlow()
-    private val _totalRecordDay = MutableStateFlow(0) // 홈 뷰 달성일
+    private val _totalRecordDay = MutableStateFlow(-1) // 홈 뷰 달성일
     val totalRecordDay = _totalRecordDay.asStateFlow()
 
     fun onExpandBtnClick() {

@@ -320,7 +320,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:text="@{viewModel.totalRecordDay.toString()}"
+                            android:text="@{(viewModel.totalRecordDay >= 0) ? viewModel.totalRecordDay.toString() : @string/empty}"
                             android:textAppearance="@style/TextAppearance.Subtitle1"
                             android:textColor="@color/primary_normal"
                             app:layout_constraintStart_toEndOf="@+id/tv_daily_record_title"
