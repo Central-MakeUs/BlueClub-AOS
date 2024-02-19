@@ -103,6 +103,11 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                                 ?: 0) / 10000).toString() + " 만원"
                         container.tvDay.setTextColor(requireContext().getColor(R.color.white))
                     } else {
+                        container.tvDay.background =
+                            AppCompatResources.getDrawable(
+                                requireContext(),
+                                R.drawable.ic_coin_gray
+                            )
                         // 오늘인 경우
                         if (viewModel.yearMonth.value.monthValue == YearMonth.now().monthValue
                             && viewModel.yearMonth.value.year == YearMonth.now().year
@@ -110,15 +115,16 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                         ) {
                             container.tvAmount.text = "Today"
                             container.tvAmount.setTextColor(requireContext().getColor(R.color.primary_normal))
+                            container.tvDay.background =
+                                AppCompatResources.getDrawable(
+                                    requireContext(),
+                                    R.drawable.ic_coin_empty
+                                )
                         } else {
                             container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
                             container.tvAmount.text = ""
                         }
-                        container.tvDay.background =
-                            AppCompatResources.getDrawable(
-                                requireContext(),
-                                R.drawable.ic_coin_gray
-                            )
+
                         container.tvDay.setTextColor(requireContext().getColor(R.color.gray_08))
                     }
 
