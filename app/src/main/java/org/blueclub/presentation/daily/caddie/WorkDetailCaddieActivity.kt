@@ -32,7 +32,6 @@ class WorkDetailCaddieActivity :
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-
         initLayout()
         collectData()
     }
@@ -43,7 +42,7 @@ class WorkDetailCaddieActivity :
             viewModel.setDate(it)
             viewModel.getCaddieWorkBook()
         }
-        intent.getIntExtra(ARG_GOAL, 0).let{
+        intent.getIntExtra(ARG_GOAL, 0).let {
             Timber.d("목표금액: $it")
             viewModel.incomeGoal.value = it
         }
@@ -61,6 +60,12 @@ class WorkDetailCaddieActivity :
         }
         binding.cbBaeto.setOnClickListener {
             viewModel.checkBaeto()
+        }
+        binding.layoutAddMemo.setOnClickListener {
+            MemoCaddieBottomSheet().show(supportFragmentManager, "memo")
+        }
+        binding.tvMemo.setOnClickListener {
+            MemoCaddieBottomSheet().show(supportFragmentManager, "memo")
         }
         val decimalFormat = DecimalFormat("#,###")
         var resultCaddieP = ""

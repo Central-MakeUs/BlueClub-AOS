@@ -42,8 +42,7 @@ class WorkDetailRiderViewModel @Inject constructor(
     val promotionCount = _promotionCount.asStateFlow()
     val promotionIncome: MutableStateFlow<String?> = MutableStateFlow(null) // 프로모션 수입
 
-    private val _memo = MutableStateFlow("")
-    val memo = _memo.asStateFlow()
+    val memo = MutableStateFlow("")
     private val _income = MutableStateFlow("계산 중이에요")
     val income = _income.asStateFlow()
     val spentAmount: MutableStateFlow<String?> = MutableStateFlow(null)

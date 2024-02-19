@@ -57,6 +57,12 @@ class WorkDetailRiderActivity :
         binding.ivSelectWorkType.setOnClickListener {
             RiderWorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
         }
+        binding.layoutAddMemo.setOnClickListener {
+            MemoRiderBottomSheet().show(supportFragmentManager, "memo")
+        }
+        binding.tvMemo.setOnClickListener {
+            MemoRiderBottomSheet().show(supportFragmentManager, "memo")
+        }
         val decimalFormat = DecimalFormat("#,###")
         var resultDeliveryIncome = ""
         binding.etAmountDeliveryIncome.addTextChangedListener(object : TextWatcher {

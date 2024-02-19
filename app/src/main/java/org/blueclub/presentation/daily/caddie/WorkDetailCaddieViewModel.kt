@@ -72,8 +72,7 @@ class WorkDetailCaddieViewModel @Inject constructor(
                 && (caddieP?.replace(",", "")?.toIntOrNull() ?: 0) > 0)
     }.asLiveData()
 
-    private val _memo = MutableStateFlow("")
-    val memo = _memo.asStateFlow()
+    val memo = MutableStateFlow("")
     private val _income = MutableStateFlow("계산 중이에요")
     val income = _income.asStateFlow()
     val spentAmount: MutableStateFlow<String?> = MutableStateFlow(null)
@@ -116,10 +115,9 @@ class WorkDetailCaddieViewModel @Inject constructor(
             _income.value = "계산 중이에요"
         else
             _income.value = decimalFormat.format(income) + " 원"
-        if(incomeGoal.value == 0){
+        if (incomeGoal.value == 0) {
             _incomePercentage.value = "N"
-        }
-        else {
+        } else {
             val percentage = (income * 100) / incomeGoal.value
             _incomePercentage.value = if (percentage == 0) "N" else percentage.toString()
         }
@@ -140,6 +138,7 @@ class WorkDetailCaddieViewModel @Inject constructor(
                         caddieP.value = decimalFormat.format(it.caddyFee)
                         overP.value = decimalFormat.format(it.overFee)
                         _baeto.value = it.topDressing
+                        memo.value = it.memo ?: ""
                     }
                 }
                 .onFailure {
@@ -164,7 +163,7 @@ class WorkDetailCaddieViewModel @Inject constructor(
             val request = if (workType.value == DailyWorkType.REST) {
                 RequestCaddieDiary(
                     workType = workType.value.title,
-                    memo = "",
+                    memo = memo.value,
                     income = 0,
                     expenditure = 0,
                     saving = 0,
@@ -178,7 +177,7 @@ class WorkDetailCaddieViewModel @Inject constructor(
             } else {
                 RequestCaddieDiary(
                     workType = workType.value.title,
-                    memo = "",
+                    memo = memo.value,
                     income = totalIncome,
                     expenditure = spentAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
                     saving = savingsAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,

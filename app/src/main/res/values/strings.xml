@@ -225,4 +225,7 @@
     <!-- work card loading -->
     <string name="card_loading_title">근무기록 저장 후\n이미지로 추출중이에요</string>
     <string name="card_loading_description">열심히 수입인증 카드를 만들고 있어요!</string>
+
+    <!-- memo -->
+    <string name="memo_hint">메모 입력</string>
 </resources>

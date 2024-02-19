@@ -57,6 +57,12 @@ class WorkDetailDayLaborActivity :
         binding.ivSelectWorkType.setOnClickListener {
             DayLaborWorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
         }
+        binding.layoutAddMemo.setOnClickListener {
+            MemoDayLaborBottomSheet().show(supportFragmentManager, "memo")
+        }
+        binding.tvMemo.setOnClickListener {
+            MemoDayLaborBottomSheet().show(supportFragmentManager, "memo")
+        }
         val decimalFormat = DecimalFormat("#,###")
         var resultLaborIncome = ""
         binding.etAmountLaborIncome.addTextChangedListener(object : TextWatcher {
