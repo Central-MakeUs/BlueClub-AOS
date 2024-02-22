@@ -42,7 +42,7 @@ class WorkbookViewModel @Inject constructor(
     // 목표 설정 바텀시트 관련
     val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
-        it?.replace(",", "")?.toInt()
+        it?.replace(",", "")?.toIntOrNull() ?: 0
     }.toStateFlow(viewModelScope, 0)
     private val _goalSettingUiState: MutableStateFlow<UiState<Boolean>> =
         MutableStateFlow(UiState.Loading)
