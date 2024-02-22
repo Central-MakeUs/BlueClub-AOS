@@ -120,6 +120,8 @@
 
     <string name="workbook_first_record">%d월의 근무기록이 없습니다.</string>
 
+    <string name="workbook_no_record">작성된 근무기록이 없습니다.</string>
+
     <!-- bottom navigation -->
     <string name="home">홈</string>
     <string name="mypage">마이페이지</string>
