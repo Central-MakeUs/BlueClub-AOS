@@ -21,6 +21,7 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
+import com.kizitonwose.calendar.core.yearMonth
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.MonthScrollListener
@@ -91,7 +92,18 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 if (data.position == DayPosition.MonthDate) { // 이번 달에 해당하는 뷰
-
+                    container.view.setOnClickListener {
+                        var date = "${data.date.yearMonth.year}-"
+                        if (data.date.yearMonth.monthValue < 10) {
+                            date += "0"
+                        }
+                        date += "${data.date.yearMonth.monthValue}-"
+                        if (data.date.dayOfMonth < 10) {
+                            date += "0"
+                        }
+                        date += data.date.dayOfMonth
+                        moveToDetail(date)
+                    }
                     container.tvDay.text = data.date.dayOfMonth.toString()
                     if (viewModel.workData.value[data.date.dayOfMonth] != null) {
                         container.tvDay.background =
@@ -141,9 +153,10 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
 
         }
         val currentMonthPage = YearMonth.now()
-        val startMonth = currentMonthPage.minusMonths(12)
+        val startMonth = currentMonthPage.minusYears(3)
+        val endMonth = currentMonthPage.plusYears(3)
         val firstDayOfWeek = firstDayOfWeekFromLocale()
-        binding.calendarView.setup(startMonth, currentMonthPage, firstDayOfWeek)
+        binding.calendarView.setup(startMonth, endMonth, firstDayOfWeek)
         binding.ivCalendarPrevMonth.setOnClickListener {
             if (viewModel.yearMonth.value.previousMonth >= startMonth)
                 viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
@@ -252,7 +265,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         GoalSettingBottomSheet().show(parentFragmentManager, "goalSetting")
     }
 
-    private fun moveToDetail(date: String) {
+    private fun moveToDetail(date: String) { // yyyy-mm-dd
         Timber.d("직업: ${viewModel.job}")
         Timber.d("목표금액: ${viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0}")
         if (viewModel.job.toString() == "골프캐디") {
