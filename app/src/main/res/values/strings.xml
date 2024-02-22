@@ -102,7 +102,7 @@
     <string name="banner_title2">근무관리 잘하는 법 배워요</string>
 
     <string name="home_nickname">%s님</string>
-    <string name="banner_info">%d월 %s님의\n첫 기록이 기다려져요!</string>
+    <string name="banner_info">%d월 %s님의 첫 기록이 기다려져요!</string>
 
     <!-- work book -->
     <string name="workbook">근무수첩</string>
