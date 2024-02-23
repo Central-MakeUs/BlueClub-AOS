@@ -14,7 +14,6 @@ import org.blueclub.presentation.auth.login.LoginActivity
 import org.blueclub.presentation.auth.setting.AuthSettingActivity
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.home.MainActivity
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_splash) {
@@ -29,7 +28,6 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
 
     private fun moveToNext() {
         val storage = BCDataSource(this)
-        Timber.d("시작 : ${storage.isLogin} ${storage.job}")
         val nextScreen = if(storage.isLogin) {
             if(storage.job == null)
                 AuthSettingActivity::class.java

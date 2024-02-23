@@ -69,6 +69,12 @@ class ProfileSettingViewModel @Inject constructor(
     val modifiedAccountUiState = _modifiedAccountUiState.asStateFlow()
     val loginPlatForm = localStorage.loginPlatform
 
+    init {
+        val jobType = JobSettingViewType.entries.find {
+            it.title == localStorage.job } ?: JobSettingViewType.GOLF
+        _chosenJobType.value = jobType
+    }
+
     fun modifyUserDetails() {
         viewModelScope.launch {
             if (nickname.value != null) {
