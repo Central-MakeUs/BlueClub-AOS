@@ -4,5 +4,6 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:gravity="center"
+    android:paddingBottom="6dp"
     android:textAppearance="@style/TextAppearance.Caption1"
     android:textColor="@color/gray_08" />

@@ -162,7 +162,7 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
                 viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
         }
         binding.ivCalendarNextMonth.setOnClickListener {
-            if (viewModel.yearMonth.value.nextMonth <= currentMonthPage)
+            if (viewModel.yearMonth.value.nextMonth <= endMonth)
                 viewModel.setYearMonth(viewModel.yearMonth.value.nextMonth)
         }
         binding.calendarView.monthScrollListener = object : MonthScrollListener {
