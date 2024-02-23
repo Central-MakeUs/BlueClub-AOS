@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="@{@string/work_card_job(viewModel.cardData.job)}"
+                android:text="@{viewModel.isHighRank ? @string/work_card_job(viewModel.cardData.job) : @string/work_card_today_work}"
                 android:textAppearance="@style/TextAppearance.Subtitle2"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BlueClub</string>
+    <string name="app_name">블루클럽</string>
     <string name="empty"> </string>
 
     <string name="ready">준비 중인 기능이에요!</string>
@@ -223,6 +223,7 @@
     <string name="work_card_save">저장하기</string>
     <string name="work_card_share">공유하기</string>
     <string name="work_card_income">%s원</string>
+    <string name="work_card_today_work">오늘 근무도</string>
 
     <!-- work card loading -->
     <string name="card_loading_title">근무기록 저장 후\n이미지로 추출중이에요</string>

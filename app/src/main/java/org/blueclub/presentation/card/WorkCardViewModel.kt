@@ -31,8 +31,15 @@ class WorkCardViewModel @Inject constructor(
     private val _rank = MutableStateFlow("")
     val rank = _rank.asStateFlow()
 
+    private val _isHighRank = MutableStateFlow(true)
+    val isHighRank = _isHighRank.asStateFlow()
+
     fun setWorkId(workId: Int) {
         _workId.value = workId
+    }
+
+    fun setHighRank(isHigh : Boolean){
+        _isHighRank.value = isHigh
     }
 
     fun getCardInfo() {
