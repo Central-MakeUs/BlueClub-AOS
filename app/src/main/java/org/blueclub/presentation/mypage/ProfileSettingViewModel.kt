@@ -17,6 +17,7 @@ import org.blueclub.data.datasource.BCDataSource
 import org.blueclub.data.model.request.RequestModifyUserDetails
 import org.blueclub.domain.repository.AuthRepository
 import org.blueclub.domain.repository.UserRepository
+import org.blueclub.presentation.type.GoalErrorType
 import org.blueclub.presentation.type.JobSettingViewType
 import org.blueclub.presentation.type.NicknameGuideType
 import org.blueclub.util.UiState
@@ -49,6 +50,15 @@ class ProfileSettingViewModel @Inject constructor(
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
         it?.replace(",", "")?.toIntOrNull() ?: 0
     }.toStateFlow(viewModelScope, 0)
+    val goalErrorMsg: StateFlow<GoalErrorType> = incomeGoalValid.map{
+        val income = it ?: 0
+        if(income <100000)
+            GoalErrorType.TOO_LOW
+        else if(income > 99999999)
+            GoalErrorType.TOO_HIGH
+        else
+            GoalErrorType.CORRECT
+    }.toStateFlow(viewModelScope, GoalErrorType.TOO_LOW)
 
     val isSaveAvailable = combine(
         _isNicknameAvailable.asFlow(),

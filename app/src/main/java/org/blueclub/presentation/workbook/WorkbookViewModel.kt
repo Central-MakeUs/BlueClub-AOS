@@ -13,6 +13,7 @@ import org.blueclub.data.model.request.RequestGoalSetting
 import org.blueclub.data.model.response.ResponseMonthlyInfo
 import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.domain.repository.WorkbookRepository
+import org.blueclub.presentation.type.GoalErrorType
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.toStateFlow
 import timber.log.Timber
@@ -44,6 +45,15 @@ class WorkbookViewModel @Inject constructor(
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
         it?.replace(",", "")?.toIntOrNull() ?: 0
     }.toStateFlow(viewModelScope, 0)
+    val goalErrorMsg: StateFlow<GoalErrorType> = incomeGoalValid.map{
+        val income = it ?: 0
+        if(income <100000)
+            GoalErrorType.TOO_LOW
+        else if(income > 99999999)
+            GoalErrorType.TOO_HIGH
+        else
+            GoalErrorType.CORRECT
+    }.toStateFlow(viewModelScope, GoalErrorType.TOO_LOW)
     private val _goalSettingUiState: MutableStateFlow<UiState<Boolean>> =
         MutableStateFlow(UiState.Loading)
     val goalSettingUiState = _goalSettingUiState.asStateFlow()

@@ -36,21 +36,12 @@ class GoalSettingFragment :
 
             override fun onTextChanged(txt: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (!TextUtils.isEmpty(txt!!.toString()) && txt.toString() != result) {
-                    //lessonPrice = txt.toString().replace(",", "").toInt()
-                    result =
-                        decimalFormat.format(txt.toString().replace(",", "").toDouble())
+                    if (txt.toString().replace(",", "").toDouble() <= 99999999)
+                        result =
+                            decimalFormat.format(txt.toString().replace(",", "").toDouble())
                     binding.etGoalSetting.setText(result)
                     binding.etGoalSetting.setSelection(result.length)
                 }
-
-//                if (TextUtils.isEmpty(txt.toString()) && txt.toString() != result) {
-//                    result = ""
-//                    binding.etGoalSetting.setText(result)
-//                    binding.tvGoalSettingAmountInfo.apply {
-//                        text = result
-//                        visibility = View.INVISIBLE
-//                    }
-//                }
             }
 
             override fun afterTextChanged(p0: Editable?) {}

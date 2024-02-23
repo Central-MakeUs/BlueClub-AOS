@@ -15,6 +15,7 @@ import org.blueclub.data.model.request.RequestUserDetails
 import org.blueclub.domain.repository.AuthRepository
 import org.blueclub.domain.repository.UserRepository
 import org.blueclub.presentation.type.AuthSettingPageViewType
+import org.blueclub.presentation.type.GoalErrorType
 import org.blueclub.presentation.type.JobSettingViewType
 import org.blueclub.presentation.type.NicknameGuideType
 import org.blueclub.presentation.type.TosViewType
@@ -52,6 +53,15 @@ class AuthSettingViewModel @Inject constructor(
             integerIncome = "0"
         integerIncome.toInt()
     }.toStateFlow(viewModelScope, 0)
+    val goalErrorMsg: StateFlow<GoalErrorType> = incomeGoalValid.map{
+        val income = it ?: 0
+        if(income <100000)
+            GoalErrorType.TOO_LOW
+        else if(income > 99999999)
+            GoalErrorType.TOO_HIGH
+        else
+            GoalErrorType.CORRECT
+    }.toStateFlow(viewModelScope, GoalErrorType.TOO_LOW)
 
     val nickname = MutableStateFlow(localStorage.nickname)
     private val _isNicknameCorrect = MutableLiveData(true)

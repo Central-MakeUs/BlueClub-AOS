@@ -49,7 +49,8 @@
     <string name="goal_setting_title">매달 수입 목표를 입력해주세요</string>
     <string name="goal_setting_description">목표 금액은 최소 10만원부터 입력해주세요.</string>
     <string name="goal_setting_hint">목표 금액 입력</string>
-    <string name="goal_setting_wrong">10만원 이상 입력해주세요.</string>
+    <string name="goal_setting_too_low">10만원 이상 입력해주세요.</string>
+    <string name="goal_setting_too_high">9,999만원 이하 입력해주세요.</string>
     <string name="goal_setting_correct">멋진 목표 금액이에요!</string>
     <string name="goal_setting_amount_info">%1%s 원</string>
     <string name="goal_setting_finished">설정 완료</string>
