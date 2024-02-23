@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -44,7 +45,7 @@ class WorkCardActivity : BindingActivity<ActivityWorkCardBinding>(R.layout.activ
         binding.ivBack.setOnClickListener { finish() }
         binding.tvClose.setOnClickListener { finish() }
         binding.btnSave.setOnClickListener { viewSave(binding.workCard) }
-        binding.btnShare.setOnClickListener { this.showToast(getString(R.string.ready)) }
+        binding.btnShare.setOnClickListener { shareCard() }
     }
 
     private fun collectData() {
@@ -63,7 +64,6 @@ class WorkCardActivity : BindingActivity<ActivityWorkCardBinding>(R.layout.activ
                         viewModel.setHighRank(false)
                         binding.ivCardCoin.setImageResource(R.drawable.img_coin_bronze)
                     }
-
                 }
 
                 else -> {}
@@ -110,5 +110,21 @@ class WorkCardActivity : BindingActivity<ActivityWorkCardBinding>(R.layout.activ
         val bitmap = getViewBitmap(view)
         val filePath = getSaveFilePathName()
         bitmapFileSave(bitmap, filePath)
+    }
+
+    private fun shareCard() {
+        val bitmapPath = MediaStore.Images.Media.insertImage(
+            this.contentResolver,
+            getViewBitmap(binding.workCard),
+            "자랑하기",
+            null
+        )
+        val bitmapUri = Uri.parse(bitmapPath)
+        val chooserTitle = "내 근무기록 자랑하기"
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_STREAM, bitmapUri)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.type = "image/jpeg"
+        startActivity(Intent.createChooser(intent, chooserTitle))
     }
 }
