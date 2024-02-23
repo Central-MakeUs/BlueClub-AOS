@@ -204,6 +204,9 @@
     <!-- withdraw -->
     <string name="withdraw_success">회원 탈퇴가 완료되었습니다.</string>
     <string name="withdraw_fail">회원 탈퇴에 실패하였습니다.</string>
+    <string name="withdraw_description">탈퇴시 계정은 삭제되며 복구되지 않아요.\n회원 탈퇴하시겠습니까?</string>
+    <string name="cancel">취소</string>
+    <string name="withdraw_yes">탈퇴</string>
 
     <!-- alert setting -->
     <string name="alert_title">알림 설정</string>

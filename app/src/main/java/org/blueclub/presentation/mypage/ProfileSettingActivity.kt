@@ -74,11 +74,7 @@ class ProfileSettingActivity :
             }
         }
         binding.tvWithdraw.setOnClickListener {
-            when (viewModel.loginPlatForm) {
-                LoginPlatformType.KAKAO -> kakaoSignService.deleteAccountKakao(viewModel::deleteAccount)
-                LoginPlatformType.NAVER -> naverSignService.deleteAccountNaver(viewModel::deleteAccount)
-                else -> {}
-            }
+            WithdrawDialog().show(supportFragmentManager, "withdrawDialog")
         }
         binding.ivJobSelection.setOnClickListener {
             JobSelectingBottomSheet().show(supportFragmentManager, "jobSelecting")
@@ -157,7 +153,7 @@ class ProfileSettingActivity :
             }
         }.launchIn(lifecycleScope)
         viewModel.nickname.flowWithLifecycle(lifecycle).onEach {
-            if(it.isNullOrEmpty()){
+            if (it.isNullOrEmpty()) {
                 viewModel.setNicknameInputGuide(NicknameGuideType.DEFAULT)
             }
             viewModel.setNicknameCorrect(verifyNickname(it ?: ""))
