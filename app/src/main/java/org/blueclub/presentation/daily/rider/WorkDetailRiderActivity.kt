@@ -140,7 +140,6 @@ class WorkDetailRiderActivity :
         viewModel.isUploadedUiState.flowWithLifecycle(lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
-                    this.showToast("저장에 성공했습니다.")
                     if (!it.data) // 자랑하기에서 온 경우
                         moveToCardLoading(viewModel.workId.value)
                     else
