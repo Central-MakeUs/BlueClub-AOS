@@ -99,6 +99,7 @@ class ProfileSettingViewModel @Inject constructor(
     fun deleteAccount() {
         viewModelScope.launch {
             userRepository.deleteAccount().onSuccess {
+                localStorage.clear()
                 _deleteAccountUiState.value = UiState.Success(true)
             }.onFailure {
                 _deleteAccountUiState.value = UiState.Error(it.message)
