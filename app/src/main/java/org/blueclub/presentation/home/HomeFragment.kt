@@ -10,7 +10,6 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -57,9 +56,12 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             val todayDate = SimpleDateFormat(dateFormat).format(date)
             moveToDetail(todayDate)
         }
-        binding.layoutBannerInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_workbook)
-        }
+//        binding.layoutBannerInfo.setOnClickListener {
+//            findNavController().navigate(R.id.action_home_to_workbook)
+//        }
+//        binding.layoutIncomeTop.setOnClickListener {
+//            findNavController().navigate(R.id.action_home_to_workbook)
+//        }
     }
 
     private fun collectData() {
