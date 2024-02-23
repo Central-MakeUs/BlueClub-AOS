@@ -76,7 +76,7 @@ class ProfileSettingActivity :
         binding.tvWithdraw.setOnClickListener {
             WithdrawDialog().show(supportFragmentManager, "withdrawDialog")
         }
-        binding.ivJobSelection.setOnClickListener {
+        binding.layoutJob.setOnClickListener {
             JobSelectingBottomSheet().show(supportFragmentManager, "jobSelecting")
         }
         binding.ivBack.setOnClickListener {

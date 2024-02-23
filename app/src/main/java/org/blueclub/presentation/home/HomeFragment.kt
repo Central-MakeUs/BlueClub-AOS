@@ -71,6 +71,17 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                     viewModel.getMonthlyInfo()
                 }
 
+                is UiState.Success -> {
+                    if(viewModel.totalRecordDay.value == "0")
+                        viewModel.setBannerInfo("${viewModel.month}월 ${viewModel.nickname}님의 첫 기록이 기다려져요!")
+                    else if(viewModel.totalRecordDay.value == "1" && viewModel.isRenew.value)
+                        viewModel.setBannerInfo("${viewModel.nickname}님 이번달 시작이 좋아요!")
+                    else if(viewModel.straightDay.value == 0)
+                        viewModel.setBannerInfo("${viewModel.nickname}님 깜빡하신 근무기록은 없으신가요?")
+                    else
+                        viewModel.setBannerInfo("${viewModel.straightDay.value}일 연속 코인 획득중이에요")
+                }
+
                 else -> {}
             }
         }.launchIn(lifecycleScope)

@@ -158,17 +158,55 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_banner_info_description"
+                android:id="@+id/tv_coin_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="23dp"
+                android:background="@drawable/shape_border_radius_80"
+                android:backgroundTint="@color/coolgray_07"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="2dp"
+                android:text="@{viewModel.totalRecordDay}"
+                android:textAppearance="@style/TextAppearance.Caption3"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_coin"
+                app:layout_constraintStart_toStartOf="@+id/iv_coin"
+                app:layout_constraintTop_toTopOf="@+id/iv_coin"
+                tools:text="1" />
+
+
+            <TextView
+                android:id="@+id/tv_banner_info_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="@{@string/banner_info(viewModel.month, viewModel.nickname)}"
+                android:gravity="start"
+                android:text="@{viewModel.bannerInfo}"
                 android:textAppearance="@style/TextAppearance.Subtitle2"
                 android:textColor="@color/gray_09"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_is_new"
                 app:layout_constraintStart_toEndOf="@+id/iv_coin"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="12월 가나다라마바사아자차님의\n첫 기록이 기다려져요!" />
+
+            <TextView
+                android:id="@+id/tv_is_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_border_radius_4"
+                android:backgroundTint="@color/red_background"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:text="NEW"
+                android:textAppearance="@style/TextAppearance.Caption2"
+                android:textColor="@color/red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibility="@{viewModel.isRenew}" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
