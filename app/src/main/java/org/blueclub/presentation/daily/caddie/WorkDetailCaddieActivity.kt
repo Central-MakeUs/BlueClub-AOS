@@ -58,6 +58,9 @@ class WorkDetailCaddieActivity :
         binding.ivSelectWorkType.setOnClickListener {
             WorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
         }
+        binding.tvDailyWorkType.setOnClickListener {
+            WorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
+        }
         binding.cbBaeto.setOnClickListener {
             viewModel.checkBaeto()
         }

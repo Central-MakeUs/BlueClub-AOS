@@ -43,7 +43,7 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
         binding.ivArrowAlarm.setOnClickListener {
             moveToAlertSetting()
         }
-        binding.ivFriend.setOnClickListener {
+        binding.layoutFriendInvitation.setOnClickListener {
             moveToWebPage(KAKAO_LINK)
         }
         binding.ivNotice.setOnClickListener {

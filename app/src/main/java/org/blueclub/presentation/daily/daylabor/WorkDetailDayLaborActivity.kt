@@ -15,6 +15,7 @@ import org.blueclub.R
 import org.blueclub.databinding.ActivityWorkDetailDayLaborBinding
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.card.WorkCardLoadingActivity
+import org.blueclub.presentation.daily.WorkTypeSettingBottomSheet
 import org.blueclub.presentation.daily.caddie.WorkDetailCaddieActivity
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.showToast
@@ -56,6 +57,9 @@ class WorkDetailDayLaborActivity :
         }
         binding.ivSelectWorkType.setOnClickListener {
             DayLaborWorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
+        }
+        binding.tvDailyWorkType.setOnClickListener {
+            WorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
         }
         binding.layoutAddMemo.setOnClickListener {
             MemoDayLaborBottomSheet().show(supportFragmentManager, "memo")
