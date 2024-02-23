@@ -168,4 +168,8 @@ class AuthSettingViewModel @Inject constructor(
         }
     }
 
+    fun logout(){
+        localStorage.clear()
+    }
+
 }

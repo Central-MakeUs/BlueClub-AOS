@@ -1,5 +1,6 @@
 package org.blueclub.presentation.auth.setting
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.viewModels
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.ActivityAuthSettingBinding
+import org.blueclub.presentation.auth.login.LoginActivity
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.type.AuthSettingPageViewType
 
@@ -35,7 +37,11 @@ class AuthSettingActivity :
             binding.vpAuthsetting.currentItem--
         }
         onBackPressedDispatcher.addCallback(this) {
-            binding.vpAuthsetting.currentItem--
+            if(binding.vpAuthsetting.currentItem > 0)
+                binding.vpAuthsetting.currentItem--
+            else
+                moveToLogin()
+
         }
         binding.vpAuthsetting.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
@@ -60,5 +66,14 @@ class AuthSettingActivity :
                 binding.vpAuthsetting.currentItem++
         }.launchIn(lifecycleScope)
 
+    }
+    private fun moveToLogin(){
+        Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }.also {
+            viewModel.logout()
+            startActivity(it)
+            finish()
+        }
     }
 }
