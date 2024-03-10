@@ -21,6 +21,7 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.core.nextMonth
 import com.kizitonwose.calendar.core.previousMonth
+import com.kizitonwose.calendar.core.yearMonth
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.MonthScrollListener
@@ -33,10 +34,14 @@ import kotlinx.coroutines.launch
 import org.blueclub.R
 import org.blueclub.databinding.FragmentWorkbookBinding
 import org.blueclub.presentation.base.BindingFragment
-import org.blueclub.presentation.daily.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.caddie.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.daylabor.WorkDetailDayLaborActivity
+import org.blueclub.presentation.daily.rider.WorkDetailRiderActivity
 import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.util.UiState
+import timber.log.Timber
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
@@ -87,26 +92,57 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 if (data.position == DayPosition.MonthDate) { // 이번 달에 해당하는 뷰
+                    container.view.setOnClickListener {
+                        var date = "${data.date.yearMonth.year}-"
+                        if (data.date.yearMonth.monthValue < 10) {
+                            date += "0"
+                        }
+                        date += "${data.date.yearMonth.monthValue}-"
+                        if (data.date.dayOfMonth < 10) {
+                            date += "0"
+                        }
+                        date += data.date.dayOfMonth
+                        moveToDetail(date)
+                    }
                     container.tvDay.text = data.date.dayOfMonth.toString()
-                    if(viewModel.workData.value[data.date.dayOfMonth] != null){
+                    if (viewModel.workData.value[data.date.dayOfMonth] != null) {
                         container.tvDay.background =
                             AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin)
 
-                        container.tvAmount.text = ((viewModel.workData.value[data.date.dayOfMonth]?.income ?: 0) / 10000).toString() + " 만원"
+                        container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
+                        container.tvAmount.text =
+                            ((viewModel.workData.value[data.date.dayOfMonth]?.income
+                                ?: 0) / 10000).toString() + " 만원"
                         container.tvDay.setTextColor(requireContext().getColor(R.color.white))
-                    }
-                    else{
-                        container.tvAmount.text = ""
+                    } else {
                         container.tvDay.background =
-                            AppCompatResources.getDrawable(requireContext(), R.drawable.ic_coin_gray)
+                            AppCompatResources.getDrawable(
+                                requireContext(),
+                                R.drawable.ic_coin_gray
+                            )
+                        // 오늘인 경우
+                        if (viewModel.yearMonth.value.monthValue == YearMonth.now().monthValue
+                            && viewModel.yearMonth.value.year == YearMonth.now().year
+                            && LocalDateTime.now().dayOfMonth == data.date.dayOfMonth
+                        ) {
+                            container.tvAmount.text = "Today"
+                            container.tvAmount.setTextColor(requireContext().getColor(R.color.primary_normal))
+                            container.tvDay.background =
+                                AppCompatResources.getDrawable(
+                                    requireContext(),
+                                    R.drawable.ic_coin_empty
+                                )
+                        } else {
+                            container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
+                            container.tvAmount.text = ""
+                        }
+
                         container.tvDay.setTextColor(requireContext().getColor(R.color.gray_08))
-
                     }
-
-                    // 오늘인 경우
 
 
                 } else { // 이번 달이 아닌 경우
+                    container.tvAmount.setTextColor(requireContext().getColor(R.color.coolgray_06))
                     container.tvDay.background = null
                     container.tvDay.text = ""
                     container.tvAmount.text = ""
@@ -117,15 +153,16 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
 
         }
         val currentMonthPage = YearMonth.now()
-        val startMonth = currentMonthPage.minusMonths(12)
+        val startMonth = currentMonthPage.minusYears(3)
+        val endMonth = currentMonthPage.plusYears(3)
         val firstDayOfWeek = firstDayOfWeekFromLocale()
-        binding.calendarView.setup(startMonth, currentMonthPage, firstDayOfWeek)
+        binding.calendarView.setup(startMonth, endMonth, firstDayOfWeek)
         binding.ivCalendarPrevMonth.setOnClickListener {
-            if(viewModel.yearMonth.value.previousMonth >= startMonth)
+            if (viewModel.yearMonth.value.previousMonth >= startMonth)
                 viewModel.setYearMonth(viewModel.yearMonth.value.previousMonth)
         }
         binding.ivCalendarNextMonth.setOnClickListener {
-            if(viewModel.yearMonth.value.nextMonth <= currentMonthPage)
+            if (viewModel.yearMonth.value.nextMonth <= endMonth)
                 viewModel.setYearMonth(viewModel.yearMonth.value.nextMonth)
         }
         binding.calendarView.monthScrollListener = object : MonthScrollListener {
@@ -228,10 +265,26 @@ class WorkbookFragment : BindingFragment<FragmentWorkbookBinding>(R.layout.fragm
         GoalSettingBottomSheet().show(parentFragmentManager, "goalSetting")
     }
 
-    private fun moveToDetail(date: String) {
-        Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
-            putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
-        }.also { startActivity(it) }
+    private fun moveToDetail(date: String) { // yyyy-mm-dd
+        Timber.d("직업: ${viewModel.job}")
+        Timber.d("목표금액: ${viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0}")
+        if (viewModel.job.toString() == "골프캐디") {
+            Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
+                putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
+                putExtra(WorkDetailCaddieActivity.ARG_GOAL, viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0)
+            }.also { startActivity(it) }
+        } else if (viewModel.job.toString() == "배달라이더") {
+            Intent(requireActivity(), WorkDetailRiderActivity::class.java).apply {
+                putExtra(WorkDetailRiderActivity.ARG_DATE, date)
+                putExtra(WorkDetailRiderActivity.ARG_GOAL, viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0)
+            }.also { startActivity(it) }
+        } else if (viewModel.job.toString() == "일용직 근로자" || viewModel.job.toString() == "일용직근로자") {
+            Intent(requireActivity(), WorkDetailDayLaborActivity::class.java).apply {
+                putExtra(WorkDetailDayLaborActivity.ARG_DATE, date)
+                putExtra(WorkDetailDayLaborActivity.ARG_GOAL, viewModel.incomeGoal.value?.replace(",","")?.toIntOrNull() ?: 0)
+            }.also { startActivity(it) }
+        }
+
     }
 
     private fun moveToNotice() {

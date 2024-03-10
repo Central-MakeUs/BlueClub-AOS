@@ -24,6 +24,7 @@ import org.blueclub.data.service.NaverAuthService
 import org.blueclub.databinding.ActivityProfileSettingBinding
 import org.blueclub.presentation.auth.login.LoginActivity
 import org.blueclub.presentation.base.BindingActivity
+import org.blueclub.presentation.home.MainActivity
 import org.blueclub.presentation.type.LoginPlatformType
 import org.blueclub.presentation.type.NicknameGuideType
 import org.blueclub.util.UiState
@@ -73,13 +74,9 @@ class ProfileSettingActivity :
             }
         }
         binding.tvWithdraw.setOnClickListener {
-            when (viewModel.loginPlatForm) {
-                LoginPlatformType.KAKAO -> kakaoSignService.deleteAccountKakao(viewModel::deleteAccount)
-                LoginPlatformType.NAVER -> naverSignService.deleteAccountNaver(viewModel::deleteAccount)
-                else -> {}
-            }
+            WithdrawDialog().show(supportFragmentManager, "withdrawDialog")
         }
-        binding.ivJobSelection.setOnClickListener {
+        binding.layoutJob.setOnClickListener {
             JobSelectingBottomSheet().show(supportFragmentManager, "jobSelecting")
         }
         binding.ivBack.setOnClickListener {
@@ -98,8 +95,9 @@ class ProfileSettingActivity :
 
             override fun onTextChanged(txt: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (!TextUtils.isEmpty(txt!!.toString()) && txt.toString() != result) {
-                    result =
-                        decimalFormat.format(txt.toString().replace(",", "").toDouble())
+                    if (txt.toString().replace(",", "").toDouble() <= 99999999)
+                        result =
+                            decimalFormat.format(txt.toString().replace(",", "").toDouble())
                     binding.etGoalSetting.setText(result)
                     binding.etGoalSetting.setSelection(result.length)
                 }
@@ -139,6 +137,12 @@ class ProfileSettingActivity :
             when (it) {
                 is UiState.Success -> {
                     this.showToast("프로필 수정에 성공했습니다.")
+                    Intent(this, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }.also {
+                        startActivity(it)
+                        finish()
+                    }
                 }
 
                 is UiState.Error -> {
@@ -149,7 +153,7 @@ class ProfileSettingActivity :
             }
         }.launchIn(lifecycleScope)
         viewModel.nickname.flowWithLifecycle(lifecycle).onEach {
-            if(it.isNullOrEmpty()){
+            if (it.isNullOrEmpty()) {
                 viewModel.setNicknameInputGuide(NicknameGuideType.DEFAULT)
             }
             viewModel.setNicknameCorrect(verifyNickname(it ?: ""))

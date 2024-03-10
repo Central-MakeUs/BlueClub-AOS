@@ -1,11 +1,13 @@
 package org.blueclub.data.interceptor
 
 import android.app.Application
+import android.content.Intent
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import org.blueclub.data.datasource.BCDataSource
+import org.blueclub.presentation.auth.login.LoginActivity
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
@@ -20,6 +22,14 @@ class AuthInterceptor @Inject constructor(
         val response = chain.proceed(authRequest)
 
         when (response.code) {
+            401 -> {
+                localStorage.clear()
+                Intent(context, LoginActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }.also {
+                    context.startActivity(it)
+                }
+            }
             403 -> {
                 // TODO
             }

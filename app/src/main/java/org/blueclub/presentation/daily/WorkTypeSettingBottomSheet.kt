@@ -7,11 +7,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.blueclub.R
 import org.blueclub.databinding.DialogWorkTypeSelectingBinding
 import org.blueclub.presentation.base.BindingBottomSheetDialogFragment
+import org.blueclub.presentation.daily.caddie.WorkDetailCaddieViewModel
 import org.blueclub.presentation.type.DailyWorkType
 
 @AndroidEntryPoint
 class WorkTypeSettingBottomSheet:BindingBottomSheetDialogFragment<DialogWorkTypeSelectingBinding>(R.layout.dialog_work_type_selecting) {
-    private val viewModel: DailyWorkDetailViewModel by activityViewModels()
+    private val viewModel: WorkDetailCaddieViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

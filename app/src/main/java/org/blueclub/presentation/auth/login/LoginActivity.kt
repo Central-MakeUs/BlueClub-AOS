@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,6 +19,7 @@ import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.home.MainActivity
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.showToast
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,6 +34,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val keyHash = Utility.getKeyHash(this)
+        Timber.d("fkffk $keyHash")
         addListeners()
         collectData()
     }
@@ -52,18 +56,27 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
                     this.showToast("로그인에 성공했습니다.")
                     moveToNext(it.data)
                 }
+
                 is UiState.Error -> {
                     // TODO 로그인 실패했을 때 UI
                     this.showToast("로그인에 실패했습니다.")
                 }
+
                 else -> {}
             }
         }.launchIn(lifecycleScope)
     }
 
     private fun moveToNext(signType: SignType) {
-        val nextScreen = if (signType == SignType.SIGN_UP) AuthSettingActivity::class.java
-        else MainActivity::class.java
-        startActivity(Intent(this, nextScreen))
+        if (signType == SignType.SIGN_UP) {
+            startActivity(Intent(this, AuthSettingActivity::class.java))
+        } else {
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }.also {
+                startActivity(it)
+                finish()
+            }
+        }
     }
 }

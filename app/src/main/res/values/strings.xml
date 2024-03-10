@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">BlueClub-AOS</string>
+    <string name="app_name">블루클럽</string>
     <string name="empty"> </string>
+
+    <string name="ready">준비 중인 기능이에요!</string>
 
     <!-- onboarding -->
     <string name="onboarding1_title">근무기록과 수입관리를 한번에!</string>
@@ -47,7 +49,8 @@
     <string name="goal_setting_title">매달 수입 목표를 입력해주세요</string>
     <string name="goal_setting_description">목표 금액은 최소 10만원부터 입력해주세요.</string>
     <string name="goal_setting_hint">목표 금액 입력</string>
-    <string name="goal_setting_wrong">10만원 이상 입력해주세요.</string>
+    <string name="goal_setting_too_low">10만원 이상 입력해주세요.</string>
+    <string name="goal_setting_too_high">9,999만원 이하 입력해주세요.</string>
     <string name="goal_setting_correct">멋진 목표 금액이에요!</string>
     <string name="goal_setting_amount_info">%1%s 원</string>
     <string name="goal_setting_finished">설정 완료</string>
@@ -100,7 +103,10 @@
     <string name="banner_title2">근무관리 잘하는 법 배워요</string>
 
     <string name="home_nickname">%s님</string>
-    <string name="banner_info">%d월 %s님의\n첫 기록이 기다려져요!</string>
+    <string name="banner_info_no_record">%d월 %s님의 첫 기록이 기다려져요!</string>
+    <string name="banner_info_no_today">%s님 깜빡하신 근무기록은 없으신가요?</string>
+    <string name="banner_info_new">%s님 이번달 시작이 좋아요!</string>
+    <string name="banner_info_normal">%d일 연속 코인 획득중이에요</string>
 
     <!-- work book -->
     <string name="workbook">근무수첩</string>
@@ -117,6 +123,8 @@
     <string name="workbook_daily_refresh">오늘은 충전하는 날</string>
 
     <string name="workbook_first_record">%d월의 근무기록이 없습니다.</string>
+
+    <string name="workbook_no_record">작성된 근무기록이 없습니다.</string>
 
     <!-- bottom navigation -->
     <string name="home">홈</string>
@@ -138,7 +146,7 @@
     <string name="auto_calculation">자동계산</string>
     <string name="expenditure_amount">지출액</string>
     <string name="saved_amount">저축액</string>
-    <string name="goal_achieved_amount">목표수입 N% 기여</string>
+    <string name="goal_achieved_amount">목표수입 %s%% 기여</string>
     <string name="show_my_income">수입 자랑하기✌️</string>
     <string name="calculating_yet">계산 중이에요</string>
     <string name="daily_work_date_format">%d.%d %s</string>
@@ -147,6 +155,18 @@
     <string name="daily_caddie_p">캐디피 수입</string>
     <string name="daily_caddie_over_p">오버피 수입</string>
     <string name="daily_caddie_soil">배토 여부</string>
+
+    <string name="daily_delivery_count">배달 건수</string>
+    <string name="daily_delivery_income">배달 수입</string>
+    <string name="daily_delivery_promotion_count">프로모션 건수</string>
+    <string name="daily_delivery_promotion_income">프로모션 수입</string>
+    
+    <string name="daily_labor_name">현장명</string>
+    <string name="daily_labor_income">일당</string>
+    <string name="daily_labor_type">직종</string>
+    <string name="daily_labor_man_hour">공수</string>
+    <string name="daily_labor_place_name_hint">근무 현장명 입력</string>
+    <string name="daily_labor_type_hint">직종명 입력</string>
 
     <string name="rest_title">오늘 하루는 제대로 충전해요</string>
     <string name="rest_description">휴무도 꾸준히 기록하는 습관\n너무 잘하고 있어요!</string>
@@ -187,6 +207,9 @@
     <!-- withdraw -->
     <string name="withdraw_success">회원 탈퇴가 완료되었습니다.</string>
     <string name="withdraw_fail">회원 탈퇴에 실패하였습니다.</string>
+    <string name="withdraw_description">탈퇴시 계정은 삭제되며 복구되지 않아요.\n회원 탈퇴하시겠습니까?</string>
+    <string name="cancel">취소</string>
+    <string name="withdraw_yes">탈퇴</string>
 
     <!-- alert setting -->
     <string name="alert_title">알림 설정</string>
@@ -207,8 +230,12 @@
     <string name="work_card_save">저장하기</string>
     <string name="work_card_share">공유하기</string>
     <string name="work_card_income">%s원</string>
+    <string name="work_card_today_work">오늘 근무도</string>
 
     <!-- work card loading -->
     <string name="card_loading_title">근무기록 저장 후\n이미지로 추출중이에요</string>
     <string name="card_loading_description">열심히 수입인증 카드를 만들고 있어요!</string>
+
+    <!-- memo -->
+    <string name="memo_hint">메모 입력</string>
 </resources>

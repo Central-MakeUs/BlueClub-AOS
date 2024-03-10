@@ -8,10 +8,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.blueclub.data.datasource.BCDataSource
 import org.blueclub.data.model.request.RequestGoalSetting
 import org.blueclub.data.model.response.ResponseMonthlyInfo
 import org.blueclub.domain.model.DailyWorkInfo
 import org.blueclub.domain.repository.WorkbookRepository
+import org.blueclub.presentation.type.GoalErrorType
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.toStateFlow
 import timber.log.Timber
@@ -22,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WorkbookViewModel @Inject constructor(
     private val workbookRepository: WorkbookRepository,
+    private val localStorage: BCDataSource,
 ) : ViewModel() {
     private val _monthlyRecordUiState: MutableStateFlow<UiState<List<DailyWorkInfo>>> =
         MutableStateFlow(UiState.Loading)
@@ -35,11 +38,22 @@ class WorkbookViewModel @Inject constructor(
     private val _today = MutableStateFlow(YearMonth.now())
     val today = _today.asStateFlow()
 
+    val job = localStorage.job
+
     // 목표 설정 바텀시트 관련
     val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
-        it?.replace(",", "")?.toInt()
+        it?.replace(",", "")?.toIntOrNull() ?: 0
     }.toStateFlow(viewModelScope, 0)
+    val goalErrorMsg: StateFlow<GoalErrorType> = incomeGoalValid.map{
+        val income = it ?: 0
+        if(income <100000)
+            GoalErrorType.TOO_LOW
+        else if(income > 99999999)
+            GoalErrorType.TOO_HIGH
+        else
+            GoalErrorType.CORRECT
+    }.toStateFlow(viewModelScope, GoalErrorType.TOO_LOW)
     private val _goalSettingUiState: MutableStateFlow<UiState<Boolean>> =
         MutableStateFlow(UiState.Loading)
     val goalSettingUiState = _goalSettingUiState.asStateFlow()
@@ -56,7 +70,7 @@ class WorkbookViewModel @Inject constructor(
     val totalIncomeString = _totalIncomeString.asStateFlow()
     private val _totalIncome = MutableStateFlow(0) // 홈 뷰 달성 수입
     val totalIncome = _totalIncome.asStateFlow()
-    private val _totalRecordDay = MutableStateFlow(0) // 홈 뷰 달성일
+    private val _totalRecordDay = MutableStateFlow(-1) // 홈 뷰 달성일
     val totalRecordDay = _totalRecordDay.asStateFlow()
 
     fun onExpandBtnClick() {

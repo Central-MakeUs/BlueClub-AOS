@@ -17,6 +17,7 @@ import org.blueclub.data.datasource.BCDataSource
 import org.blueclub.data.model.request.RequestModifyUserDetails
 import org.blueclub.domain.repository.AuthRepository
 import org.blueclub.domain.repository.UserRepository
+import org.blueclub.presentation.type.GoalErrorType
 import org.blueclub.presentation.type.JobSettingViewType
 import org.blueclub.presentation.type.NicknameGuideType
 import org.blueclub.util.UiState
@@ -45,16 +46,26 @@ class ProfileSettingViewModel @Inject constructor(
     val chosenJobType = _chosenJobType
 
     val incomeGoal: MutableStateFlow<String?> =
-        MutableStateFlow(DecimalFormat("#,###").format(localStorage.incomeGoal))
+        MutableStateFlow(DecimalFormat("#,###").format(localStorage.incomeGoal ?: 0))
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
-        it?.replace(",", "")?.toInt() ?: 100000
+        it?.replace(",", "")?.toIntOrNull() ?: 0
     }.toStateFlow(viewModelScope, 0)
+    val goalErrorMsg: StateFlow<GoalErrorType> = incomeGoalValid.map{
+        val income = it ?: 0
+        if(income <100000)
+            GoalErrorType.TOO_LOW
+        else if(income > 99999999)
+            GoalErrorType.TOO_HIGH
+        else
+            GoalErrorType.CORRECT
+    }.toStateFlow(viewModelScope, GoalErrorType.TOO_LOW)
 
     val isSaveAvailable = combine(
         _isNicknameAvailable.asFlow(),
+        nickname,
         incomeGoalValid
-    ) { nicknameAvailable, income, ->
-        nicknameAvailable == true && income != null && income >= 100000 && income <= 99999999
+    ) { nicknameAvailable, nickname, income ->
+        (nicknameAvailable == true || nickname == localStorage.nickname) && income != null && income >= 100000 && income <= 99999999
     }.asLiveData()
 
     private val _logoutUiState: MutableStateFlow<UiState<Boolean>> =
@@ -68,17 +79,26 @@ class ProfileSettingViewModel @Inject constructor(
     val modifiedAccountUiState = _modifiedAccountUiState.asStateFlow()
     val loginPlatForm = localStorage.loginPlatform
 
+    init {
+        val jobType = JobSettingViewType.entries.find {
+            it.title == localStorage.job } ?: JobSettingViewType.GOLF
+        _chosenJobType.value = jobType
+    }
+
     fun modifyUserDetails() {
         viewModelScope.launch {
-            if(nickname.value != null){
+            if (nickname.value != null) {
                 userRepository.modifyUserDetails(
                     RequestModifyUserDetails(
                         nickname.value!!,
-                        "골프캐디",
+                        chosenJobType.value.title,
+                        //"골프캐디",
                         incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 100000
                     )
                 ).onSuccess {
                     _modifiedAccountUiState.value = UiState.Success(true)
+                    localStorage.job = chosenJobType.value.title
+                    localStorage.nickname = nickname.value
                 }.onFailure {
                     _modifiedAccountUiState.value = UiState.Error(it.message)
                 }
@@ -95,6 +115,7 @@ class ProfileSettingViewModel @Inject constructor(
     fun deleteAccount() {
         viewModelScope.launch {
             userRepository.deleteAccount().onSuccess {
+                localStorage.clear()
                 _deleteAccountUiState.value = UiState.Success(true)
             }.onFailure {
                 _deleteAccountUiState.value = UiState.Error(it.message)
@@ -121,7 +142,10 @@ class ProfileSettingViewModel @Inject constructor(
     }
 
     fun setNicknameAvailable(isAvailable: Boolean?) {
-        _isNicknameAvailable.value = isAvailable
+        if(nickname.value != localStorage.nickname)
+            _isNicknameAvailable.value = isAvailable
+        else
+            _isNicknameAvailable.value = true
     }
 
     fun setNicknameInputGuide(inputGuideType: NicknameGuideType) {

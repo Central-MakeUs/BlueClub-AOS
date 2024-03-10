@@ -1,4 +1,4 @@
-package org.blueclub.presentation.daily
+package org.blueclub.presentation.daily.caddie
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +16,7 @@ import org.blueclub.databinding.ActivityWorkDetailCaddieBinding
 import org.blueclub.presentation.base.BindingActivity
 import org.blueclub.presentation.card.WorkCardLoadingActivity
 import org.blueclub.presentation.card.WorkCardLoadingActivity.Companion.ARG_WORK_BOOK_ID
+import org.blueclub.presentation.daily.WorkTypeSettingBottomSheet
 import org.blueclub.util.UiState
 import org.blueclub.util.extension.showToast
 import timber.log.Timber
@@ -24,13 +25,12 @@ import java.text.DecimalFormat
 @AndroidEntryPoint
 class WorkDetailCaddieActivity :
     BindingActivity<ActivityWorkDetailCaddieBinding>(R.layout.activity_work_detail_caddie) {
-    private val viewModel: DailyWorkDetailViewModel by viewModels()
+    private val viewModel: WorkDetailCaddieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-
 
         initLayout()
         collectData()
@@ -41,6 +41,10 @@ class WorkDetailCaddieActivity :
             Timber.d("날짜: $it")
             viewModel.setDate(it)
             viewModel.getCaddieWorkBook()
+        }
+        intent.getIntExtra(ARG_GOAL, 0).let {
+            Timber.d("목표금액: $it")
+            viewModel.incomeGoal.value = it
         }
         binding.ivBack.setOnClickListener {
             finish()
@@ -54,8 +58,17 @@ class WorkDetailCaddieActivity :
         binding.ivSelectWorkType.setOnClickListener {
             WorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
         }
+        binding.tvDailyWorkType.setOnClickListener {
+            WorkTypeSettingBottomSheet().show(supportFragmentManager, "workTypeSetting")
+        }
         binding.cbBaeto.setOnClickListener {
             viewModel.checkBaeto()
+        }
+        binding.layoutAddMemo.setOnClickListener {
+            MemoCaddieBottomSheet().show(supportFragmentManager, "memo")
+        }
+        binding.tvMemo.setOnClickListener {
+            MemoCaddieBottomSheet().show(supportFragmentManager, "memo")
         }
         val decimalFormat = DecimalFormat("#,###")
         var resultCaddieP = ""
@@ -71,7 +84,9 @@ class WorkDetailCaddieActivity :
                 }
             }
 
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.calculateIncome()
+            }
 
         })
         var resultOverP = ""
@@ -87,7 +102,9 @@ class WorkDetailCaddieActivity :
                 }
             }
 
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.calculateIncome()
+            }
 
         })
         var spentAmount = ""
@@ -127,24 +144,25 @@ class WorkDetailCaddieActivity :
 
     private fun collectData() {
         viewModel.isUploadedUiState.flowWithLifecycle(lifecycle).onEach {
-            when(it){
+            when (it) {
                 is UiState.Success -> {
-                    this.showToast("저장에 성공했습니다.")
-                    if(!it.data) // 자랑하기에서 온 경우
+                    if (!it.data) // 자랑하기에서 온 경우
                         moveToCardLoading(viewModel.workId.value)
                     else
                         finish()
                 }
+
                 is UiState.Error -> {
                     this.showToast("저장에 실패했습니다.")
                 }
+
                 else -> {}
             }
         }.launchIn(lifecycleScope)
 
     }
 
-    private fun moveToCardLoading(workBookId: Int?){
+    private fun moveToCardLoading(workBookId: Int?) {
         Intent(this, WorkCardLoadingActivity::class.java).apply {
             putExtra(ARG_WORK_BOOK_ID, workBookId)
         }.also { startActivity(it) }
@@ -153,5 +171,6 @@ class WorkDetailCaddieActivity :
 
     companion object {
         const val ARG_DATE = "date"
+        const val ARG_GOAL = "goal"
     }
 }

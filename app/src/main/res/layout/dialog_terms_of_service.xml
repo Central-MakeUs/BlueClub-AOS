@@ -43,21 +43,18 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="14dp"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_tos_title">
 
 
-            <CheckBox
+            <org.blueclub.util.MultiLevelCheckBox
                 android:id="@+id/iv_check"
                 style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
                 android:layout_marginStart="16dp"
-                android:checked="@{viewModel.tosEntireSelected}"
-                android:clickable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -95,16 +92,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_tos_entire">
 
-            <CheckBox
+            <org.blueclub.util.MultiLevelCheckBox
                 android:id="@+id/iv_check_age"
                 style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@{viewModel.selectedTosType.get(TosViewType.AGE)}"
-                android:clickable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:parentCheckBox="@id/iv_check" />
 
             <TextView
                 android:id="@+id/tv_age"
@@ -131,17 +128,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_age">
 
-            <CheckBox
+            <org.blueclub.util.MultiLevelCheckBox
                 android:id="@+id/iv_check_service"
                 style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@{viewModel.selectedTosType.get(TosViewType.SERVICE)}"
-                android:clickable="false"
                 android:src="@drawable/selector_check"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:parentCheckBox="@id/iv_check" />
 
             <TextView
                 android:id="@+id/tv_service"
@@ -176,17 +173,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_service">
 
-            <CheckBox
+            <org.blueclub.util.MultiLevelCheckBox
                 android:id="@+id/iv_check_privacy"
                 style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@{viewModel.selectedTosType.get(TosViewType.PRIVACY)}"
-                android:clickable="false"
                 android:src="@drawable/selector_check"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:parentCheckBox="@id/iv_check" />
 
             <TextView
                 android:id="@+id/tv_privacy"
@@ -221,17 +218,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_privacy">
 
-            <CheckBox
+
+            <org.blueclub.util.MultiLevelCheckBox
                 android:id="@+id/iv_check_marketing"
                 style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@{viewModel.selectedTosType.get(TosViewType.MARKETING)}"
-                android:clickable="false"
                 android:src="@drawable/selector_check"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:parentCheckBox="@id/iv_check" />
 
             <TextView
                 android:id="@+id/tv_marketing"
@@ -258,17 +256,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_marketing">
 
-            <CheckBox
+            <org.blueclub.util.MultiLevelCheckBox
                 android:id="@+id/iv_check_event"
                 style="@style/Style.Check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@{viewModel.selectedTosType.get(TosViewType.EVENT)}"
-                android:clickable="false"
                 android:src="@drawable/selector_check"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:parentCheckBox="@id/iv_check" />
 
             <TextView
                 android:id="@+id/tv_event"

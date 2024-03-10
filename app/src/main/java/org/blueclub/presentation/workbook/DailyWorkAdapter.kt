@@ -29,7 +29,7 @@ class DailyWorkAdapter(
             binding.dailyWorkInfo = dailyWorkInfo
             binding.dailyWorkType = dailyWorkInfo.dailyWorkType
             binding.date = dailyWorkInfo.date.slice(5..9).replace("-", ".")
-            binding.ivMoveToDetail.setOnClickListener { moveToDetail(dailyWorkInfo.date) }
+            binding.layoutDailyRecord.setOnClickListener { moveToDetail(dailyWorkInfo.date) }
             val decimalFormat = DecimalFormat("#,###")
             binding.income = decimalFormat.format(dailyWorkInfo.income ?: 0)
         }

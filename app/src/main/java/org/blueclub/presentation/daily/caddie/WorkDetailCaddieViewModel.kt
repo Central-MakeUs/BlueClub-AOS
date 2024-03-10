@@ -1,4 +1,4 @@
-package org.blueclub.presentation.daily
+package org.blueclub.presentation.daily.caddie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -12,16 +12,13 @@ import org.blueclub.data.model.request.RequestCaddieDiary
 import org.blueclub.domain.repository.WorkbookRepository
 import org.blueclub.presentation.type.DailyWorkType
 import org.blueclub.util.UiState
+import org.blueclub.util.getDayOfWeek
 import timber.log.Timber
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class DailyWorkDetailViewModel @Inject constructor(
+class WorkDetailCaddieViewModel @Inject constructor(
     private val workbookRepository: WorkbookRepository,
 ) : ViewModel() {
 
@@ -70,17 +67,19 @@ class DailyWorkDetailViewModel @Inject constructor(
         _rounding,
         caddieP
     ) { workType, rounding, caddieP ->
-        workType == DailyWorkType.REST || ( workType != DailyWorkType.DEFAULT
+        workType == DailyWorkType.REST || (workType != DailyWorkType.DEFAULT
                 && rounding > 0
-                && (caddieP?.replace(",","")?.toIntOrNull() ?: 0) > 0)
+                && (caddieP?.replace(",", "")?.toIntOrNull() ?: 0) > 0)
     }.asLiveData()
 
-    private val _memo = MutableStateFlow("")
-    val memo = _memo.asStateFlow()
+    val memo = MutableStateFlow("")
     private val _income = MutableStateFlow("계산 중이에요")
     val income = _income.asStateFlow()
     val spentAmount: MutableStateFlow<String?> = MutableStateFlow(null)
     val savingsAmount: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val _incomePercentage = MutableStateFlow("N")
+    val incomePercentage = _incomePercentage.asStateFlow()
+    val incomeGoal = MutableStateFlow(0)
 
 
     fun setDate(date: String) {
@@ -88,15 +87,6 @@ class DailyWorkDetailViewModel @Inject constructor(
         _month.value = date.slice(5..6).toIntOrNull() ?: 0
         _day.value = date.slice(8..9).toIntOrNull() ?: 0
         _dow.value = getDayOfWeek(date)
-    }
-
-    fun getDayOfWeek(date: String): String {
-        val cal: Calendar = Calendar.getInstance()
-        val df = SimpleDateFormat(dateFormat)
-        var day = Date()
-        day = df.parse(date) ?: return ""
-        cal.time = day
-        return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.KOREAN) ?: ""
     }
 
     fun minusRounding() {
@@ -117,6 +107,22 @@ class DailyWorkDetailViewModel @Inject constructor(
         _baeto.value = !baeto.value
     }
 
+    fun calculateIncome() {
+        val decimalFormat = DecimalFormat("#,###")
+        val income = (caddieP.value?.replace(",", "")?.toIntOrNull() ?: 0) +
+                (overP.value?.replace(",", "")?.toIntOrNull() ?: 0)
+        if (income == 0)
+            _income.value = "계산 중이에요"
+        else
+            _income.value = decimalFormat.format(income) + " 원"
+        if (incomeGoal.value == 0) {
+            _incomePercentage.value = "N"
+        } else {
+            val percentage = (income * 100) / incomeGoal.value
+            _incomePercentage.value = if (percentage == 0) "N" else percentage.toString()
+        }
+    }
+
     fun getCaddieWorkBook() {
         viewModelScope.launch {
             workbookRepository.getDetailRecord("골프캐디", date.value)
@@ -132,6 +138,7 @@ class DailyWorkDetailViewModel @Inject constructor(
                         caddieP.value = decimalFormat.format(it.caddyFee)
                         overP.value = decimalFormat.format(it.overFee)
                         _baeto.value = it.topDressing
+                        memo.value = it.memo ?: ""
                     }
                 }
                 .onFailure {
@@ -156,7 +163,7 @@ class DailyWorkDetailViewModel @Inject constructor(
             val request = if (workType.value == DailyWorkType.REST) {
                 RequestCaddieDiary(
                     workType = workType.value.title,
-                    memo = "",
+                    memo = memo.value,
                     income = 0,
                     expenditure = 0,
                     saving = 0,
@@ -170,7 +177,7 @@ class DailyWorkDetailViewModel @Inject constructor(
             } else {
                 RequestCaddieDiary(
                     workType = workType.value.title,
-                    memo = "",
+                    memo = memo.value,
                     income = totalIncome,
                     expenditure = spentAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,
                     saving = savingsAmount.value?.replace(",", "")?.toIntOrNull() ?: 0,

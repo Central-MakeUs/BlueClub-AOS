@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="org.blueclub.presentation.daily.DailyWorkDetailViewModel" />
+            type="org.blueclub.presentation.daily.caddie.WorkDetailCaddieViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -135,6 +135,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
+                        android:paddingHorizontal="2dp"
+                        android:paddingVertical="2dp"
                         android:src="@drawable/ic_arrow_right"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_daily_work_type_title"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -198,6 +200,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:onClick="@{() -> viewModel.minusRounding()}"
+                        android:paddingHorizontal="2dp"
+                        android:paddingVertical="2dp"
                         android:src="@drawable/ic_minus_active"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/tv_amount"
@@ -223,6 +227,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
                         android:onClick="@{() -> viewModel.plusRounding()}"
+                        android:paddingHorizontal="2dp"
+                        android:paddingVertical="2dp"
                         android:src="@drawable/ic_plus_active"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -427,6 +433,57 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_memo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="16dp"
+                    android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_baeto"
+                    app:visibility="@{!viewModel.memo.blank}">
+
+                    <ImageView
+                        android:id="@+id/iv_memo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_memo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/memo"
+                        android:textAppearance="@style/TextAppearance.Body1_Medium"
+                        android:textColor="@color/coolgray_06"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_memo"
+                        app:layout_constraintStart_toEndOf="@+id/iv_memo"
+                        app:layout_constraintTop_toTopOf="@+id/iv_memo" />
+
+                    <TextView
+                        android:id="@+id/tv_memo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/background_memo"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="16dp"
+                        android:text="@{viewModel.memo}"
+                        android:textAppearance="@style/TextAppearance.Body1_Medium"
+                        android:textColor="@color/gray_10"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_memo" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_add_memo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -436,9 +493,9 @@
                     android:backgroundTint="@color/coolgray_01"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="6dp"
-                    android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_baeto">
+                    app:layout_constraintTop_toBottomOf="@+id/layout_memo"
+                    app:visibility="@{viewModel.memo.blank}">
 
                     <ImageView
                         android:id="@+id/iv_plus_memo"
@@ -538,7 +595,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:text="@string/calculating_yet"
+                        android:text="@{viewModel.income}"
                         android:textColor="@color/primary_normal"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_total_income_title"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -614,7 +671,7 @@
                     android:background="@drawable/background_income_info_bottom"
                     android:gravity="center"
                     android:paddingVertical="16dp"
-                    android:text="@string/goal_achieved_amount"
+                    android:text="@{@string/goal_achieved_amount(viewModel.incomePercentage)}"
                     android:textAppearance="@style/TextAppearance.Body1_Medium"
                     android:textColor="@color/coolgray_06"
                     android:visibility="@{viewModel.workType.name != DailyWorkType.REST.name ? View.VISIBLE : View.INVISIBLE}"
@@ -630,6 +687,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="20dp"
+                    android:backgroundTint="@{viewModel.isInputCompleted ? @color/coolgray_10 : @color/gray_04}"
                     android:enabled="@{viewModel.isInputCompleted}"
                     android:paddingVertical="17dp"
                     android:text="@string/show_my_income"

@@ -32,11 +32,19 @@ class HomeViewModel @Inject constructor(
     val totalIncomeString = _totalIncomeString.asStateFlow()
     private val _totalIncome = MutableStateFlow(0) // 홈 뷰 달성 수입
     val totalIncome = _totalIncome.asStateFlow()
-    private val _totalRecordDay = MutableStateFlow(0) // 홈 뷰 달성일
+    private val _totalRecordDay = MutableStateFlow("Hi") // 홈 뷰 달성일
     val totalRecordDay = _totalRecordDay.asStateFlow()
-    val nickname = localStorage.nickname
-    val job = localStorage.job
+    private val _isRenew = MutableStateFlow(false)
+    val isRenew = _isRenew.asStateFlow()
+    private val _straightDay = MutableStateFlow(0)
+    val straightDay = _straightDay.asStateFlow()
+    var nickname = localStorage.nickname
+    var job = localStorage.job
     val month = LocalDateTime.now().month.value
+    private val _bannerInfo = MutableStateFlow("")
+    val bannerInfo = _bannerInfo.asStateFlow()
+
+    val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
 
     fun getMonthlyInfo() {
         var yearMonth = "${YearMonth.now().year}-"
@@ -53,12 +61,25 @@ class HomeViewModel @Inject constructor(
                     _progress.value = it.progress ?: 0
                     _totalIncome.value = it.totalIncome ?: 0
                     _totalIncomeString.value = decimalFormat.format(it.totalIncome ?: 0) + "원"
-                    _totalRecordDay.value = it.totalDay
+                    _totalRecordDay.value = it.totalDay.toString()
                     localStorage.incomeGoal = it.targetIncome
+                    incomeGoal.value = decimalFormat.format(it.targetIncome ?: 0)
+                    _isRenew.value = it.isRenew
+                    _straightDay.value = it.straightDay
                 }
                 .onFailure {
                     _homeUiState.value = UiState.Error(it.message)
                 }
         }
+    }
+
+    fun setBannerInfo(info :String){
+        _bannerInfo.value = info
+    }
+
+    fun restart(){
+        _homeUiState.value = UiState.Loading
+        job = localStorage.job
+        nickname = localStorage.nickname
     }
 }

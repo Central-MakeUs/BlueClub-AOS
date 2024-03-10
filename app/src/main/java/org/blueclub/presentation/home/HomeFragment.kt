@@ -16,11 +16,12 @@ import kotlinx.coroutines.flow.onEach
 import org.blueclub.R
 import org.blueclub.databinding.FragmentHomeBinding
 import org.blueclub.presentation.base.BindingFragment
-import org.blueclub.presentation.daily.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.caddie.WorkDetailCaddieActivity
+import org.blueclub.presentation.daily.daylabor.WorkDetailDayLaborActivity
+import org.blueclub.presentation.daily.rider.WorkDetailRiderActivity
 import org.blueclub.presentation.notice.NoticeActivity
 import org.blueclub.presentation.workbook.WorkbookFragment
 import org.blueclub.util.UiState
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -28,6 +29,11 @@ import java.util.Date
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by activityViewModels()
     private lateinit var rootView: View
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.restart()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,6 +56,12 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             val todayDate = SimpleDateFormat(dateFormat).format(date)
             moveToDetail(todayDate)
         }
+//        binding.layoutBannerInfo.setOnClickListener {
+//            findNavController().navigate(R.id.action_home_to_workbook)
+//        }
+//        binding.layoutIncomeTop.setOnClickListener {
+//            findNavController().navigate(R.id.action_home_to_workbook)
+//        }
     }
 
     private fun collectData() {
@@ -57,6 +69,17 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             when (it) {
                 is UiState.Loading -> {
                     viewModel.getMonthlyInfo()
+                }
+
+                is UiState.Success -> {
+                    if(viewModel.totalRecordDay.value == "0")
+                        viewModel.setBannerInfo("${viewModel.month}월 ${viewModel.nickname}님의 첫 기록이 기다려져요!")
+                    else if(viewModel.totalRecordDay.value == "1" && viewModel.isRenew.value)
+                        viewModel.setBannerInfo("${viewModel.nickname}님 이번달 시작이 좋아요!")
+                    else if(viewModel.straightDay.value == 0)
+                        viewModel.setBannerInfo("${viewModel.nickname}님 깜빡하신 근무기록은 없으신가요?")
+                    else
+                        viewModel.setBannerInfo("${viewModel.straightDay.value}일 연속 코인 획득중이에요")
                 }
 
                 else -> {}
@@ -88,10 +111,31 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun moveToDetail(date: String) {
-        Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
-            putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
-            Timber.d("디테일 전달: $date")
-        }.also { startActivity(it) }
+        if (viewModel.job.toString() == "골프캐디") {
+            Intent(requireActivity(), WorkDetailCaddieActivity::class.java).apply {
+                putExtra(WorkDetailCaddieActivity.ARG_DATE, date)
+                putExtra(
+                    WorkDetailCaddieActivity.ARG_GOAL,
+                    viewModel.incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 0
+                )
+            }.also { startActivity(it) }
+        } else if (viewModel.job.toString() == "배달라이더") {
+            Intent(requireActivity(), WorkDetailRiderActivity::class.java).apply {
+                putExtra(WorkDetailRiderActivity.ARG_DATE, date)
+                putExtra(
+                    WorkDetailCaddieActivity.ARG_GOAL,
+                    viewModel.incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 0
+                )
+            }.also { startActivity(it) }
+        } else if (viewModel.job.toString() == "일용직 근로자" || viewModel.job.toString() == "일용직근로자") {
+            Intent(requireActivity(), WorkDetailDayLaborActivity::class.java).apply {
+                putExtra(WorkDetailDayLaborActivity.ARG_DATE, date)
+                putExtra(
+                    WorkDetailCaddieActivity.ARG_GOAL,
+                    viewModel.incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 0
+                )
+            }.also { startActivity(it) }
+        }
     }
 
     private fun getProgressBarSize(): Int {

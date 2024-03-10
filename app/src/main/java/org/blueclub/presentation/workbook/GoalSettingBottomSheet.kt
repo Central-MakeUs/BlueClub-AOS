@@ -43,8 +43,9 @@ class GoalSettingBottomSheet :
 
             override fun onTextChanged(txt: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (!TextUtils.isEmpty(txt!!.toString()) && txt.toString() != result) {
-                    result =
-                        decimalFormat.format(txt.toString().replace(",", "").toDouble())
+                    if (txt.toString().replace(",", "").toDouble() <= 99999999)
+                        result =
+                            decimalFormat.format(txt.toString().replace(",", "").toDouble())
                     binding.etGoalSetting.setText(result)
                     binding.etGoalSetting.setSelection(result.length)
                 }

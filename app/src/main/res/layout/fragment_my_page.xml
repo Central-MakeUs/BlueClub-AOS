@@ -55,9 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="14dp"
-            android:background="@drawable/background_job_unselected"
+            android:background="@drawable/background_workbook_goal"
             android:paddingHorizontal="20dp"
-            android:paddingVertical="20dp"
+            android:paddingTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_title_bar">
@@ -86,6 +86,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="2dp"
                 android:src="@drawable/ic_arrow_right_gray_08"
                 app:layout_constraintBottom_toBottomOf="@id/tv_my_job"
                 app:layout_constraintStart_toEndOf="@id/tv_my_job"
@@ -129,11 +131,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_friend_invitation"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toStartOf="@+id/layout_inquiry"
-                app:layout_constraintStart_toStartOf="parent"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="20dp"
+                app:layout_constraintStart_toStartOf="@+id/view_divider"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider">
 
                 <ImageView
@@ -162,11 +165,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_inquiry"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/layout_service_comment"
-                app:layout_constraintStart_toEndOf="@+id/layout_friend_invitation"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider">
 
                 <ImageView
@@ -195,11 +200,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_service_comment"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/layout_inquiry"
+                android:paddingHorizontal="7dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/view_divider"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider">
 
                 <ImageView
@@ -232,8 +238,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:paddingVertical="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_my_info">
@@ -253,6 +259,8 @@
                 android:id="@+id/iv_arrow_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="2dp"
                 android:src="@drawable/ic_arrow_right"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -264,8 +272,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="14dp"
+            android:paddingVertical="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_notice">
@@ -285,6 +292,8 @@
                 android:id="@+id/iv_arrow_alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="2dp"
                 android:src="@drawable/ic_arrow_right"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -296,8 +305,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="14dp"
+            android:paddingVertical="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_setting_alarm">
@@ -317,6 +325,8 @@
                 android:id="@+id/iv_arrow_tos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="2dp"
                 android:src="@drawable/ic_arrow_right"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -328,8 +338,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="14dp"
+            android:paddingVertical="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_tos">
@@ -349,6 +358,8 @@
                 android:id="@+id/iv_arrow_privacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="2dp"
                 android:src="@drawable/ic_arrow_right"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -360,8 +371,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="14dp"
+            android:paddingVertical="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_age">

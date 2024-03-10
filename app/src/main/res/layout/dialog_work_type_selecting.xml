@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="org.blueclub.presentation.daily.DailyWorkDetailViewModel" />
+            type="org.blueclub.presentation.daily.caddie.WorkDetailCaddieViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

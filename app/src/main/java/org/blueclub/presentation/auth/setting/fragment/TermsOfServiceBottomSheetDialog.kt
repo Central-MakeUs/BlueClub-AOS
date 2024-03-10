@@ -16,6 +16,7 @@ import org.blueclub.presentation.auth.setting.AuthSettingFinishActivity
 import org.blueclub.presentation.auth.setting.AuthSettingViewModel
 import org.blueclub.presentation.base.BindingBottomSheetDialogFragment
 import org.blueclub.presentation.type.TosViewType
+import timber.log.Timber
 
 class TermsOfServiceBottomSheetDialog :
     BindingBottomSheetDialogFragment<DialogTermsOfServiceBinding>(R.layout.dialog_terms_of_service) {
@@ -54,23 +55,15 @@ class TermsOfServiceBottomSheetDialog :
                 binding.btnTos.isEnabled = false
                 binding.btnTos.setBackgroundColor(requireActivity().getColor(R.color.gray_04))
             }
-
-            if(it[TosViewType.AGE] == true && it[TosViewType.SERVICE] == true && it[TosViewType.PRIVACY] == true
-                && it[TosViewType.EVENT] == true && it[TosViewType.MARKETING] == true){
-                //binding.ivCheck.isSelected = true
-                viewModel.setEntireTosSelected(true)
-            }else if(it[TosViewType.AGE] == false || it[TosViewType.SERVICE] == false || it[TosViewType.PRIVACY] == false
-                || it[TosViewType.EVENT] == false || it[TosViewType.MARKETING] == false){
-                viewModel.setEntireTosSelected(false)
-            }
         }.launchIn(lifecycleScope)
     }
 
     private fun checkboxClickEvent() {
-//        binding.layoutTosEntire.setOnClickListener {
-//            val isSelected = viewModel.setWholeTosType()
-//            binding.ivCheck.isSelected = isSelected
-//        }
+        binding.ivCheck.setOnClickListener {
+            Timber.d("확인 : ${binding.ivCheck.isChecked}")
+            it.isSelected = binding.ivCheck.isChecked
+            viewModel.setWholeTosType(it.isSelected)
+        }
         binding.ivCheckAge.setOnClickListener {
             it.isSelected = !it.isSelected
             viewModel.setTosType(TosViewType.AGE)

@@ -6,6 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.blueclub.R
 import org.blueclub.databinding.ActivityDailyWorkDetailBinding
 import org.blueclub.presentation.base.BindingActivity
+import org.blueclub.presentation.daily.caddie.WorkDetailCaddieViewModel
 import org.blueclub.presentation.model.DailyWorkDetailOption
 import org.blueclub.presentation.type.DailyWorkDetailOptionType
 
@@ -13,7 +14,7 @@ import org.blueclub.presentation.type.DailyWorkDetailOptionType
 class DailyWorkDetailActivity :
     BindingActivity<ActivityDailyWorkDetailBinding>(R.layout.activity_daily_work_detail) {
     private lateinit var dailyworkAdapter: DailyWorkDetailAdapter
-    private val viewModel: DailyWorkDetailViewModel by viewModels()
+    private val viewModel: WorkDetailCaddieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

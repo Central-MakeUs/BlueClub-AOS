@@ -15,6 +15,7 @@ import org.blueclub.data.model.request.RequestUserDetails
 import org.blueclub.domain.repository.AuthRepository
 import org.blueclub.domain.repository.UserRepository
 import org.blueclub.presentation.type.AuthSettingPageViewType
+import org.blueclub.presentation.type.GoalErrorType
 import org.blueclub.presentation.type.JobSettingViewType
 import org.blueclub.presentation.type.NicknameGuideType
 import org.blueclub.presentation.type.TosViewType
@@ -48,10 +49,19 @@ class AuthSettingViewModel @Inject constructor(
     val incomeGoal: MutableStateFlow<String?> = MutableStateFlow(null)
     val incomeGoalValid: StateFlow<Int?> = incomeGoal.map {
         var integerIncome = it?.replace(",", "")
-        if(integerIncome.isNullOrEmpty())
+        if (integerIncome.isNullOrEmpty())
             integerIncome = "0"
         integerIncome.toInt()
     }.toStateFlow(viewModelScope, 0)
+    val goalErrorMsg: StateFlow<GoalErrorType> = incomeGoalValid.map{
+        val income = it ?: 0
+        if(income <100000)
+            GoalErrorType.TOO_LOW
+        else if(income > 99999999)
+            GoalErrorType.TOO_HIGH
+        else
+            GoalErrorType.CORRECT
+    }.toStateFlow(viewModelScope, GoalErrorType.TOO_LOW)
 
     val nickname = MutableStateFlow(localStorage.nickname)
     private val _isNicknameCorrect = MutableLiveData(true)
@@ -63,9 +73,9 @@ class AuthSettingViewModel @Inject constructor(
         MutableLiveData(NicknameGuideType.VALID_NICKNAME)
     val nicknameInputGuide: LiveData<NicknameGuideType> get() = _nicknameInputGuide
 
-    private val _selectedTosType: MutableStateFlow<Map<TosViewType, Boolean>> =
+    private val _selectedTosType: MutableStateFlow<MutableMap<TosViewType, Boolean>> =
         MutableStateFlow(
-            mapOf(
+            mutableMapOf(
                 TosViewType.AGE to false,
                 TosViewType.SERVICE to false,
                 TosViewType.PRIVACY to false,
@@ -74,8 +84,6 @@ class AuthSettingViewModel @Inject constructor(
             )
         )
     val selectedTosType = _selectedTosType.asStateFlow()
-    private val _tosEntireSelected = MutableStateFlow(false)
-    val tosEntireSelected = _tosEntireSelected.asStateFlow()
 
     init {
         _isNicknameCorrect.value = true
@@ -118,12 +126,7 @@ class AuthSettingViewModel @Inject constructor(
         }
     }
 
-    fun setEntireTosSelected(isSelected: Boolean){
-        _tosEntireSelected.value = isSelected
-    }
-
-    fun setWholeTosType(): Boolean {
-        val isSelected = selectedTosType.value.values.contains(true)
+    fun setWholeTosType(isSelected: Boolean) {
         _selectedTosType.value = mutableMapOf(
             TosViewType.AGE to isSelected,
             TosViewType.SERVICE to isSelected,
@@ -131,7 +134,6 @@ class AuthSettingViewModel @Inject constructor(
             TosViewType.MARKETING to isSelected,
             TosViewType.EVENT to isSelected,
         )
-        return isSelected
     }
 
     fun setNicknameCorrect(isCorrect: Boolean) {
@@ -160,13 +162,13 @@ class AuthSettingViewModel @Inject constructor(
         }
     }
 
-    fun writeUserDetails(moveToFinish: () -> Unit){
+    fun writeUserDetails(moveToFinish: () -> Unit) {
         viewModelScope.launch {
             userRepository.writeUserDetails(
                 RequestUserDetails(
                     nickname.value ?: "",
-                    //chosenJobType.value.title,
-                    "골프캐디",
+                    chosenJobType.value.title,
+                    //"골프캐디",
                     incomeGoal.value?.replace(",", "")?.toIntOrNull() ?: 0,
                     tosAgree = true,
                 )
@@ -174,6 +176,10 @@ class AuthSettingViewModel @Inject constructor(
                 moveToFinish()
             }
         }
+    }
+
+    fun logout(){
+        localStorage.clear()
     }
 
 }
